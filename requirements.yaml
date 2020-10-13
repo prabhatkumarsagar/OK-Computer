@@ -1,0 +1,7 @@
+packages:
+  - wolframalpha
+  - pyttsx3
+  - wikipedia
+  - SpeechRecognition
+  - pyjokes
+  
