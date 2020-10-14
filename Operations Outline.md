@@ -76,7 +76,6 @@
 
     d. Help
 <br>
-<br>
 3. <b>MISCELLANEOUS OPERATIONS:</b>
 
     a. Web Search
