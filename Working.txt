@@ -1,0 +1,24 @@
+Various Operations offered by the assitant and their General fuckin Syntaxes(if any).
+**-Optional (to be added only if time allows)
+1. FILE(incl. APPS)/FOLDER OPERATIONS:
+    a. Opening a file.
+    b. Closing a file.
+    c. Opening a folder.
+    d. Closing a folder.
+    e. Renaming a file.
+    f. Renaming a folder.
+    g. Deleting a file.
+    h. Deleting a folder.
+    i. Moving a file.
+    j. Moving a folder.
+
+2. CHAT OPERATIONS:
+    a. Greet
+    b. Joke
+    c. Interesting Fact
+    d. Help
+3. MISCELLANEOUS OPERATIONS:
+    a. Web Search
+    b. Time & Date
+    c. **Notes and Reminders
+    d. Calculations

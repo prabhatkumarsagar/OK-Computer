@@ -4,13 +4,16 @@ import speech_recognition as sr
 import datetime
 engine=pyttsx3.init()
 voices=engine.getProperty('voices')
-engine.setProperty('voice',voices[0].id)
-engine.setProperty('rate',200)
-#engine.say('Hello there sire Prabhat how may i be of any fucking use today?')
-#engine.runAndWait()
+engine.setProperty('voice',voices[1].id)
+engine.setProperty('rate',125)
+engine.say('Hello there sire Prabhat how may i be of any fucking use today?')
+engine.runAndWait()
+
+"""
 def speak(audio): 
     engine.say(audio) 
     engine.runAndWait()
+
 def wishMe(): 
     hour = int(datetime.datetime.now().hour) 
     if hour>= 0 and hour<12: 
@@ -55,3 +58,4 @@ def usrname():
     speak("How can i Help you, Sir") 
 
 wishMe()
+"""
