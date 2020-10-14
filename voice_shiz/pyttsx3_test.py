@@ -6,7 +6,7 @@ engine=pyttsx3.init()
 voices=engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
 engine.setProperty('rate',200)
-#engine.say('teri maa ki choott bhhen ke lod-a!')
+#engine.say('Hello there sire Prabhat how may i be of any fucking use today?')
 #engine.runAndWait()
 def speak(audio): 
     engine.say(audio) 
@@ -22,17 +22,14 @@ def wishMe():
     else: 
         speak("Good Evening Sir !")   
    
-    assname =("Friday 1 dot o") 
-    speak("I am your Assistant") 
+    assname =("Saturday 1 point o") 
+    speak("I am your Personal Desktop Assistant") 
     speak(assname)
     usrname()
 
-def takeCommand(): 
-      
+def takeCommand():
     r = sr.Recognizer() 
-      
     with sr.Microphone() as source: 
-          
         print("Listening...") 
         r.pause_threshold = 1
         audio = r.listen(source) 
@@ -48,17 +45,13 @@ def takeCommand():
         return "None"
       
     return query
+
 def usrname(): 
     speak("What should i call you sir") 
     uname = takeCommand() 
     speak("Welcome Mister") 
     speak(uname) 
-    columns = shutil.get_terminal_size().columns 
-      
-    print("#####################".center(columns)) 
-    print("Welcome Mr.", uname.center(columns)) 
-    print("#####################".center(columns)) 
-      
+    print("Welcome Mr f'{uname}")
     speak("How can i Help you, Sir") 
 
 wishMe()
