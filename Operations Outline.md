@@ -78,11 +78,11 @@
 <br>
 3. <b>MISCELLANEOUS OPERATIONS:</b>
 
-    a. Web Search
+     a. Web Search
 
-    b. Time & Date
+     b. Time & Date
 
-    c. Notes and Reminders
+     c. Notes and Reminders
 
-    d. Calculations
+     d. Calculations
 
