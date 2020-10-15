@@ -87,3 +87,7 @@
 
      d. Calculations
 
+     e. E-mails
+
+     f. Play Songs (Optional)
+
