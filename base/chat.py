@@ -1,4 +1,5 @@
-from joke.jokes import *
+#import jokes
 # pip install joke-generator
 # pip install axju-jokes
-#print(jokes())
+#c=jokes.joke()
+#print(c)
