@@ -1,4 +1,4 @@
-#file operations goes here!
+#file operations go here!
 
 #file handler
 import os

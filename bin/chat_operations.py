@@ -1,4 +1,4 @@
-#chat operations goes here!
+#chat operations go here!
 import requests 
 
 #jokes
