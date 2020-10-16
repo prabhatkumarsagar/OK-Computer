@@ -3,5 +3,5 @@ packages:
   - pyttsx3
   - wikipedia
   - SpeechRecognition
-  - pyjokes
+  - geocoder
   

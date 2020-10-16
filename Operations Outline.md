@@ -89,5 +89,7 @@
 
      e. E-mails
 
-     f. Play Songs (Optional)
+     f. Weather and Weather Forecast
+
+     g. Play Songs (Optional)
 
