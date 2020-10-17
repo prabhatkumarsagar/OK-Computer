@@ -14,3 +14,7 @@ def joke():     #to be replaced with - elif 'joke' in query: / to be added later
         print("Oops! it looks like i ran out of my jokes, why don't you try again later.") #to be replaced with - print("Oops! looks like i ran out of jokes, why don't you try again later.)
 
 #joke()
+
+#help
+#def help():
+#    x="Hello "

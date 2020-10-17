@@ -15,8 +15,7 @@ Various Operations offered by the assitant and their General fuckin Syntaxes(if 
 2. CHAT OPERATIONS:
     a. Greet
     b. Joke
-    c. Interesting Fact
-    d. Help
+    c. Help
 
 3. MISCELLANEOUS OPERATIONS:
     a. Web Search (everything excl. Wikipedia part)
