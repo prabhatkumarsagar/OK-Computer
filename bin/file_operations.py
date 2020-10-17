@@ -2,6 +2,7 @@
 
 #file handler
 import os
+
 class File_Handler:
     operation = []
 
@@ -13,3 +14,12 @@ class File_Handler:
     
     
     def deleteFile(self,):
+
+
+
+
+
+    def main(self):
+        op = self.operation
+        if op == "del":
+            se
