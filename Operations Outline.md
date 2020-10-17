@@ -79,7 +79,7 @@
     </br>
 3. <b>MISCELLANEOUS OPERATIONS:</b>
 
-     a. Web Search
+     a. Web Search (everything excl. Wikipedia part)
 
      b. Time & Date
 
@@ -91,5 +91,8 @@
 
      f. Weather and Weather Forecast
 
-     g. Play Songs (Optional)
+     g. Play Offline Songs (*online ones can be done using Web Search(a))
 
+     h. Opening and Closing APPS (applications/softwares)
+     
+     i. Wikipedia Queries (who/what/about)

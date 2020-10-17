@@ -2,13 +2,14 @@
 import requests
 import json
 import re
-import pyowm
+from pyowm.owm import OWM  #pip install pyowm
+from pyowm.utils import timestamps
 import geocoder #pip install geocoder
 g = geocoder.ip('me')
 print(g.latlng)
 ct=(g.city)
 
-#weather/weather forecast
+#weather
 def weather_curr(city): #to be replaced with - elif 'weather' in command:    
     #api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}          
     api_key = "cd140d1c1404cba5de2dabf6bcd00f52" 
@@ -29,49 +30,32 @@ def weather_curr(city): #to be replaced with - elif 'weather' in command:
 
 #weather_curr(ct)
 
+
+#weather forecaster
+def weather_forec(city):
+    owm = OWM('cd140d1c1404cba5de2dabf6bcd00f52')
+    mgr=owm.weather_manager()
+    loc = mgr.weather_at_place(city)
+    weather = loc.weather
+    temp = weather.temperature(unit='celsius')
+    #for key,val in temp.items():
+    #    print(f'{key} => {val}')
+    loa = mgr.forecast_at_place(city,'3h')
+    tomorrow=timestamps.tomorrow()
+    forecasttt=loa.get_weather_at(tomorrow)
+    print(forecasttt)
+
+#weather_forec(ct)
+
+"""
+###other method
+lat=str(g.lat)
+lon=str(g.lng)
+bs_url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,daily&appid=cd140d1c1404cba5de2dabf6bcd00f52"
+
+response = requests.get(bs_url)  
+x = response.json()  
+print(x)
 """
 
-### to be continued (weather forecaster)s
-def weather_forec():
-import pyowm
-
-owm = pyowm.OWM(
-    'cd140d1c1404cba5de2dabf6bcd00f52')
-
-city = 'Lisbon'
-
-loc = owm.weather_at_place(city)
-weather = loc.get_weather()
-
-# temperature
-temp = weather.get_temperature(unit='celsius')
-
-for key,val in temp.items():
-    print(f'{key} => {val}')
-
-# humidity, wind, rain, snow
-humidity = weather.get_humidity()
-wind = weather.get_wind()
-rain = weather.get_rain()
-snow = weather.get_snow()
-
-print(f'humidity = {humidity}')
-print(f'wind = {wind}')
-print(f'rain = {rain}')
-print(f'snow = {snow}')
-
-# sun rise and sun set
-sr = weather.get_sunrise_time(timeformat='iso')
-ss = weather.get_sunset_time(timeformat='iso')
-print(f'SunRise = {sr}') 
-print(f'SunSet = {ss}')
-
-# clouds and rain
-loc = owm.three_hours_forecast(city)
-print(loc)
-clouds = str(loc.will_have_clouds())
-rain = str(loc.will_have_rain())
-
-print('will have clouds? ' + clouds)
-print('will have rain? ' + rain)
-"""
+#Emails

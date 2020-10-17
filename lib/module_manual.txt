@@ -1,14 +1,16 @@
-1. File_Reader.py
+1. file_operations.file_handler
 
 This file contains all the code required for the system file handling operation of the AI Assistant.
 
     Core functionalities of this module:-
-
     a. Rename an existing file.
     b. Create a new file of the required name and type.
     c. Rename an existing folder.
     d. Create a new folder of required name.
     e. Delete a pre-existing file or folder.
+    f. Move a file or folder from one location to another.
 
 This module will take an operation as its parameter which is to be a list of strings, containing all the required information
 for the operation to be performed.
+
+2. 
