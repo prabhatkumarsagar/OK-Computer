@@ -13,7 +13,38 @@ class File_Handler:
         if os.name == 'nt':
             home = os.environ['USERPROFILE']
         
-        elif os.name == 'posix'
+        elif os.name == 'posix':
+            home = os.getenv("HOME")
+
+        print("Search where?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+        ch = int(input("Enter your choice here : "))
+        if ch == 1:
+            print("Searching in Desktop")
+            search_dir = home + "/Desktop"
+        if ch == 2:
+            print("Searching in Downloads")
+            search_dir = home + "/Downloads"
+        if ch == 3:
+            print("Searching in Documents")
+            search_dir = home + "/Documents"
+        if ch == 4:
+            print("Searching in Music")
+            search_dir = home + "/Music"
+        if ch == 5:
+            print("Searching in Pictures")
+            search_dir = home + "/Pictures"
+        if ch == 6:
+            print("Searching in Videos")
+            search_dir = home + "/Videos"
+        if ch == 7:
+            print("Searching in Home")
+            search_dir = home
+
+        for root, dirs, files in os.walk(dir_path): 
+            for file in files:  
+                if file.endswith('.mp3'): 
+            print root+'/'+str(file) 
+        
     
     def delete(self):
 
