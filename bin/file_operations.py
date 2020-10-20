@@ -2,14 +2,19 @@
 
 #file handler
 import os
+import shutil
 
 class File_Handler:
     operation = []
 
-    def __init__(self, operation, *dets):
-        self.operation = operation
+    
 
-    def fileSearch(self, search_type, file_name, search_path):
+    def __init__(self, operation, file_name):
+        self.operation = operation
+        self.file_name = file_name
+
+    def fileSearch(self, search_type, search_path):
+        file_name = self.file_name
         if os.name == 'nt':
             home = os.environ['USERPROFILE']
         
@@ -43,9 +48,15 @@ class File_Handler:
         for root, dirs, files in os.walk(search_dir): 
             if file_name in files:  
                 return root, dirs, files
+        return False
     
-    def delete(self):
+    def delete_file(self):
+        if not self.search():
+            message("Oops! The file name that you entered seem to be missing. Please make sure that the file you are trying to delete exists or if the name has been spelled correctly and try again!")
         
+        else:
+            os.remove(self.file_name)
+            message(file_name,"has been deleted successfully!")
         
     def copy(self):
 
