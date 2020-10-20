@@ -40,14 +40,13 @@ class File_Handler:
             print("Searching in Home")
             search_dir = home
 
-        for root, dirs, files in os.walk(dir_path): 
-            for file in files:  
-                if file.endswith('.mp3'): 
-            print root+'/'+str(file) 
-        
+        for root, dirs, files in os.walk(search_dir): 
+            if file_name in files:  
+                return root, dirs, files
     
     def delete(self):
-
+        
+        
     def copy(self):
 
     def rname(self):
