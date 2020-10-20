@@ -9,9 +9,8 @@ class File_Handler:
     def __init__(self, operation, *dets):
         self.operation = operation
 
-    def fileSearch(self):
-
-    
+    def fileSearch(self, search_type, file_name, search_path):
+        
     
     def delete(self):
 
@@ -51,4 +50,5 @@ class File_Handler:
             self.createFolder()
             return
         
+
         
