@@ -10,7 +10,10 @@ class File_Handler:
         self.operation = operation
 
     def fileSearch(self, search_type, file_name, search_path):
+        if os.name == 'nt':
+            home = os.environ['USERPROFILE']
         
+        elif os.name == 'posix'
     
     def delete(self):
 
