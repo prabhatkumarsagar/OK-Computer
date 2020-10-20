@@ -19,22 +19,21 @@ assistant voice noise cancellation - none
 assistant ui theme - light
 assistant ui font - predefined 100%
 """
+
 """
+import pyttsx3
+engine=pyttsx3.init()
+voices=engine.getProperty('voices') 
+for i in range(len(voices)):
+    print(voices[i])
+engine.setProperty('voice',voices=="english")
+engine.say("the quick brown fox jumped over the lazy dog")
+engine.runAndWait()
+"""
+
 import pickle
 usr_ass_settings={}
 as_vc_gnd=input("Enter the assistant voice gender: ") #DEF=MALE
 as_vc_vol=int(input("Enter the assistant voice volume: ")) #DEF=1.0
 as_vc_rate=int(input("Enter the assistant voice rate: ")) #DEF=200 wpm
 as_vc_amb=input()
-"""
-"""
-import pyttsx3
-engine=pyttsx3.init()
-voices=engine.getProperty('voices')
-for i in range(len(voices)):
-    print(voices[i])
-
-engine.setProperty('voice',voices=="english")
-engine.say("the quick brown fox jumped over the lazy dog")
-engine.runAndWait()
-"""
