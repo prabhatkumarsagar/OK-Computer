@@ -10,7 +10,8 @@ class File_Handler:
         self.file_name = file_name
         self.folder_name = folder_name
         self.search_dir = ""
-        self.search_results = []
+        self.file_search_results = []
+        self.folder_search_results = []
 
     def getDir(self):
         file_name = self.file_name
@@ -22,6 +23,7 @@ class File_Handler:
 
         print("Search where?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
         ch = int(input("Enter your choice here : "))
+
         if ch == 1:
             print("Searching in Desktop")
             self.search_dir = home + "/Desktop"
@@ -45,25 +47,31 @@ class File_Handler:
             self.search_dir = home
         return
     def fileSearch(self):
+        #Searches for the given file name in the file tree(case sensitive)
         for root, dirs, files in os.walk(self.search_dir): 
             for file in files:
-                if self.file_name in files:  
-                    self.lst root, dirs, files
-        return False
+                if self.file_name in file:  
+                    self.file_search_results.append({"root": root, "file": file})
+
+        return self.file_search_results == []
     
     def folderSearch(self):
+        #Searches for the given folder name in the file tree(case sensitive)
         for root, dirs, files in os.walk(self.search_dir): 
-            if self.folder_name in dirs:  
-                return root, dirs, files
-        return False
+            for folder in dirs:
+                if self.folder_name in folder:  
+                    self.folder_search_results.append({"root": root, "folder": folder})
 
-    def delete_file(self):
-        root, dirs, files = self.fileSearch()
-        os.remove(self.file_name)
-        message(file_name,"has been deleted successfully!")
+        return self.folder_search_results == []
+    
+    def deleteFile(self):
+        if len(self.file_search_results) == 1:
+            confirmation = confirm("%s from %s will be permanently lost, do you want to continue?"%(self.file_search_results[0]["file"]),self.file_search_results[0]["root"]))
+            os.remove(self.file_name)
+            message(file_name,"has been deleted successfully!")
 
     
-    def delete_folder(self):
+    def deleteFolder(self):
         os.remove(self.folder_name)
         message(self.folder_name,"has been deleted successfully!")
 
@@ -80,17 +88,19 @@ class File_Handler:
 
     def main(self):
         op = self.operation
+        self.getDir()
+
         if not self.fileSearch() or not self.folderSearch():
-            message("Oops! The file name that you entered seem to be missing. Please make sure that the file/folder you are trying to operate on exists or if the name has been spelled correctly and try again!")
+            message("Oops! The file/folder name that you entered seem to be missing. Please make sure that the file/folder you are trying to operate on exists or if the name has been spelled correctly and try again!")
             return
         
         else:
             if op == "del_file":
-                self.delete()
+                self.deleteFile()
                 return
 
             if op == "del_folder":
-                self.delete()
+                self.deleteFolder()
                 return
 
             if op == "rname_file":
