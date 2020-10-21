@@ -39,7 +39,8 @@ usr_ass_settings['vc_gnd']=as_vc_gnd
 usr_ass_settings['vc_vol']=as_vc_vol
 usr_ass_settings['vc_rate']=as_vc_rate
 usr_ass_settings['vc_lng']=as_vc_lng
-print(usr_ass_settings)
+#print(usr_ass_settings)
+
 def ass_settings_update():
     print("What do you wanna update?")
     print("1. Assistant Voice Gender")

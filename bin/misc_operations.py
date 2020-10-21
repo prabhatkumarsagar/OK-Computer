@@ -2,11 +2,12 @@
 import requests
 import json
 import re
+import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
 import geocoder #pip install geocoder
 g = geocoder.ip('me')
-print(g.latlng)
+#print(g.latlng)
 ct=(g.city)
 
 #weather
@@ -58,4 +59,26 @@ x = response.json()
 print(x)
 """
 
-#Emails
+#Notes and Reminders
+def notes():
+    while True:
+        try:
+            usr=input("Enter your MySQL Username: ")
+            pwd=input("Enter you MySQL Password: ")
+            if usr=="":
+                usr="root"
+            con=sql.connect(host="localhost",user=usr,password=pwd)
+            break
+        except:
+            print("MySQL Error")
+            break
+    cur=con.cursor()
+    cur.execute("create database if not exists pydeskassist;")
+    cur.execute("use pydeskassist;")
+    cur.execute("create table notes(date_added date, note longtext);")
+    con.close()
+    
+notes()
+
+def reminders():
+    pass
