@@ -10,6 +10,7 @@ class File_Handler:
         self.file_name = file_name
         self.folder_name = folder_name
         self.search_dir = ""
+        self.search_results = []
 
     def getDir(self):
         file_name = self.file_name
@@ -23,37 +24,36 @@ class File_Handler:
         ch = int(input("Enter your choice here : "))
         if ch == 1:
             print("Searching in Desktop")
-            search_dir = home + "/Desktop"
+            self.search_dir = home + "/Desktop"
         if ch == 2:
             print("Searching in Downloads")
-            search_dir = home + "/Downloads"
+            self.search_dir = home + "/Downloads"
         if ch == 3:
             print("Searching in Documents")
-            search_dir = home + "/Documents"
+            self.search_dir = home + "/Documents"
         if ch == 4:
             print("Searching in Music")
-            search_dir = home + "/Music"
+            self.search_dir = home + "/Music"
         if ch == 5:
             print("Searching in Pictures")
-            search_dir = home + "/Pictures"
+            self.search_dir = home + "/Pictures"
         if ch == 6:
             print("Searching in Videos")
-            search_dir = home + "/Videos"
+            self.search_dir = home + "/Videos"
         if ch == 7:
             print("Searching in Home")
-            search_dir = home
-
-        return search_dir
-
+            self.search_dir = home
+        return
     def fileSearch(self):
-        for root, dirs, files in os.walk(search_dir): 
-            if file_name in files:  
-                return root, dirs, files
+        for root, dirs, files in os.walk(self.search_dir): 
+            for file in files:
+                if self.file_name in files:  
+                    self.lst root, dirs, files
         return False
     
     def folderSearch(self):
-        for root, dirs, files in os.walk(search_dir): 
-            if folder_name in dirs:  
+        for root, dirs, files in os.walk(self.search_dir): 
+            if self.folder_name in dirs:  
                 return root, dirs, files
         return False
 
@@ -64,8 +64,8 @@ class File_Handler:
 
     
     def delete_folder(self):
-        os.remove(self.file_name)
-        message(folder_name_name,"has been deleted successfully!")
+        os.remove(self.folder_name)
+        message(self.folder_name,"has been deleted successfully!")
 
     def copy(self):
 
