@@ -1,19 +1,17 @@
-#file operations go here!
-
+#file operations go here! 
 #file handler
 import os
 import shutil
 
 class File_Handler:
-    operation = []
 
-    
-
-    def __init__(self, operation, file_name):
+    def __init__(self, operation, file_name = "", folder_name = ""):
         self.operation = operation
         self.file_name = file_name
+        self.folder_name = folder_name
+        self.search_dir = ""
 
-    def fileSearch(self, search_type, search_path):
+    def getDir(self):
         file_name = self.file_name
         if os.name == 'nt':
             home = os.environ['USERPROFILE']
@@ -45,20 +43,32 @@ class File_Handler:
             print("Searching in Home")
             search_dir = home
 
+        return search_dir
+
+    def fileSearch(self):
         for root, dirs, files in os.walk(search_dir): 
             if file_name in files:  
                 return root, dirs, files
         return False
     
+    def folderSearch(self):
+        for root, dirs, files in os.walk(search_dir): 
+            if folder_name in dirs:  
+                return root, dirs, files
+        return False
+
     def delete_file(self):
-        if not self.search():
-            message("Oops! The file name that you entered seem to be missing. Please make sure that the file you are trying to delete exists or if the name has been spelled correctly and try again!")
-        
-        else:
-            os.remove(self.file_name)
-            message(file_name,"has been deleted successfully!")
-        
+        root, dirs, files = self.fileSearch()
+        os.remove(self.file_name)
+        message(file_name,"has been deleted successfully!")
+
+    
+    def delete_folder(self):
+        os.remove(self.file_name)
+        message(folder_name_name,"has been deleted successfully!")
+
     def copy(self):
+
 
     def rname(self):
 
@@ -70,29 +80,35 @@ class File_Handler:
 
     def main(self):
         op = self.operation
-        if op == "del":
-            self.delete()
-            return
-
-        if op == "rname":
-            self.rname()
-            return
-
-        if op == "copy":
-            self.copy()
-            return
-
-        if op == "move":
-            self.move()
+        if not self.fileSearch() or not self.folderSearch():
+            message("Oops! The file name that you entered seem to be missing. Please make sure that the file/folder you are trying to operate on exists or if the name has been spelled correctly and try again!")
             return
         
-        if op == "create file":
-            self.createFile()
-            return
+        else:
+            if op == "del_file":
+                self.delete()
+                return
+
+            if op == "del_folder":
+                self.delete()
+                return
+
+            if op == "rname_file":
+                self.rname()
+                return
+
+            if op == "copy_file":
+                self.copy()
+                return
+
+            if op == "move_file":
+                self.move()
+                return
+        
+            if op == "create file":
+                self.createFile()
+                return
     
-        if op == "create folder":
-            self.createFolder()
-            return
-        
-
-        
+            if op == "create folder":
+                self.createFolder()
+                return
