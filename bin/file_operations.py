@@ -69,8 +69,10 @@ class File_Handler:
             confirmation = confirm("%s from %s will be permanently lost, do you want to continue?"%(self.file_search_results[0]["file"]),self.file_search_results[0]["root"]))
             os.remove(self.file_name)
             message(file_name,"has been deleted successfully!")
+        
+        else:
+            msg
 
-    
     def deleteFolder(self):
         os.remove(self.folder_name)
         message(self.folder_name,"has been deleted successfully!")
