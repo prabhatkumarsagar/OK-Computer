@@ -1,48 +1,62 @@
 import pickle as pk
 import os
-usr_info_dic={}
+import getpass
+import get_home
 
-nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
-gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
-eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")
-pswd=input("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ")
-usr_info_dic['name']=nm
-gnd1=["girl",'miss','missus','mrs','female','lady','woman']
-gnd2=["boy","master","mister","mr","male","lodu","man"]
-if gnd.lower() in gnd1:
-    usr_info_dic['gender']="Female"
-elif gnd.lower() in gnd2:
-    usr_info_dic['gender']="Male"
-else:
-    usr_info_dic['gender']="Others"
-usr_info_dic['email']=eml
-usr_info_dic['password']=pswd
+
+def setNewUser():
+    usr_info_dic={}
+    nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
+    gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
+    eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")#usr email address
+    pswd=getpass.getpass("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ")#use password
+
+    usr_info_dic['name']=nm
+    GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
+    GND_MALE=["boy","master","mister","mr","male","lodu","man"]
+
+    if gnd.lower() in gnd1:
+        usr_info_dic['gender']="Female"
+
+    elif gnd.lower() in gnd2:
+        usr_info_dic['gender']="Male"
+
+    else:   
+        usr_info_dic['gender']="Others"
+
+    usr_info_dic['email']=eml
+    usr_info_dic['password']=pswd
+    info_in(usr_info_dic)
 #print(usr_info_dic)
 
 def info_in(x):
-    f=open("./usr_info.dat",'wb')
+    f=open(get_home.PATH_USR_DATA,'wb')
     pk.dump(x,f)
     f.close()
 
-info_in(usr_info_dic)
-
-
 def info_out(x="all"):
-    f=open("./usr_info.dat",'rb+')
+    f=open(get_home.PATH_USR_DATA,'rb+')
     rd=pk.load(f)
     ch=x.lower()
+
     if ch=="name":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="gender":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="email":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="password":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="all":
-        print(rd)
+        return rd
+
     else:
-        print("Invalid operation")
+        return False
+
     f.close()
 
 #info_out("password")
@@ -101,4 +115,9 @@ def in_upd_entr():
         print(rd)
         f.close()
 
-info_update()
+def main(**kwargs):
+    if kwargs["operation"] == "new":
+        setNewUser()
+    
+    elif kwargs["operation"] == "fetch existing":
+        info_update()
