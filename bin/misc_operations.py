@@ -60,25 +60,59 @@ print(x)
 """
 
 #Notes and Reminders
-def notes():
-    while True:
-        try:
-            usr=input("Enter your MySQL Username: ")
-            pwd=input("Enter you MySQL Password: ")
-            if usr=="":
-                usr="root"
-            con=sql.connect(host="localhost",user=usr,password=pwd)
-            break
-        except:
-            print("MySQL Error")
-            break
-    cur=con.cursor()
-    cur.execute("create database if not exists pydeskassist;")
-    cur.execute("use pydeskassist;")
-    cur.execute("create table notes(date_added date, note longtext);")
-    con.close()
-    
-notes()
+def notrems():
+    def notes():
+        while True:
+            try:
+                usr=input("Enter your MySQL Username: ")
+                pwd=input("Enter you MySQL Password: ")
+                if usr=="":
+                    usr="root"
+                con=sql.connect(host="localhost",user=usr,password=pwd)
+                break
+            except:
+                print("MySQL Error")
+                break
+        cur=con.cursor()
+        cur.execute("create database if not exists pydeskassist;")
+        cur.execute("use pydeskassist;")
+        cur.execute("create table if not exists notes(date_added date, note longtext);")
+        x1=input("Enter Note: ")
+        cur.execute("insert into notes values(curdate(), '%s');"%x1)
+        con.commit()
+        cur.execute("select * from notes;")
+        c=cur.fetchall()
+        print(c)
+        con.close()
 
-def reminders():
-    pass
+    #notes()
+
+    def reminders():
+        while True:
+            try:
+                usr=input("Enter your MySQL Username: ")
+                pwd=input("Enter you MySQL Password: ")
+                if usr=="":
+                    usr="root"
+                con=sql.connect(host="localhost",user=usr,password=pwd)
+                break
+            except:
+                print("MySQL Error")
+                break
+        cur=con.cursor()
+        cur.execute("create database if not exists pydeskassist;")
+        cur.execute("use pydeskassist;")
+        cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
+        x1=input("Enter Reminder: ")
+        x2=input("Enter Date to be Notified (YYYY:MM:DD): ")
+        x3=input("Enter Time to be Notified (HH:MM:SS): ")
+        cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
+        con.commit()
+        cur.execute("select * from reminders;")
+        c=cur.fetchall()
+        print(c)
+        con.close()
+
+    reminders()
+
+notrems()
