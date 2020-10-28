@@ -1,6 +1,7 @@
 import pickle as pk
 import os
 usr_info_dic={}
+
 nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
 gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
 eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")
