@@ -110,9 +110,11 @@ def notrems():
         con.commit()
         cur.execute("select * from reminders;")
         c=cur.fetchall()
-        print(c)
+        print(c) 
         con.close()
 
-    reminders()
+    #reminders()
 
-notrems()
+#notrems()
+
+#EMAIL 
