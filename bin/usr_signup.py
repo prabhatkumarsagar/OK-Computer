@@ -1,11 +1,14 @@
 import pickle as pk
 import os
 import getpass
-import get_home
+
+from bin import clear
+from bin import get_dirs
 
 
 def setNewUser():
     usr_info_dic={}
+    clear
     nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
     gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")#usr email address
@@ -15,10 +18,10 @@ def setNewUser():
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
     GND_MALE=["boy","master","mister","mr","male","lodu","man"]
 
-    if gnd.lower() in gnd1:
+    if gnd.lower() in GND_FEMALE:
         usr_info_dic['gender']="Female"
 
-    elif gnd.lower() in gnd2:
+    elif gnd.lower() in GND_MALE:
         usr_info_dic['gender']="Male"
 
     else:   
@@ -30,12 +33,12 @@ def setNewUser():
 #print(usr_info_dic)
 
 def info_in(x):
-    f=open(get_home.PATH_USR_DATA,'wb')
+    f=open(get_dirs.FILE_USR_DATA,'wb')
     pk.dump(x,f)
     f.close()
 
 def info_out(x="all"):
-    f=open(get_home.PATH_USR_DATA,'rb+')
+    f=open(get_dirs.FILE_USR_DATA,'rb+')
     rd=pk.load(f)
     ch=x.lower()
 
@@ -62,6 +65,28 @@ def info_out(x="all"):
 #info_out("password")
 
 u=''
+
+def in_upd_entr():
+        global u
+        f1=open("./usr_info.dat","rb+")
+        f2=open("./usr_info1.dat","wb+")
+        x=input("Enter new value: ")
+        while True:
+            try:
+                r=pk.load(f1)
+                r[u]=x
+                pk.dump(r,f2)
+            except:
+                break
+        f1.close()
+        f2.close()
+        os.remove("usr_info.dat")
+        os.rename("usr_info1.dat","usr_info.dat")
+        f=open("./usr_info.dat","rb+")
+        rd=pk.load(f)
+        print(rd)
+        f.close()
+
 def info_update():
     global u
     while True:
@@ -93,31 +118,14 @@ def info_update():
         else:
             print("Invalid Input!")
             break
-    
-def in_upd_entr():
-        global u
-        f1=open("./usr_info.dat","rb+")
-        f2=open("./usr_info1.dat","wb+")
-        x=input("Enter new value: ")
-        while True:
-            try:
-                r=pk.load(f1)
-                r[u]=x
-                pk.dump(r,f2)
-            except:
-                break
-        f1.close()
-        f2.close()
-        os.remove("usr_info.dat")
-        os.rename("usr_info1.dat","usr_info.dat")
-        f=open("./usr_info.dat","rb+")
-        rd=pk.load(f)
-        print(rd)
-        f.close()
+        in_upd_entr()  
 
 def main(**kwargs):
     if kwargs["operation"] == "new":
         setNewUser()
     
-    elif kwargs["operation"] == "fetch existing":
+    elif kwargs["operation"] == "fetch":
+        info_out(kwargs["data_type"])
+
+    elif kwargs["operation"] == "update":
         info_update()
