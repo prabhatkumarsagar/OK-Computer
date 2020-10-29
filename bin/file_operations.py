@@ -2,7 +2,7 @@
 #file handler
 import os
 import shutil
-
+import get_home
 class File_Handler:
 
     def __init__(self, operation, file_name = "", folder_name = ""):
@@ -15,11 +15,7 @@ class File_Handler:
 
     def getDir(self):
         file_name = self.file_name
-        if os.name == 'nt':
-            home = os.environ['USERPROFILE']
-        
-        elif os.name == 'posix':
-            home = os.getenv("HOME")
+        home = get_home.get_home()
 
         print("Search where?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
         ch = int(input("Enter your choice here : "))
@@ -66,11 +62,13 @@ class File_Handler:
     
     def deleteFile(self):
         if len(self.file_search_results) == 1:
-            confirmation = confirm("%s from %s will be permanently lost, do you want to continue?"%(self.file_search_results[0]["file"]),self.file_search_results[0]["root"]))
+            confirmation = confirm("%s from %s will be permanently lost, do you want to continue?"%(self.file_search_results[0]["file"]),self.file_search_results[0]["root"])
             os.remove(self.file_name)
             message(file_name,"has been deleted successfully!")
+        
+        else:
+            msg
 
-    
     def deleteFolder(self):
         os.remove(self.folder_name)
         message(self.folder_name,"has been deleted successfully!")

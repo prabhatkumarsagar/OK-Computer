@@ -1,52 +1,92 @@
 import pickle as pk
 import os
-usr_info_dic={}
-nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
-gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
-eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")
-pswd=input("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ")
-usr_info_dic['name']=nm
-gnd1=["girl",'miss','missus','mrs','female','lady','woman']
-gnd2=["boy","master","mister","mr","male","lodu","man"]
-if gnd.lower() in gnd1:
-    usr_info_dic['gender']="Female"
-elif gnd.lower() in gnd2:
-    usr_info_dic['gender']="Male"
-else:
-    usr_info_dic['gender']="Others"
-usr_info_dic['email']=eml
-usr_info_dic['password']=pswd
+import getpass
+
+from bin import clear
+from bin import get_dirs
+
+
+def setNewUser():
+    usr_info_dic={}
+    clear
+    nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
+    gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
+    eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")#usr email address
+    pswd=getpass.getpass("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ")#use password
+
+    usr_info_dic['name']=nm
+    GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
+    GND_MALE=["boy","master","mister","mr","male","lodu","man"]
+
+    if gnd.lower() in GND_FEMALE:
+        usr_info_dic['gender']="Female"
+
+    elif gnd.lower() in GND_MALE:
+        usr_info_dic['gender']="Male"
+
+    else:   
+        usr_info_dic['gender']="Others"
+
+    usr_info_dic['email']=eml
+    usr_info_dic['password']=pswd
+    info_in(usr_info_dic)
 #print(usr_info_dic)
 
 def info_in(x):
-    f=open("./usr_info.dat",'wb')
+    f=open(get_dirs.FILE_USR_DATA,'wb')
     pk.dump(x,f)
     f.close()
 
-info_in(usr_info_dic)
-
-
 def info_out(x="all"):
-    f=open("./usr_info.dat",'rb+')
+    f=open(get_dirs.FILE_USR_DATA,'rb+')
     rd=pk.load(f)
     ch=x.lower()
+
     if ch=="name":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="gender":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="email":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="password":
-        print(rd[ch])
+        return rd[ch]
+
     elif ch=="all":
-        print(rd)
+        return rd
+
     else:
-        print("Invalid operation")
+        return False
+
     f.close()
 
 #info_out("password")
 
 u=''
+
+def in_upd_entr():
+        global u
+        f1=open("./usr_info.dat","rb+")
+        f2=open("./usr_info1.dat","wb+")
+        x=input("Enter new value: ")
+        while True:
+            try:
+                r=pk.load(f1)
+                r[u]=x
+                pk.dump(r,f2)
+            except:
+                break
+        f1.close()
+        f2.close()
+        os.remove("usr_info.dat")
+        os.rename("usr_info1.dat","usr_info.dat")
+        f=open("./usr_info.dat","rb+")
+        rd=pk.load(f)
+        print(rd)
+        f.close()
+
 def info_update():
     global u
     while True:
@@ -78,26 +118,14 @@ def info_update():
         else:
             print("Invalid Input!")
             break
-    
-def in_upd_entr():
-        global u
-        f1=open("./usr_info.dat","rb+")
-        f2=open("./usr_info1.dat","wb+")
-        x=input("Enter new value: ")
-        while True:
-            try:
-                r=pk.load(f1)
-                r[u]=x
-                pk.dump(r,f2)
-            except:
-                break
-        f1.close()
-        f2.close()
-        os.remove("usr_info.dat")
-        os.rename("usr_info1.dat","usr_info.dat")
-        f=open("./usr_info.dat","rb+")
-        rd=pk.load(f)
-        print(rd)
-        f.close()
+        in_upd_entr()  
 
-info_update()
+def main(**kwargs):
+    if kwargs["operation"] == "new":
+        setNewUser()
+    
+    elif kwargs["operation"] == "fetch":
+        info_out(kwargs["data_type"])
+
+    elif kwargs["operation"] == "update":
+        info_update()
