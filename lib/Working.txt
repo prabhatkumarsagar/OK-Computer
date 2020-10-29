@@ -1,6 +1,6 @@
 Various Operations offered by the assitant and their General fuckin Syntaxes(if any).
 **-Optional (to be added only if time allows)
-1. FILE(excl. APPS)/FOLDER OPERATIONS:
+1. FILE(incl. APPS)/FOLDER OPERATIONS:
     a. Opening a file.
     b. Closing a file.
     c. Opening a folder.
@@ -18,12 +18,10 @@ Various Operations offered by the assitant and their General fuckin Syntaxes(if 
     c. Help
 
 3. MISCELLANEOUS OPERATIONS:
-    a. Web Search (everything excl. Wikipedia part)
+    a. Web Search (incl. Wikipedia part)
     b. Time & Date
     c. Notes and Reminders
     d. Calculations
     e. Weather and Weather Forecast
     f. Send Emails
     g. Play Offline Songs
-    h. Opening and Closing APPS (applications/softwares)
-    i. Wikipedia Queries (who/what/about)

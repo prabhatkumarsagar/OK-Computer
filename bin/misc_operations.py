@@ -2,6 +2,9 @@
 import requests
 import json
 import re
+import datetime
+import wolframalpha
+import smtplib
 import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
@@ -117,4 +120,67 @@ def notrems():
 
 #notrems()
 
-#EMAIL 
+"""
+#Calculations
+def Calculations():
+    app_id = "Wolframalpha api id" #to be added
+    client = wolframalpha.Client(app_id) 
+    indx = query.lower().split().index('calculate')  
+    query = query.split()[indx + 1:]  
+    res = client.query(' '.join(query))  
+    answer = next(res.results).text 
+    print("The answer is " + answer)  
+"""
+
+#Time & Date
+def date():
+    x = datetime.datetime.now().strftime("%x")  
+    print(x)
+def time():
+    x=datetime.datetime.now().strftime("%H:%M:%S")     
+    print(x) 
+
+def year():
+    x=datetime.datetime.now()
+    print(x.strftime("%Y"))
+
+def month():
+    x=datetime.datetime.now()
+    print(x.strftime("%B"))
+
+def day():
+    x=datetime.datetime.now()
+    print(x.strftime("%A"))
+
+#month()
+#day()
+#year()
+#time()
+#date()
+
+#Send Emails
+"""
+def sendEmail(to, content): 
+    x=input("Enter your email address: ")
+    y=input("Enter email password: ")
+    server = smtplib.SMTP('smtp.gmail.com', 587) 
+    server.ehlo() 
+    server.starttls() 
+    server.login(x,y) 
+    server.sendmail(x, to, content) 
+    server.close() 
+
+try: 
+    u=input("What should I say? ")  
+    z=input("Enter recepient's email: ") 
+    sendEmail(z, u) 
+    print("Email has been sent !") 
+except Exception as e: 
+    print(e) 
+    print("I am not able to send this email") 
+"""
+
+#Web Search
+
+
+#Play Offline Songs
