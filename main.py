@@ -33,7 +33,7 @@ What would you like me to do?
 
         task = input(">>>")
 
-        if task.lower() in delete_unspecified:
+        #if task.lower() in delete_unspecified:
 
         if "clear" in task.lower() or task.lower() == "clrcls":
             continue
