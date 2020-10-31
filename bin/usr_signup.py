@@ -2,13 +2,16 @@ import pickle as pk
 import os
 import getpass
 
-from bin import clear
+import bin
 from bin import get_dirs
+from bin import clear
 
 
 def setNewUser():
     usr_info_dic={}
-    clear
+
+    clear.clear()
+
     nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
     gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")#usr email address
@@ -125,7 +128,7 @@ def main(**kwargs):
         setNewUser()
     
     elif kwargs["operation"] == "fetch":
-        info_out(kwargs["data_type"])
+        return info_out(kwargs["data_type"])
 
     elif kwargs["operation"] == "update":
         info_update()

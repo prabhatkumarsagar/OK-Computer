@@ -1,7 +1,8 @@
 import os
 
-if os.name == "nt":
-    os.system("clr")
+def clear():
+    if os.name == "nt":
+        os.system("clr")
 
-else:
-    os.system("clear")
+    else:
+        os.system("clear")
