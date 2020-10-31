@@ -27,7 +27,7 @@ def weather_curr(city): #to be replaced with - elif 'weather' in command:
         y = x["main"]  
         curr_temperature = y["temp"]  
         curr_pressure = y["pressure"]  
-        curr_humidiy = y["humidity"]  
+        curr_humidity = y["humidity"]  
         z = x["weather"]  
         weather_desc = z[0]["description"]  
         print("The current temperatre in %s (in Celcius Scale) is " % city +str(round(curr_temperature-273))+" degree celsius" +". It's a " +str(weather_desc))  
