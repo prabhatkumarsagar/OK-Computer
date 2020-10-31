@@ -96,3 +96,14 @@ def voice_in():
 
     except:   
         print("Sorry i didn't get that! Please try again.")   
+
+
+def show(text = "", end = "\n", sep = " ", voice = True, show_output = True):
+    if voice:
+        if show_output:
+            print(text, end = end, sep = sep)
+        voice_out(text)
+    else:
+        if show_output:
+            print(text, end = end, sep = sep)
+    return text

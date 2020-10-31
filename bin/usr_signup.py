@@ -5,6 +5,8 @@ import getpass
 import bin
 from bin import get_dirs
 from bin import clear
+from bin import voice_io
+voice = True
 
 
 def setNewUser():
@@ -12,10 +14,17 @@ def setNewUser():
 
     clear.clear()
 
-    nm=input("What shall i call you? ") #Name of the user i.e the name by which the assistant will call him/her
-    gnd=input("And you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
-    eml=input("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ")#usr email address
-    pswd=getpass.getpass("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ")#use password
+    voice_io.show("What shall i call you? ", end = "", voice = voice)
+    nm = input() #Name of the user i.e the name by which the assistant will call him/her
+    
+    voice_io.show("And you are, Master or Miss, master? ", end = "", voice = voice) #Gender of the user which the assistant will refer to again and again
+    gnd = input()
+
+    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", voice = voice)#usr email address
+    eml = input()
+
+    pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, voice = voice))#use password
+    
 
     usr_info_dic['name']=nm
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
@@ -124,8 +133,12 @@ def info_update():
         in_upd_entr()  
 
 def main(**kwargs):
+    global voice
+
     if kwargs["operation"] == "new":
+        voice = kwargs["voice"]
         setNewUser()
+        print(voice)
     
     elif kwargs["operation"] == "fetch":
         return info_out(kwargs["data_type"])
