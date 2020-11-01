@@ -27,6 +27,11 @@ try:
     import speech_recognition as sr
 except:
     os.system("pip3 install SpeechRecognition")
+    if os.name == 'nt':
+        os.system("pip3 install pyaudio")
+    
+    else:
+        print("You need to install pyaudio first! Please install the package 'python3-pyaudio' by running your distro-specific commands.")
     import speech_recognition as sr
 
 
@@ -86,23 +91,25 @@ Mandarin 67
 def voice_in():
     r = sr.Recognizer() 
     with sr.Microphone() as source:  
-        print("speak now")
         audio = r.listen(source) 
 
     try:    
         query = r.recognize_google(audio, language ='en-in') 
-        print("you said: ",query)
+        return query
 
     except:   
-        print("Sorry i didn't get that! Please try again.")   
+        return False   
 
 
-def show(text = "", end = "\n", sep = " ", voice = True, show_output = True):
+def show(*args, end = "\n", sep = " ", voice = True, show_output = True):
+    st = ""
+    for i in args:
+        st += i
     if voice:
         if show_output:
-            print(text, end = end, sep = sep)
-        voice_out(text)
+            print(st, end = end, sep = sep)
+        voice_out(st)
     else:
         if show_output:
-            print(text, end = end, sep = sep)
-    return text
+            print(st, end = end, sep = sep)
+    return st

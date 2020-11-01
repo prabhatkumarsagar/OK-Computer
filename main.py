@@ -4,6 +4,8 @@ from bin import get_dirs
 from bin import usr_signup
 from bin import clear
 from bin import voice_io
+from bin import invoice
+#from bin import file_operations
 
 file_user_data = get_dirs.FILE_USR_DATA
 
@@ -11,6 +13,7 @@ file_user_data = get_dirs.FILE_USR_DATA
 #print(path_user_data)
 voice_triggers = [""]
 delete_unspecified = ["delete a file", "delete a folder", "file delete", "folder delete", "remove a file", "remove a folder", "remove directory"]
+rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename"]
 
 def main():
     voice = True
@@ -31,16 +34,17 @@ def main():
 What would you like me to do?
 """, voice = voice)
 
-        task = input(">>>")
+        task = invoice.inpt()
 
-        #if task.lower() in delete_unspecified:
-
-        if "clear" in task.lower() or task.lower() == "clrcls":
-            continue
-
-        if task.lower() in "exitquitend":
-            voice_io.show("\n\nBye and have a nice day!", voice = voice)
-            exit()
+        """if task.lower() in delete_unspecified:
+            while True:
+            voice_io.show("Which file/folder would you like to delete?", voice = voice)
+            file_folder = input(">>>")
+            voice_io.show("Where would you like me to search for the file?n1. \nDesktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+            locate = input(">>>")
+            locate = locate.lower()
+            
+            if locate in {""}"""
 
     #while True:
 
@@ -56,19 +60,24 @@ or lightening the mood with a few jokes or a friendly talk!
 
 But first, please do let me know you better.
     
-If you would like to disable voice, please type 'disable voice' and continue.
-else you can simply continue by pressing Enter/Return and disable voice 
-later on using the command 'disable voice'.""")
-    command = input(">>>")
+If you would like to disable sound, please type 'disable sound' and continue.
+else you can simply continue by pressing Enter/Return and disable sound 
+later on using the command 'disable sound'. You can also use the command 
+'enable sound' if you feel generous enough to give me my voice(s) back!
 
-    if command == "disable voice":
+You can always use the command 'voice' if you would prefer to speak your commands 
+instead.
+""")
+    command = invoice.inpt()
+
+    if command == "disable sound":
         return_val =  False
     
     elif command == "":
         return_val =  True
     
     else:
-        voice_io.show("Unable to understand your command, continuing with voice")
+        voice_io.show("Unable to understand your command, continuing with sound.")
     
     
     if not os.path.exists(get_dirs.PATH_USR_DATA):

@@ -2,40 +2,38 @@
 #file handler
 import os
 import shutil
-import get_home
-class File_Handler:
 
-    def __init__(self, operation, file_name = "", folder_name = ""):
-        self.operation = operation
-        self.file_name = file_name
-        self.folder_name = folder_name
-        self.search_dir = ""
-        self.file_search_results = []
-        self.folder_search_results = []
+from bin import get_dirs
+from bin import voice_io
 
-    def getDir(self):
-        file_name = self.file_name
-        home = get_home.get_home()
 
-        print("Search where?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
-        ch = int(input("Enter your choice here : "))
+search_dir = ""
+file_search_results = []
+folder_search_results = []
 
-        if ch == 1:
-            print("Searching in Desktop")
-            self.search_dir = home + "/Desktop"
-        if ch == 2:
-            print("Searching in Downloads")
-            self.search_dir = home + "/Downloads"
-        if ch == 3:
-            print("Searching in Documents")
-            self.search_dir = home + "/Documents"
-        if ch == 4:
-            print("Searching in Music")
-            self.search_dir = home + "/Music"
-        if ch == 5:
-            print("Searching in Pictures")
-            self.search_dir = home + "/Pictures"
-        if ch == 6:
+def getDir(self):
+    file_name = self.file_name
+    home = get_dirs.get_home()
+
+    voice_io.show("Search where?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+    ch = input(">>>")
+
+    if ch == 1:
+        print("Searching in Desktop")
+        self.search_dir = home + "/Desktop"
+    if ch == 2:
+        print("Searching in Downloads")
+        self.search_dir = home + "/Downloads"
+    if ch == 3:
+        print("Searching in Documents")
+        self.search_dir = home + "/Documents"
+    if ch == 4:
+        print("Searching in Music")
+        self.search_dir = home + "/Music"
+    if ch == 5:
+        print("Searching in Pictures")
+        self.search_dir = home + "/Pictures"
+    if ch == 6:
             print("Searching in Videos")
             self.search_dir = home + "/Videos"
         if ch == 7:
