@@ -2,9 +2,14 @@
 import requests
 import json
 import re
+import wikipedia
 import datetime
 import wolframalpha
+import webbrowser
 import smtplib
+#import vlc #pip install python-vlc
+#from bs4 import BeautifulSoup
+#import youtube-dl #RIP
 import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
@@ -12,7 +17,7 @@ import geocoder #pip install geocoder
 g = geocoder.ip('me')
 #print(g.latlng)
 ct=(g.city)
-
+#BeautifulSoup("html.parser")
 #weather
 def weather_curr(city): #to be replaced with - elif 'weather' in command:    
     #api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}          
@@ -51,16 +56,7 @@ def weather_forec(city):
 
 #weather_forec(ct)
 
-"""
-###other method
-lat=str(g.lat)
-lon=str(g.lng)
-bs_url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,daily&appid=cd140d1c1404cba5de2dabf6bcd00f52"
 
-response = requests.get(bs_url)  
-x = response.json()  
-print(x)
-"""
 
 #Notes and Reminders
 def notrems():
@@ -120,37 +116,30 @@ def notrems():
 
 #notrems()
 
-"""
 #Calculations
 def Calculations():
-    app_id = "Wolframalpha api id" #to be added
-    client = wolframalpha.Client(app_id) 
-    indx = query.lower().split().index('calculate')  
-    query = query.split()[indx + 1:]  
-    res = client.query(' '.join(query))  
-    answer = next(res.results).text 
-    print("The answer is " + answer)  
-"""
+    pass
 
 #Time & Date
-def date():
-    x = datetime.datetime.now().strftime("%x")  
-    print(x)
-def time():
-    x=datetime.datetime.now().strftime("%H:%M:%S")     
-    print(x) 
+def datentime():
+    def date():
+        x = datetime.datetime.now().strftime("%x")  
+        print(x)
+    def time():
+        x=datetime.datetime.now().strftime("%H:%M:%S")     
+        print(x) 
 
-def year():
-    x=datetime.datetime.now()
-    print(x.strftime("%Y"))
+    def year():
+        x=datetime.datetime.now()
+        print(x.strftime("%Y"))
 
-def month():
-    x=datetime.datetime.now()
-    print(x.strftime("%B"))
+    def month():
+        x=datetime.datetime.now()
+        print(x.strftime("%B"))
 
-def day():
-    x=datetime.datetime.now()
-    print(x.strftime("%A"))
+    def day():
+        x=datetime.datetime.now()
+        print(x.strftime("%A"))
 
 #month()
 #day()
@@ -180,7 +169,84 @@ except Exception as e:
     print("I am not able to send this email") 
 """
 
+
+#Play Offline/Online Songs
+def playsong():
+    def offline():
+        print("Alright, fetching your offline music playlist right away!")
+        if os.name == "nt":
+            music_dir = "C:\\Users\\Local\\Music"
+        else:
+            music_dir = "HOME$/Music"
+        
+        songs = os.listdir(music_dir)
+        print(songs)
+        random = os.startfile(os.path.join(music_dir, songs[1]))
+        
+    def online():    
+        song=input("Alright, what song do you wanna play? ")
+        url="https://www.youtube.com/results?search_query="
+        url1=song.split()
+        for i in url1:
+            url+=i
+        webbrowser.open(url)
+        #LET'S JUST KEEP IT TO THIS FOR NOW! LATER WE CAN MAYBE MAKE A WEBSCRAPER/DRIVER WHICH WILL OPEN THE YOUTUBE PAGE AND AUTOMATICALLY CLICK ON THE FIRST VIDEO AND PLAY IT ALL OF THIS BEING DONE IN BACKGROUND.
+
 #Web Search
+def web():
+    query=input("Enter Web Command(some example of which are \"Open Youtube\" or \"Wikipedia What is Anarchy?\"): ")
+    query=query.lower()
+
+    if 'wikipedia' in query:
+        try:
+            print('Searching Wikipedia...')
+            #speak('Searching Wikipedia...')
+            query = query.replace("wikipedia","")
+            results = wikipedia.summary(query,sentences=3)
+            print("According to Wikipedia")
+            print(results)
+            #speak(results)
+        except:
+            print("Please make sure you're entering a valid input!")
 
 
-#Play Offline Songs
+    elif 'youtube' in query:
+        print("Alright, opening Youtube right away!\n")
+        webbrowser.open("youtube.com")
+
+    elif 'google' in query:
+        print("Alright, opening Google right away!\n")
+        webbrowser.open("google.com")
+
+    elif 'instagram' in query:
+        print("Alright, opening Instagram right away!")
+        webbrowser.open("instagram.com")
+    
+    elif 'twitter' in query:
+        print("Alright, opening Instagram right away!")
+        webbrowser.open("twitter.com")
+    
+    elif 'reddit' in query:
+        print("Alright, opening Instagram right away!")
+        webbrowser.open("reddit.com")
+    
+    elif 'facebook' in query:
+        print("Alright, opening Instagram right away!")
+        webbrowser.open("facebook.com")
+
+    elif 'search' in query or 'play' in query:
+        query = query.replace("search", "")
+        query = query.replace("play", "")
+        webbrowser.open(query)
+
+
+    elif "where is" in query:
+        query = query.replace("where is", "")
+        location = query
+        print("You asked to locate",location,"and here you go!")
+        webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+    
+    else:
+        webbrowser.open(query)
+
+#web()
