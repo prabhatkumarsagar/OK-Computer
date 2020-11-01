@@ -3,7 +3,7 @@ import requests
 from bin import voice_io
 
 #jokes
-def joke():     #to be replaced with - elif 'joke' in query: / to be added later 
+def joke():  
     res_j = requests.get(
         'https://icanhazdadjoke.com/',
         headers={"Accept":"application/json"}
@@ -14,8 +14,12 @@ def joke():     #to be replaced with - elif 'joke' in query: / to be added later
     else:
         voice_io.show("Oops! it looks like i ran out of my jokes, why don't you try again later.") #to be replaced with - print("Oops! looks like i ran out of jokes, why don't you try again later.)
 
-#joke()
+joke()
 
 #help
 #def help():
-#    x="Hello "
+#    pass
+
+#greet
+def greet():
+    pass
