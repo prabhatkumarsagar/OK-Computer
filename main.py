@@ -9,14 +9,14 @@ from bin import invoice
 
 file_user_data = get_dirs.FILE_USR_DATA
 
-#clear_commands = ["clear", "clr", "clear screen", "clear terminal", "clear current chats", "clear the terminal", "clear the session chat", "clear my screen", "clear "]
+#clear_commands = ["clear", "clr", "clear screen", "clear terminal", "clearv current chats", "clear the terminal", "clear the session chat", "clear my screen", "clear "]
 #print(path_user_data)
 voice_triggers = [""]
 delete_unspecified = ["delete a file", "delete a folder", "file delete", "folder delete", "remove a file", "remove a folder", "remove directory"]
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename"]
 
 def main():
-    voice = True
+    voice = False
     clear.clear()
     #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
@@ -55,8 +55,7 @@ def userSetup():
 
 I am Python, your personal desktop Assistant.
 I will be present at all times, waiting for your command.
-You can ask me to do wh
-#from bin import file_oat ever you want; getting some work done,
+You can ask me to do what ever you want; getting some work done,
 or lightening the mood with a few jokes or a friendly talk!
 
 But first, please do let me know you better.
