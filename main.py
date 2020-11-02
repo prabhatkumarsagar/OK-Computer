@@ -55,7 +55,8 @@ def userSetup():
 
 I am Python, your personal desktop Assistant.
 I will be present at all times, waiting for your command.
-You can ask me to do what ever you want; getting some work done,
+You can ask me to do wh
+#from bin import file_oat ever you want; getting some work done,
 or lightening the mood with a few jokes or a friendly talk!
 
 But first, please do let me know you better.
