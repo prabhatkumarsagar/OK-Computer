@@ -3,38 +3,12 @@ from os import system
 import subprocess 
 import datetime
 import socket
+import gtts
+from playsound import playsound
+import pyttsx3
+import speech_recognition as sr
 
 from bin import get_dirs
-
-try:
-    import gtts
-except:
-    os.system("pip3 install gTTS")
-    import gtts
-
-try:
-    from playsound import playsound
-except:
-    os.system("pip3 install playsound")
-    from playsound import playsound
-try:
-    import pyttsx3
-except:
-    os.system("pip3 install pyttsx3")
-    import pyttsx3
-
-try:
-    import speech_recognition as sr
-except:
-    os.system("pip3 install SpeechRecognition")
-    print("hellohello gello \n\n")
-    os.system("pip3 install PyAudio-0.2.11-cp39-cp39-win_amd64.whl")
-        #try
-    
-    #else:
-        #print("You need to install pyaudio first! Please install the package 'python3-pyaudio' by running your distro-specific commands.")
-    import speech_recognition as sr
-
 
 def is_connected():
     try:

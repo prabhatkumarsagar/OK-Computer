@@ -1,14 +1,21 @@
 import os
 
 from bin import get_dirs
-from bin import usr_signup
-from bin import clear
-from bin import voice_io
-from bin import invoice
 from bin import install_packages as ip
-#from bin import file_operations
+from bin import clear
 
 file_user_data = get_dirs.FILE_USR_DATA
+
+if not os.path.exists(file_user_data):
+    print("\nInstalling required packages.....\n")
+    if ip.setup():
+                input("\nAll packages have been successfully installed! Press Enter/Return to continue")
+                clear.clear()
+
+from bin import usr_signup
+from bin import voice_io
+from bin import invoice
+#from bin import file_operations
 
 #clear_commands = ["clear", "clr", "clear screen", "clear terminal", "clearv current chats", "clear the terminal", "clear the session chat", "clear my screen", "clear "]
 #print(path_user_data)
@@ -25,9 +32,7 @@ def main():
         pass
 
     else:
-        print("\nInstalling required packages.....\n")
-        ip.setup()
-        voice = userSetup()
+        sound = userSetup()
 
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
     while True:
@@ -35,13 +40,13 @@ def main():
         voice_io.show(f"""Hey {usr_name}! 
         
 What would you like me to do?
-""", voice = voice)
+""", sound = voice)
 
         task = invoice.inpt()
 
         """if task.lower() in delete_unspecified:
             while True:
-            voice_io.show("Which file/folder would you like to delete?", voice = voice)
+            voice_io.show("Which file/folder would you like to delete?", sound = sound)
             file_folder = input(">>>")
             voice_io.show("Where would you like me to search for the file?n1. \nDesktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
             locate = input(">>>")
@@ -70,7 +75,8 @@ later on using the command 'disable sound'. You can also use the command
 
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
-""", voice = False)
+Press Ener/Return to continue.
+""", sound = False)
     command = invoice.inpt()
 
     if command == "disable sound":
@@ -86,7 +92,7 @@ instead.
     if not os.path.exists(get_dirs.PATH_USR_DATA):
         os.mkdir(get_dirs.PATH_USR_DATA)
 
-    usr_signup.main(operation = "new", voice = return_val)
+    usr_signup.main(operation = "new", sound = return_val)
     return return_val
 
 main()
