@@ -5,6 +5,7 @@ from bin import usr_signup
 from bin import clear
 from bin import voice_io
 from bin import invoice
+from bin import install_packages as ip
 #from bin import file_operations
 
 file_user_data = get_dirs.FILE_USR_DATA
@@ -24,6 +25,8 @@ def main():
         pass
 
     else:
+        print("\nInstalling required packages.....\n")
+        ip.setup()
         voice = userSetup()
 
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
@@ -67,7 +70,7 @@ later on using the command 'disable sound'. You can also use the command
 
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
-""")
+""", voice = False)
     command = invoice.inpt()
 
     if command == "disable sound":

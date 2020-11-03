@@ -27,11 +27,12 @@ try:
     import speech_recognition as sr
 except:
     os.system("pip3 install SpeechRecognition")
-    if os.name == 'nt':
-        os.system("pip3 install pyaudio")
+    print("hellohello gello \n\n")
+    os.system("pip3 install PyAudio-0.2.11-cp39-cp39-win_amd64.whl")
+        #try
     
-    else:
-        print("You need to install pyaudio first! Please install the package 'python3-pyaudio' by running your distro-specific commands.")
+    #else:
+        #print("You need to install pyaudio first! Please install the package 'python3-pyaudio' by running your distro-specific commands.")
     import speech_recognition as sr
 
 
@@ -46,7 +47,10 @@ def is_connected():
 
 engine=pyttsx3.init()
 voices=engine.getProperty('voices')
-engine.setProperty('voice',voices[10].id)
+if os.name == "nt":
+    engine.setProperty('voice',voices[1].id)
+else:
+    engine.setProperty('voice',voices[10].id)
 engine.setProperty('rate',125) #Default Rate = 150
 
 def voice_out(qry): 
@@ -101,11 +105,11 @@ def voice_in():
         return False   
 
 
-def show(*args, end = "\n", sep = " ", voice = True, show_output = True):
+def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
     st = ""
     for i in args:
         st += i
-    if voice:
+    if sound:
         if show_output:
             print(st, end = end, sep = sep)
         voice_out(st)
