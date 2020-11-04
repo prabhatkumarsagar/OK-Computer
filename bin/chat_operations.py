@@ -17,8 +17,8 @@ def joke():
 joke()
 
 #help
-#def help():
-#    pass
+def help():
+    pass
 
 #greet
 def greet():

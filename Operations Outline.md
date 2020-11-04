@@ -72,14 +72,12 @@
 
     b. Joke
 
-    c. Interesting Fact
-
-    d. Help
+    c. Help
 <br>
     </br>
 3. <b>MISCELLANEOUS OPERATIONS:</b>
 
-     a. Web Search (everything excl. Wikipedia part)
+     a. Web Search (everything incl. Wikipedia)
 
      b. Time & Date
 
@@ -91,8 +89,6 @@
 
      f. Weather and Weather Forecast
 
-     g. Play Offline Songs (*online ones can be done using Web Search(a))
+     g. Play Songs (*Online and Offline both!)
 
-     h. Opening and Closing APPS (applications/softwares)
-     
-     i. Wikipedia Queries (who/what/about)
+     h. News

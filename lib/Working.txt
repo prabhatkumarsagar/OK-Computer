@@ -24,4 +24,5 @@ Various Operations offered by the assitant and their General fuckin Syntaxes(if 
     d. Calculations
     e. Weather and Weather Forecast
     f. Send Emails
-    g. Play Offline Songs
+    g. Play Songs
+    h. News
