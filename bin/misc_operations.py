@@ -301,10 +301,20 @@ def web():
     elif "news" in query:
         news()
     
+    elif "open" in query:
+        reg_ex = re.search('open (.+)', query)
+        if reg_ex:
+            domain = reg_ex.group(1)
+            #print(domain)
+            url='https://www.'+domain
+            #webbrowser.open(url)
+            print(url)
+            print('The website you have requested has been opened for you.')
+        else:
+            pass
     else:
-        webbrowser.open(query)
-
-#web()
+        print("LOL it ain't working! maybe try again later bitch!")
+web()
 
 def news():
     try:
