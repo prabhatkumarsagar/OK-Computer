@@ -1,20 +1,31 @@
 import os
 
 from bin import get_dirs
-from bin import install_packages as ip
 from bin import clear
 
-file_user_data = get_dirs.FILE_USR_DATA
+try:
+    #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
+    from bin import usr_signup
+    from bin import voice_io
+    from bin import invoice
 
-if not os.path.exists(file_user_data):
+except:
+    from bin import install_packages as ip
+    clear.clear()
     print("\nInstalling required packages.....\n")
     if ip.setup():
-                input("\nAll packages have been successfully installed! Press Enter/Return to continue")
-                clear.clear()
+        input("\nAll packages have been successfully installed! Press Enter/Return to continue")
+        clear.clear()
+    else:
+        print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
+        exit()
 
-from bin import usr_signup
-from bin import voice_io
-from bin import invoice
+    from bin import usr_signup
+    from bin import voice_io
+    from bin import invoice
+
+
+file_user_data = get_dirs.FILE_USR_DATA
 #from bin import file_operations
 
 #clear_commands = ["clear", "clr", "clear screen", "clear terminal", "clearv current chats", "clear the terminal", "clear the session chat", "clear my screen", "clear "]
@@ -24,7 +35,7 @@ delete_unspecified = ["delete a file", "delete a folder", "file delete", "folder
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename"]
 
 def main():
-    voice = False
+    sound = False
     clear.clear()
     #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
@@ -40,9 +51,10 @@ def main():
         voice_io.show(f"""Hey {usr_name}! 
         
 What would you like me to do?
-""", sound = voice)
+""", sound = sound)
 
         task = invoice.inpt()
+
 
         """if task.lower() in delete_unspecified:
             while True:
@@ -55,6 +67,8 @@ What would you like me to do?
             if locate in {""}"""
 
     #while True:
+    
+
 
     
 def userSetup():
