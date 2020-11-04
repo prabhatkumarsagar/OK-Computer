@@ -314,7 +314,7 @@ def web():
             pass
     else:
         print("LOL it ain't working! maybe try again later bitch!")
-web()
+#web()
 
 def news():
     try:
