@@ -6,6 +6,8 @@ import socket
 import gtts
 from playsound import playsound
 import pyttsx3
+import pyaudio
+import bs4
 import speech_recognition as sr
 
 from bin import get_dirs
