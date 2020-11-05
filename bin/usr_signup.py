@@ -1,30 +1,22 @@
 import pickle as pk
 import os
 import getpass
-
-import bin
-from bin import get_dirs
-from bin import clear
-from bin import voice_io
+import get_dirs
+import clear
+import voice_io
 voice = True
 
 
 def setNewUser():
     usr_info_dic={}
-
     clear.clear()
-
-    voice_io.show("What shall i call you? ", end = "", voice = voice)
+    voice_io.show("What shall i call you? ", end = "", sound = voice)
     nm = input() #Name of the user i.e the name by which the assistant will call him/her
-    
-    voice_io.show("And you are, Master or Miss, master? ", end = "", voice = voice) #Gender of the user which the assistant will refer to again and again
+    voice_io.show("And you are, Master or Miss, master? ", end = "", sound = voice) #Gender of the user which the assistant will refer to again and again
     gnd = input()
-
-    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", voice = voice)#usr email address
+    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", sound = voice)#usr email address
     eml = input()
-
-    pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, voice = voice))#use password
-    
+    pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, sound = voice))#use password
 
     usr_info_dic['name']=nm
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
@@ -49,6 +41,7 @@ def info_in(x):
     pk.dump(x,f)
     f.close()
 
+
 def info_out(x="all"):
     f=open(get_dirs.FILE_USR_DATA,'rb+')
     rd=pk.load(f)
@@ -56,25 +49,30 @@ def info_out(x="all"):
 
     if ch=="name":
         return rd[ch]
+        f.close()
 
     elif ch=="gender":
         return rd[ch]
+        f.close()
 
     elif ch=="email":
         return rd[ch]
+        f.close()
 
     elif ch=="password":
         return rd[ch]
+        f.close()
 
     elif ch=="all":
         return rd
+        f.close()
 
     else:
         return False
+        f.close()
 
-    f.close()
 
-#info_out("password")
+info_out("password")
 
 u=''
 
@@ -145,3 +143,5 @@ def main(**kwargs):
 
     elif kwargs["operation"] == "update":
         info_update()
+
+#setNewUser()

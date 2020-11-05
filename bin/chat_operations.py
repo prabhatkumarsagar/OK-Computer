@@ -1,6 +1,7 @@
 #chat operations go here!
 import requests 
 import voice_io
+import usr_signup
 
 #jokes
 def joke():  
@@ -14,7 +15,7 @@ def joke():
     else:
         voice_io.show("Oops! it looks like i ran out of my jokes, why don't you try again later.")
 
-joke()
+#joke()
 
 #help
 def help():
@@ -35,4 +36,13 @@ def help():
 
 #greet
 def greet():
-    pass
+    def hello():
+        print("Hello"+gnd)
+
+
+"""
+if usr_signup.info_out("gender")=="Female":
+    print("Hello Mam")
+else:
+    print("Hello Sir")
+"""
