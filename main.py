@@ -14,7 +14,7 @@ except:
     clear.clear()
     print("\nInstalling required packages.....\n")
     if ip.setup():
-        input("\nAll packages have been successfully installed! Press Enter/Return to continue")
+        input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
         clear.clear()
     else:
         print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
@@ -33,9 +33,10 @@ file_user_data = get_dirs.FILE_USR_DATA
 voice_triggers = [""]
 delete_unspecified = ["delete a file", "delete a folder", "file delete", "folder delete", "remove a file", "remove a folder", "remove directory"]
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename"]
+file_search = {""}
 
 def main():
-    sound = False
+    sound = True
     clear.clear()
     #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
@@ -56,15 +57,15 @@ What would you like me to do?
         task = invoice.inpt()
 
 
-        """if task.lower() in delete_unspecified:
+        if task.lower() in delete_unspecified:
             while True:
-            voice_io.show("Which file/folder would you like to delete?", sound = sound)
-            file_folder = input(">>>")
-            voice_io.show("Where would you like me to search for the file?n1. \nDesktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
-            locate = input(">>>")
-            locate = locate.lower()
+                voice_io.show("Which file/folder would you like to delete?", sound = sound)
+                file_folder = input(">>>")
+                voice_io.show("Where would you like me to search for the file?n1. \nDesktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+                locate = input(">>>")
+                locate = locate.lower()
             
-            if locate in {""}"""
+        
 
     #while True:
     
@@ -89,22 +90,23 @@ later on using the command 'disable sound'. You can also use the command
 
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
-Press Ener/Return to continue.
-""", sound = False)
-    command = invoice.inpt()
+Press Enter/Return to continue.
+""", sound = True)
+    command = invoice.inpt(iterate = False)
+
 
     if command == "disable sound":
         return_val =  False
     
-    elif command == "":
+    elif command == None:
         return_val =  True
     
     else:
         voice_io.show("Unable to understand your command, continuing with sound.")
     
     
-    if not os.path.exists(get_dirs.PATH_USR_DATA):
-        os.mkdir(get_dirs.PATH_USR_DATA)
+    #if not os.path.exists(get_dirs.PATH_USR_DATA):
+        #os.mkdir(get_dirs.PATH_USR_DATA)
 
     usr_signup.main(operation = "new", sound = return_val)
     return return_val

@@ -1,8 +1,9 @@
 from bin import clear
-from bin import voice_io
 
-def inpt(text = ">>>", sound = False, audio_io = True):
+def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
     if audio_io:
+        from bin import voice_io
+        
         while True:
             try:
                 entered_data = input(text)
@@ -26,11 +27,12 @@ def inpt(text = ">>>", sound = False, audio_io = True):
                             voice_data = True
 
                 elif entered_data == "":
+                    if not iterate:
+                        break
                     continue
-                
+
                 elif "clear" in entered_data.lower() or entered_data.lower() == "clrcls":
-                    print("hello1")
-                    #clear.clear()
+                    clear.clear()
 
                 elif entered_data.lower() in "exitquitend":
                     print(entered_data.lower() in "exitquitend")
