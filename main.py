@@ -126,6 +126,7 @@ What would you like me to do?""", sound = sound)
             file_operations.deleteFolder(folder_name = folder_name,search_dir = search_dir)
 
         elif task.lower in rename:
+            pass
     
 def userSetup():
     return_val = True
