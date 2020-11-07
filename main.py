@@ -1,3 +1,4 @@
+from bin import file_operations
 import os
 
 from bin import get_dirs
@@ -26,17 +27,35 @@ except:
 
 
 file_user_data = get_dirs.FILE_USR_DATA
-#from bin import file_operations
+home = get_dirs.HOME
+desktop = get_dirs.DESKTOP
+downloads = get_dirs.DOWNLOADS
+documents = get_dirs.DOCUMENTS
+music = get_dirs.MUSIC
+videos = get_dirs.VIDEOS
+pictures = get_dirs.PICTURES
+
 
 #clear_commands = ["clear", "clr", "clear screen", "clear terminal", "clearv current chats", "clear the terminal", "clear the session chat", "clear my screen", "clear "]
 #print(path_user_data)
 voice_triggers = [""]
-delete_unspecified = ["delete a file", "delete a folder", "file delete", "folder delete", "remove a file", "remove a folder", "remove directory"]
-rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename"]
-file_search = {""}
+delete_file_unspecified = ["delete a file", "file delete", "remove a file", "del", "rm"]
+delete_folder_unspecified = ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"]
+delete_general = ["delete", "del", "remove", "Erase"]
+rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"]
+
+locate_desktop = ["1"]
+locate_downloads = ["2"]
+locate_documents = ["3"]
+locate_music = ["4"]
+locate_pictures = ["5"]
+locate_videos = ["6"]
+locate_home = ["7"]
+
+sound = False
 
 def main():
-    sound = True
+    global sound
     clear.clear()
     #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
@@ -47,30 +66,33 @@ def main():
         sound = userSetup()
 
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
-    while True:
-        clear.clear()
-        voice_io.show(f"""Hey {usr_name}! 
-        
-What would you like me to do?
-""", sound = sound)
 
+    clear.clear()
+    voice_io.show(f"""Hey {usr_name}! 
+        
+What would you like me to do?""", sound = sound)
+
+    while True:
         task = invoice.inpt()
 
-
-        if task.lower() in delete_unspecified:
-            while True:
-                voice_io.show("Which file/folder would you like to delete?", sound = sound)
-                file_folder = input(">>>")
-                voice_io.show("Where would you like me to search for the file?n1. \nDesktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
-                locate = input(">>>")
-                locate = locate.lower()
-            
+        if task.lower() in delete_file_unspecified:
+            deleteFileUnspecified()
         
+        elif task.lower() in delete_folder_unspecified:
+            deleteFolderUnspecified()
 
-    #while True:
+        elif task.lower() in delete_general:
+            voice_io.show(f"What would you like to {task}, a file or a folder?")
+            choice = invoice.inpt()
+            if choice == "file":
+                deleteFileUnspecified()
+
+            elif choice == "folder":
+                deleteFolderUnspecified()
+
+            else:
+                voice_io.show("Unable to understand your command, please try again with the proper command.", sound = sound)
     
-
-
     
 def userSetup():
     return_val = True
@@ -110,5 +132,72 @@ Press Enter/Return to continue.
 
     usr_signup.main(operation = "new", sound = return_val)
     return return_val
+
+def deleteFileUnspecified():
+    global sound
+    search_dir = ""
+    voice_io.show("Which file would you like to delete?", sound = sound)
+    file_name = invoice.inpt()
+    voice_io.show(f"Where would you like me to search for the file, {file_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+    locate = invoice.inpt().lower()
+    if locate in locate_desktop:
+        search_dir = desktop
+
+    elif locate in locate_documents:
+        search_dir = documents
+
+    elif locate in locate_downloads:
+        search_dir = downloads
+
+    elif locate in locate_home:
+        search_dir = home
+                
+    elif locate in locate_music:
+        search_dir = music
+                
+    elif locate in locate_pictures:
+        search_dir = pictures
+
+    elif locate in locate_videos:
+        search_dir = videos
+                
+    else:
+        voice_io.show("Selected directory is invalid, please try again!", sound = sound)
+                    
+    file_operations.deleteFile(file_name = file_name,search_dir = search_dir)
+
+def deleteFolderUnspecified():
+    global sound
+    search_dir = ""
+    voice_io.show("Which folder would you like to delete?", sound = sound)
+    folder_name = invoice.inpt()
+    voice_io.show(f"Where would you like me to search for the folder, {folder_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+    locate = invoice.inpt().lower()
+    if locate in locate_desktop:
+        search_dir = desktop
+
+    elif locate in locate_documents:
+        search_dir = documents
+
+    elif locate in locate_downloads:
+        search_dir = downloads
+
+    elif locate in locate_home:
+        search_dir = home
+                
+    elif locate in locate_music:
+        search_dir = music
+    
+    elif locate in locate_pictures:
+        search_dir = pictures
+
+    elif locate in locate_videos:
+        search_dir = videos
+                
+    else:
+        voice_io.show("Selected directory is invalid, please try again!", sound = sound)
+                    
+    file_operations.deleteFolder(folder_name = folder_name,search_dir = search_dir)
+
 
 main()

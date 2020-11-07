@@ -1,6 +1,8 @@
 from bin import clear
+from bin import usr_signup
 
-def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
+def inpt(text = "\n>>>", sound = False, audio_io = True, iterate = True):
+    usr_name = usr_signup.main(operation = "fetch", data_type = "name")
     if audio_io:
         from bin import voice_io
         
@@ -31,8 +33,12 @@ def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
                         break
                     continue
 
-                elif "clear" in entered_data.lower() or entered_data.lower() == "clrcls":
+                elif "clear" in entered_data.lower() or entered_data.lower() in "clrcls":
                     clear.clear()
+                    voice_io.show(f"""Hey {usr_name}! 
+        
+What would you like me to do?""", sound = sound)
+
 
                 elif entered_data.lower() in "exitquitend":
                     print(entered_data.lower() in "exitquitend")

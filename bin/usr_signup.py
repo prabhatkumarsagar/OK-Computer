@@ -12,6 +12,7 @@ import bin
 from bin import get_dirs
 from bin import clear
 from bin import voice_io
+
 sound = True
 >>>>>>> 6437bd0f865947824dd7223afc5c5f9f7f864d16
 
