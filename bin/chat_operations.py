@@ -77,9 +77,7 @@ def greet():
         pass
 
 
-"""
 if usr_signup.info_out("gender")=="Female":
     print("Hello Mam")
 else:
     print("Hello Sir")
-"""
