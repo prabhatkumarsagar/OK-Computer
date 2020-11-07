@@ -1,7 +1,7 @@
 from bin import clear
 from bin import usr_signup
 
-def inpt(text = "\n>>>", sound = False, audio_io = True, iterate = True):
+def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
     if audio_io:
         from bin import voice_io

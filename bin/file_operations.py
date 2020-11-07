@@ -46,7 +46,7 @@ def deleteFolder(folder_name, search_dir):
     folder_search_results = folderSearch(folder_name, search_dir)
     if folder_search_results != []:
         if len(folder_search_results) == 1:
-            invoice.inpt("%s from %s will be permanently lost, press Enter to continue."%(folder_search_results[0]["folder"]), folder_search_results[0]["root"], iterate = False)
+            invoice.inpt("%s from %s will be permanently lost, press Enter to continue."%(folder_search_results[0]["folder"], folder_search_results[0]["root"]), iterate = False)
             os.rmdir(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"])
             voice_io.show(folder_name,"has been deleted successfully!")
             
@@ -64,11 +64,23 @@ def copy(obj_name, search_dir, dest_dir):
     file_search_results = fileSearch(obj_name, search_dir)
     if folder_search_results != []:
         if len(folder_search_results) == 1:
-            #invoice.inpt(f"Copying folder {folder_search_results[0]["folder"]} from {folder_search_results[0]["root"]} to {dest_dir}.....")
-            shutil.copy2()
+            voice_io.show(f'Copying folder {folder_search_results[0]["folder"]} from {folder_search_results[0]["root"]} to {dest_dir}.....')
+            shutil.copy2(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
+        
+        else:
+            voice_io.show("Hold on! \nMultiple folder copying is still being worked on!")
+        
     
     elif file_search_results != []:
-        pass
+        if len(file_search_results) == 1:
+            voice_io.show(f'Copying folder {file_search_results[0]["file"]} from {file_search_results[0]["root"]} to {dest_dir}.....')
+            shutil.copy2(file_search_results[0]["root"] + "/" + file_search_results[0]["file"], dest_dir)
+
+        else:
+            voice_io.show("Hold on! \nMultiple file copying is still being worked on!")
+
+    else:
+        voice_io.show("Given file/folder {obj_name} was not found!")
         
 
 
