@@ -3,6 +3,7 @@
 from importlib.abc import FileLoader
 import os
 import shutil
+import playsound
 
 from bin import get_dirs
 from bin import voice_io
@@ -54,13 +55,13 @@ def deleteFile(file_name,search_dir):
                 voice_io.show(f"'{f_name}' has been deleted successfully!")
 
             except IndexError:
-                voice_io.show("Deletion failed : Sorry, but the entered number was within the range of available options.")
+                voice_io.show("Deletion failed : Sorry, but the entered number is not within the range of available options.")
             
             except SyntaxError or TypeError:
-                voice_io.show("Deletion failed : Sorry, but your entered data was not a number.")
+                voice_io.show("Deletion failed : Sorry, but your entered data is not a number.")
 
     else:
-        voice_io.show(f"Could not find file '{file_name}', please check if the file you named exists or\nhas been spelled correctly.")
+        voice_io.show(f"Sorry, could not find file '{file_name}', please check if the file you named exists or\nhas been spelled correctly.")
 
 
 def deleteFolder(folder_name, search_dir):
@@ -89,13 +90,13 @@ def deleteFolder(folder_name, search_dir):
                 voice_io.show(f"'{f_name}' has been deleted successfully!")
 
             except IndexError:
-                voice_io.show("Deletion failed : Sorry, but the entered number was within the range of available options.")
+                voice_io.show("Deletion failed : Sorry, but the entered number is not within the range of available options.")
             
             except SyntaxError or TypeError:
-                voice_io.show("Deletion failed : Sorry, but your entered data was not a number.")
+                voice_io.show("Deletion failed : Sorry, but your entered data is not a number.")
 
     else:
-        voice_io.show(f"Could not find file '{folder_name}', please check if the file you named exists or\nhas been spelled correctly.")
+        voice_io.show(f"Sorry, could not find file '{folder_name}', please check if the file you named exists or\nhas been spelled correctly.")
 
 def copy(obj_name, search_dir, dest_dir):
     dest_dir = get_dirs.HOME + "/" + dest_dir
@@ -106,23 +107,97 @@ def copy(obj_name, search_dir, dest_dir):
     file_search_results = fileSearch(obj_name, search_dir)
     if folder_search_results != []:
         if len(folder_search_results) == 1:
-            voice_io.show(f'Copying folder {folder_search_results[0]["folder"]} from {folder_search_results[0]["root"]} to {dest_dir}.....')
+            voice_io.show(f"Copying folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{dest_dir}'.....")
             shutil.copy2(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
+            voice_io.show(f"Successfully copied '{folder_search_results[0]['file']}' to '{dest_dir}'")
         
         else:
-            voice_io.show("Hold on! \nMultiple folder copying is still being worked on!")
-        
+            sno = 0
+            for i in folder_search_results:
+                voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
+                sno += 1
+            voice_io.show("Select the number of the folder which you would like to copy.")
+            choice = int(invoice.inpt())
+            choice -= 1
+            try:
+                f_name = folder_search_results[choice]['folder']
+                parent_dir = folder_search_results[choice]['root']
+                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+
+            except IndexError:
+                voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
+                
+            except SyntaxError or TypeError:
+                voice_io.show("Copying failed : Sorry, but your entered data is not a number.")  
     
     elif file_search_results != []:
         if len(file_search_results) == 1:
-            voice_io.show(f'Copying folder {file_search_results[0]["file"]} from {file_search_results[0]["root"]} to {dest_dir}.....')
+            voice_io.show(f"Copying file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{dest_dir}''.....")
             shutil.copy2(file_search_results[0]["root"] + "/" + file_search_results[0]["file"], dest_dir)
+            voice_io.show(f"Successfully copied '{file_search_results[0]['file']}' to '{dest_dir}'")
 
         else:
-            voice_io.show("Hold on! \nMultiple file copying is still being worked on!")
+            sno = 0
+            for i in file_search_results:
+                voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
+                sno += 1
+            voice_io.show("Select the number of the file which you would like to copy.")
+            choice = int(invoice.inpt())
+            choice -= 1
+            try:
+                f_name = folder_search_results[choice]['file']
+                parent_dir = folder_search_results[choice]['root']
+                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+
+            except IndexError:
+                voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
+                
+            except SyntaxError or TypeError:
+                voice_io.show("Copying failed : Sorry, but your entered data is not a number.") 
+
+    elif folder_search_results and file_search_results != 0:
+        count_files = len(file_search_results)
+        count_folders = len(folder_search_results)
+        voice_io.show(f"Found {count_files} files and {count_folders} folders matching the given name! They are :-")
+        sno = 1
+        for i in file_search_results:
+            voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
+            sno += 1
+        
+        for i in folder_search_results:
+            voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
+            sno += 1
+        voice_io.show("Select the number of the file/folder which you would like to copy.")
+        choice = int(invoice.inpt())
+        choice -= 1
+        try:
+            if choice in count_files - 1:
+                f_name = file_search_results[choice]['file']
+                parent_dir = file_search_results[choice]['root']
+                voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+            
+            elif choice - (count_files - 1) in count_folders - 1:
+                choice -= (count_files - 1)
+                f_name = folder_search_results[choice]['folder']
+                parent_dir = folder_search_results[choice]['root']
+                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+
+            else:
+                voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
+            
+        except SyntaxError or TypeError:
+            voice_io.show("Copying failed : Sorry, but your entered data is not a number.")
 
     else:
-        voice_io.show("Given file/folder {obj_name} was not found!")
+        voice_io.show("Sorry, could not find file/folder '{obj_name}'!")
 
 def rname(obj_name, new_name, search_dir):
     folder_search_results = folderSearch(obj_name, search_dir)
