@@ -143,6 +143,32 @@ def op_help():
         print("20. move folder")
 
 #3. Python Desktop Assistant Help (pda_help)
+#3.a ass_usr_stngs_update()
+def ass_usr_stng_update():
+    pass
+
+#3.a ass_ui_stngs_update()
+def ass_ui_stng_update():
+    pass
+
+#3.a ass_stngs_reset()
+def ass_stng_reset():
+    pass
+
+def pda_help():
+    print("Select from the following what is it that i can help you with?")
+    print("1. Assistant User Settings Update")
+    print("2. Assistant UI Settings Update")
+    print("3. Assitant Settings Reset")
+    x=input("Enter Choice: ")
+    if x=="1":
+        ass_usr_stng_update()
+    elif x=="2":
+        ass_ui_stng_update()
+    elif x=="3":
+        ass_stng_reset()
+    else:
+        print("Invalid Input! Please make sure you're entering a valid input!")
 
 #TBDL
 

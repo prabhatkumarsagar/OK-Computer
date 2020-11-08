@@ -1,26 +1,15 @@
 import pickle as pk
 import os
 import getpass
-<<<<<<< HEAD
 import get_dirs
 import clear
 import voice_io
 voice = True
-=======
-
-import bin
-from bin import get_dirs
-from bin import clear
-from bin import voice_io
-
-sound = True
->>>>>>> 6c3b8be0cfe38b34f64163847a26f9dfbfae677e
 
 
 def setNewUser():
     usr_info_dic={}
     clear.clear()
-<<<<<<< HEAD
     voice_io.show("What shall i call you? ", end = "", sound = voice)
     nm = input() #Name of the user i.e the name by which the assistant will call him/her
     voice_io.show("And you are, Master or Miss, master? ", end = "", sound = voice) #Gender of the user which the assistant will refer to again and again
@@ -28,20 +17,6 @@ def setNewUser():
     voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", sound = voice)#usr email address
     eml = input()
     pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, sound = voice))#use password
-=======
-
-    voice_io.show("What shall i call you? ", end = "", sound = sound)
-    nm = input() #Name of the user i.e the name by which the assistant will call him/her
-    
-    voice_io.show("And you are, Master or Miss, master? ", end = "", sound = sound) #Gender of the user which the assistant will refer to again and again
-    gnd = input()
-
-    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", sound = sound)#usr email address
-    eml = input()
-
-    pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, sound = sound))#use password
-    
->>>>>>> 6c3b8be0cfe38b34f64163847a26f9dfbfae677e
 
     usr_info_dic['name']=nm
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
