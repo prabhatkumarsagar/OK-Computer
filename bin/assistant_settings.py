@@ -19,18 +19,9 @@ assistant ui theme - light
 assistant ui font - predefined 100%
 """
 
-"""
-import pyttsx3
-engine=pyttsx3.init()
-voices=engine.getProperty('voices') 
-for i in range(len(voices)):
-    print(voices[i])
-engine.setProperty('voice',voices=="english")
-engine.say("the quick brown fox jumped over the lazy dog")
-engine.runAndWait()
-"""
-
+#DEFAULT
 usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'200','vc_lng':'english-us'}
+#FIRST_USER_INPUT
 as_vc_gnd=input("Enter the assistant voice gender: ") #DEF=MALE
 as_vc_vol=float(input("Enter the assistant voice volume: ")) #DEF=1.0
 as_vc_rate=int(input("Enter the assistant voice rate: ")) #DEF=200 wpm
@@ -41,6 +32,7 @@ usr_ass_settings['vc_rate']=as_vc_rate
 usr_ass_settings['vc_lng']=as_vc_lng
 #print(usr_ass_settings)
 
+#UPDATE
 def ass_settings_update():
     print("What do you wanna update?")
     print("1. Assistant Voice Gender")
