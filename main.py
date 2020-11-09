@@ -206,8 +206,8 @@ Press Enter/Return to continue.
     else:
         voice_io.show("Unable to understand your command, continuing with sound.")
     
-    #if not os.path.exists(get_dirs.PATH_USR_DATA):
-        #os.mkdir(get_dirs.PATH_USR_DATA)
+    if not os.path.exists(get_dirs.PATH_USR_DATA):
+        os.mkdir(get_dirs.PATH_USR_DATA)
 
     usr_signup.main(operation = "new", sound = return_val)
     return return_val
