@@ -76,8 +76,7 @@ What would you like me to do?""", sound = sound)
 
     while True:
         task = invoice.inpt()
-        print(task.lower())
-
+        
         if task.lower() in delete_file_unspecified:
             deleteFileUnspecified()
         
@@ -97,7 +96,6 @@ What would you like me to do?""", sound = sound)
                 voice_io.show("Unable to understand your command, please try again with the proper command.", sound = sound)
         
         elif task.lower() in copy:
-            print("hello mf")
             search_dir = ""
             voice_io.show("Which file/folder would you like to copy?", sound = sound)
             obj_name = invoice.inpt()
@@ -207,7 +205,6 @@ Press Enter/Return to continue.
     
     else:
         voice_io.show("Unable to understand your command, continuing with sound.")
-    
     
     #if not os.path.exists(get_dirs.PATH_USR_DATA):
         #os.mkdir(get_dirs.PATH_USR_DATA)
