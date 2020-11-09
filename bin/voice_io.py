@@ -9,8 +9,7 @@ import pyttsx3
 import pyaudio
 import bs4
 import speech_recognition as sr
-
-from bin import get_dirs
+import get_dirs
 
 def is_connected():
     try:
@@ -50,43 +49,21 @@ def chng_voice_rate(newrate):
 def chng_voice_lang(x):
     engine.setProperty('voice',voices[x].id)
 
-
-"""
-VOICE IDS
-german 8
-default 10
-english 11
-english-us 16
-spanish 19
-french 26
-hindi 29
-malayalam 46
-punjabi 51
-russian 56
-tamil 62
-Mandarin 67
-"""
-
-
 def voice_in():
     r = sr.Recognizer() 
     with sr.Microphone() as source:  
         audio = r.listen(source) 
-
     try:    
         query = r.recognize_google(audio, language ='en-in') 
         return query
-
     except:   
         return False   
-
 
 def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
     st = ""
     for i in args:
         st = st + i + sep
     st = st.strip()
-
     if sound:
         if show_output:
             print(st, end = end)
