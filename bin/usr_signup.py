@@ -1,11 +1,12 @@
 import pickle as pk
 import os
 import getpass
-import get_dirs
-import clear
-import voice_io
-voice = True
 
+from bin import get_dirs
+from bin import clear
+from bin import voice_io
+
+voice = True
 
 def setNewUser():
     usr_info_dic={}

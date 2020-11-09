@@ -272,7 +272,7 @@ def rname(obj_name, new_name, search_dir):
             parent_dir = folder_search_results[0]["root"]
             f_name = folder_search_results[0]["file"]
             voice_io.show(f"Renaming file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{new_name}''.....")
-            os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name))
+            os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
             voice_io.show(f"Successfully renamed '{file_search_results[0]['file']}' to '{new_name}'")
 
         else:

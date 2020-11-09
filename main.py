@@ -1,3 +1,4 @@
+from bin.get_dirs import HOME
 from bin import file_operations
 import os
 
@@ -75,6 +76,7 @@ What would you like me to do?""", sound = sound)
 
     while True:
         task = invoice.inpt()
+        print(task.lower())
 
         if task.lower() in delete_file_unspecified:
             deleteFileUnspecified()
@@ -94,11 +96,12 @@ What would you like me to do?""", sound = sound)
             else:
                 voice_io.show("Unable to understand your command, please try again with the proper command.", sound = sound)
         
-        elif task.lower in copy:
+        elif task.lower() in copy:
+            print("hello mf")
             search_dir = ""
-            voice_io.show("Which file/folder would you like to delete?", sound = sound)
-            folder_name = invoice.inpt()
-            voice_io.show(f"Where would you like me to search for {folder_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+            voice_io.show("Which file/folder would you like to copy?", sound = sound)
+            obj_name = invoice.inpt()
+            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
             locate = invoice.inpt().lower()
             if locate in locate_desktop:
                 search_dir = desktop
@@ -120,14 +123,58 @@ What would you like me to do?""", sound = sound)
 
             elif locate in locate_videos:
                 search_dir = videos
+            
+            elif locate in locate_home:
+                search_dir = home
                         
             else:
-                voice_io.show("Selected directory does not exist, please try again!", sound = sound)
+                voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+                search_dir = home
+            
+            voice_io.show("Where would you like me to paste it? (Example : Desktop or Desktop/My folder)")
+            destination = invoice.inpt()
                             
-            file_operations.deleteFolder(folder_name = folder_name,search_dir = search_dir)
+            file_operations.copy(obj_name= = obj_name,search_dir = search_dir, dest_dir = destination)
 
-        elif task.lower in rename:
-            pass
+        elif task.lower() in rename:
+            search_dir = ""
+            voice_io.show("Which file/folder would you like to delete?", sound = sound)
+            obj_name = invoice.inpt()
+            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+            locate = invoice.inpt().lower()
+            if locate in locate_desktop:
+                search_dir = desktop
+
+            elif locate in locate_documents:
+                search_dir = documents
+
+            elif locate in locate_downloads:
+                search_dir = downloads
+
+            elif locate in locate_home:
+                search_dir = home
+                        
+            elif locate in locate_music:
+                search_dir = music
+            
+            elif locate in locate_pictures:
+                search_dir = pictures
+
+            elif locate in locate_videos:
+                search_dir = videos
+
+            elif locate in locate_home:
+                search_dir = home
+
+            else:
+                voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+                search_dir = home
+            
+            voice_io.show("What should be the new name for '{obj_name}")
+            new_name = invoice.inpt()
+                            
+            file_operations.rename(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
+            
     
 def userSetup():
     return_val = True
@@ -197,7 +244,8 @@ def deleteFileUnspecified():
         search_dir = videos
                 
     else:
-        voice_io.show("Selected directory does not exist, please try again!", sound = sound)
+        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+        search_dir = home
                     
     file_operations.deleteFile(file_name = file_name,search_dir = search_dir)
 
@@ -230,7 +278,8 @@ def deleteFolderUnspecified():
         search_dir = videos
                 
     else:
-        voice_io.show("Selected directory does not exist, please try again!", sound = sound)
+        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+        search_dir = home
                     
     file_operations.deleteFolder(folder_name = folder_name,search_dir = search_dir)
 
