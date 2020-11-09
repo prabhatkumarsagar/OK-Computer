@@ -1,8 +1,15 @@
+from bin.get_dirs import FILE_USR_DATA
+import os
+
+from bin import get_dirs
 from bin import clear
-from bin import usr_signup
+if os.path.exists(get_dirs.FILE_USR_DATA):
+    from bin import usr_signup
 
 def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
-    usr_name = usr_signup.main(operation = "fetch", data_type = "name")
+    usr_name = ""
+    if os.path.exists(FILE_USR_DATA):
+        usr_name = usr_signup.main(operation = "fetch", data_type = "name")
     if audio_io:
         from bin import voice_io
         
@@ -35,7 +42,8 @@ def inpt(text = ">>>", sound = False, audio_io = True, iterate = True):
 
                 elif "clear" in entered_data.lower() or entered_data.lower() in "clrcls":
                     clear.clear()
-                    voice_io.show(f"""Hey {usr_name}! 
+                    if os.path.exists(FILE_USR_DATA):
+                        voice_io.show(f"""Hey {usr_name}! 
         
 What would you like me to do?""", sound = sound)
 

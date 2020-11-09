@@ -5,18 +5,20 @@ import getpass
 from bin import get_dirs
 from bin import clear
 from bin import voice_io
+from bin import invoice
 
 voice = True
 
 def setNewUser():
     usr_info_dic={}
     clear.clear()
-    voice_io.show("What shall i call you? ", end = "", sound = voice)
-    nm = input() #Name of the user i.e the name by which the assistant will call him/her
-    voice_io.show("And you are, Master or Miss, master? ", end = "", sound = voice) #Gender of the user which the assistant will refer to again and again
-    gnd = input()
-    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", end = "", sound = voice)#usr email address
-    eml = input()
+    os.mkdir(get_dirs.PATH_USR_DATA)
+    voice_io.show("What shall i call you? ", sound = voice)
+    nm = invoice.inpt() #Name of the user i.e the name by which the assistant will call him/her
+    voice_io.show("And you are, Master or Miss, master? ", sound = voice) #Gender of the user which the assistant will refer to again and again
+    gnd = invoice.inpt()
+    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", sound = voice)#usr email address
+    eml = invoice.inpt()
     pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, sound = voice))#use password
 
     usr_info_dic['name']=nm
@@ -71,9 +73,6 @@ def info_out(x="all"):
     else:
         return False
         f.close()
-
-
-info_out("password")
 
 u=''
 

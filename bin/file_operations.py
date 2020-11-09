@@ -123,7 +123,7 @@ def copy(obj_name, search_dir, dest_dir):
             if choice in count_files - 1:
                 f_name = file_search_results[choice]['file']
                 parent_dir = file_search_results[choice]['root']
-                voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
             
@@ -131,7 +131,7 @@ def copy(obj_name, search_dir, dest_dir):
                 choice -= (count_files - 1)
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
-                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
 
@@ -158,7 +158,7 @@ def copy(obj_name, search_dir, dest_dir):
             try:
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
-                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
 
@@ -185,7 +185,7 @@ def copy(obj_name, search_dir, dest_dir):
             try:
                 f_name = file_search_results[choice]['file']
                 parent_dir = file_search_results[choice]['root']
-                voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}''.....")
+                voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
 
@@ -257,7 +257,7 @@ def rname(obj_name, new_name, search_dir):
             try:
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
-                voice_io.show(f"Renaming folder '{f_name}' from '{parent_dir}' to '{new_name}''.....")
+                voice_io.show(f"Renaming folder '{f_name}' from '{parent_dir}' to '{new_name}'.....")
                 os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
                 voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
 
@@ -269,8 +269,8 @@ def rname(obj_name, new_name, search_dir):
     
     elif file_search_results != []:
         if len(file_search_results) == 1:
-            parent_dir = folder_search_results[0]["root"]
-            f_name = folder_search_results[0]["file"]
+            parent_dir = file_search_results[0]["root"]
+            f_name = file_search_results[0]["file"]
             voice_io.show(f"Renaming file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{new_name}''.....")
             os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
             voice_io.show(f"Successfully renamed '{file_search_results[0]['file']}' to '{new_name}'")
@@ -286,7 +286,7 @@ def rname(obj_name, new_name, search_dir):
             try:
                 f_name = file_search_results[choice]['file']
                 parent_dir = file_search_results[choice]['root']
-                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_name}''.....")
+                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_name}'.....")
                 os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
                 voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
 

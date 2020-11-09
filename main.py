@@ -11,7 +11,7 @@ try:
     from bin import voice_io
     from bin import invoice
 
-except:
+except ModuleNotFoundError:
     from bin import install_packages as ip
     clear.clear()
     print("\nInstalling required packages.....\n")
@@ -136,7 +136,7 @@ What would you like me to do?""", sound = sound)
 
         elif task.lower() in rename:
             search_dir = ""
-            voice_io.show("Which file/folder would you like to delete?", sound = sound)
+            voice_io.show("Which file/folder would you like to rename?", sound = sound)
             obj_name = invoice.inpt()
             voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
             locate = invoice.inpt().lower()
@@ -168,10 +168,10 @@ What would you like me to do?""", sound = sound)
                 voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
                 search_dir = home
             
-            voice_io.show("What should be the new name for '{obj_name}")
+            voice_io.show(f"What should be the new name for '{obj_name}'")
             new_name = invoice.inpt()
                             
-            file_operations.rename(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
+            file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
             
     
 def userSetup():
