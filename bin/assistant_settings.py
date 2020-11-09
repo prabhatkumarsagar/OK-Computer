@@ -1,3 +1,4 @@
+import pickle as pk
 """
 Assistant Voice Settings:
 - assistant voice gender (male/female) **WINDOWS ONLY
@@ -45,9 +46,32 @@ tamil 62
 Mandarin 67
 """
 
-usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'200','vc_lng':'english-us'}
-def ass_settings_default():
-    global usr_ass_settings
+usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us'}
+
+def write():
+    f1=open("assistant_settings.dat","wb+")
+    pk.dump(usr_ass_settings,f1)
+    f1.close()
+#write()
+
+def read():
+    f2=open("assistant_settings.dat","rb+")
+    r=pk.load(f2)
+    print(r)
+    f2.close()
+#read()
+
+def update(x,y):
+    f2=open("assistant_settings.dat","rb+")
+    newc=pk.load(f2)
+    f2.close()
+    f3=open("assistant_settings.dat","wb+")
+    newc[x]=y
+    pk.dump(newc,f3)
+    f3.close()
+#update('vc_gnd','female')
+
+def ass_settings_input():
     def vc_gnd_inp():
         as_vc_gnd=input("Enter the assistant voice gender (Male/Female): ") #DEF=MALE
         vc_gnd1=["male","man","boy","mister"]
@@ -88,11 +112,10 @@ def ass_settings_default():
             vc_lng1=["en-in","english","english india","english united states","english us"]
             if as_vc_lng.lower() in vc_lng1:
                 as_vc_lng="english"
-                as_vc_lng_id=11
+                #as_vc_lng_id=11
                 return as_vc_lng
             else:
                 as_vc_lng="Default"
-                as_vc_lng_id=10
                 return as_vc_lng
         except:
             print("Invalid Input! Please Try Again!")
@@ -102,18 +125,13 @@ def ass_settings_default():
     usr_ass_settings['vc_vol']=vc_vol_inp()
     usr_ass_settings['vc_rate']=vc_rate_inp()
     usr_ass_settings['vc_lng']=vc_lng_inp()
-    print(usr_ass_settings)
-ass_settings_default()
-
-#DISPLAY
-def display():
-    global usr_ass_settings
-    print(usr_ass_settings)
+    write()
+    read()
+#ass_settings_input()
 
 
 #UPDATE
 def ass_settings_update():
-    global usr_ass_settings
     print("What do you wanna update?")
     print("1. Assistant Voice Gender")
     print("2. Assistant Voice Volume")
@@ -122,20 +140,53 @@ def ass_settings_update():
     x=input("Enter Choice: ")
     if x=="1":
         u=input("Enter New Value(Male/Female): ")
-        usr_ass_settings['vc_gnd']=u
-        display()
+        update('vc_gnd',u)
+        read()
     elif x=="2":
         u=float(input("Enter New Value(0-1): "))
-        usr_ass_settings['vc_vol']=u
-        display()
+        update('vc_vol',u)
+        read()
     elif x=="3":
         u=int(input("Enter New Value(Words Per Minute): "))
-        usr_ass_settings['vc_rate']=u
-        display()
+        update('vc_rate',u)
+        read()
     elif x=="4":
         u=input("Enter New Value: ")
-        usr_ass_settings['vc_lng']=u
-        display()
+        update('vc_lng',u)
+        read()
     else:
         print("Invalid Input")
-ass_settings_update()
+#ass_settings_update()
+
+def ass_settings_reset():
+    f4=open("assistant_settings.dat","wb+")
+    pk.dump(usr_ass_settings,f4)
+    f4.close()
+    read()
+#ass_settings_reset()
+
+"""
+while True:
+    print("What do you wanna do?")
+    print("1. New Assistant Settings")
+    print("2. Update Assistant Settings")
+    print("3. Reset Assistant Settings")
+    print("4. Exit")
+    x=input("Enter CHOICE: ")
+    if x=="1":
+        ass_settings_input()
+        break
+    elif x=="2":
+        ass_settings_update()
+        break
+    elif x=="3":
+        ass_settings_reset()
+        break
+    elif x=="4":
+        break
+        exit()
+    else:
+        print("Invalid Input! Please Try Again!")
+        continue
+"""
+#ass_settings_input()

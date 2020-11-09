@@ -4,6 +4,7 @@ import voice_io
 import usr_signup
 import random
 import datetime
+import assistant_settings
 
 #jokes
 def joke():  
@@ -37,8 +38,9 @@ def srvc_help():
 
 #2. Operations Help
 def op_help():
-    print("Hello Hello! What operations do you need help with? (just enter the operation, for example 'news', and i'll tell you its general syntax and what it does too.)")
+    print("Alright, So What operations do you need help with? (just enter the operation, for example 'news', and i'll tell you its general syntax and what it does too.)")
     x=input()
+    x=x.lower()
     if "news" in x:
         print("With the News operation you can ask me to read out the top 15 news headlines of the moment.")
         print("The General Syntax of this operation is: \n")
@@ -121,56 +123,75 @@ def op_help():
         print("")
     else:
         print("Sorry i don't think i can help you with that, make sure you're entering a valid operation name as input, which is supposed to be one of the following: \n")
-        print("1. news")
-        print("2. website")
-        print("3. email")
-        print("4. song")
-        print("5. weather")
-        print("6. time/date")
-        print("7. calculation")
-        print("8. notes/reminders")
-        print("9. joke")
-        print("10. help")
-        print("11. open file")
-        print("12. open folder")
-        print("13. close file")
-        print("14. close folder")
-        print("15. rename file")
-        print("16. rename folder")
-        print("17. delete file")
-        print("18. delete folder")
-        print("19. move file")
-        print("20. move folder")
+        print("1. News")
+        print("2. Website")
+        print("3. Email")
+        print("4. Song")
+        print("5. Weather")
+        print("6. Time/Date")
+        print("7. Calculation")
+        print("8. Notes/Reminders")
+        print("9. Joke")
+        print("10. Help")
+        print("11. Open file")
+        print("12. Open folder")
+        print("13. Close file")
+        print("14. Close folder")
+        print("15. Rename file")
+        print("16. Rename folder")
+        print("17. Delete file")
+        print("18. Delete folder")
+        print("19. Move file")
+        print("20. Move folder")
 
 #3. Python Desktop Assistant Help (pda_help)
-#3.a ass_usr_stngs_update()
-def ass_usr_stng_update():
-    pass
-
-#3.a ass_ui_stngs_update()
-def ass_ui_stng_update():
-    pass
-
-#3.a ass_stngs_reset()
-def ass_stng_reset():
-    pass
-
 def pda_help():
-    print("Select from the following what is it that i can help you with?")
+    print("Select from the following what Assistant Setting can i help you with?")
     print("1. Assistant User Settings Update")
-    print("2. Assistant UI Settings Update")
-    print("3. Assitant Settings Reset")
+    print("2. Assitant User Settings Reset")
+    #print("3. Assistant UI Settings Update")   
     x=input("Enter Choice: ")
     if x=="1":
-        ass_usr_stng_update()
+        assistant_settings.ass_settings_update()
     elif x=="2":
-        ass_ui_stng_update()
-    elif x=="3":
-        ass_stng_reset()
+        assistant_settings.ass_settings_reset()
+    #elif x=="2":
+    #    ass_ui_stng_update() #WILL DO LATER IF TIME AND TANMAY ALLOWS
     else:
         print("Invalid Input! Please make sure you're entering a valid input!")
 
+#feedback()
+def feedback():
+    pass
 #TBDL
+
+def help():
+    while True:
+        print("Hello Hello! What is it that i can help you with, today?")
+        print("1. Assistant Settings")
+        print("2. Assistant Services")
+        print("3. Assistant Operations")
+        print("4. Feedback (Suggest Improvements/Report Bugs/...)")
+        print("5. Exit")
+        x=input("Enter Choice: ")
+        if x=="1":
+            pda_help()
+            continue
+        elif x=="2":
+            srvc_help()
+            continue
+        elif x=="3":
+            op_help()
+            continue
+        elif x=="4":
+            feedback()
+            continue
+        elif x=="5":
+            exit()
+        else:
+            print("Invalid Input! Please Try Again!")
+            continue
+#help()
 
 #greet
 def gnd():
@@ -202,3 +223,4 @@ def greet():
     #tm_hello()
 #greet()
         
+#help()
