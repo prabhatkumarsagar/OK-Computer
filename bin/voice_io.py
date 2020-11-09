@@ -64,7 +64,7 @@ def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
     st = ""
     for i in args:
         st = st + i + sep
-    st = st.strip()
+    st = st.rstrip()
     if sound:
         if show_output:
             print(st, end = end)

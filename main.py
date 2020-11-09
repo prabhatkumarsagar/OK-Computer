@@ -76,7 +76,7 @@ What would you like me to do?""", sound = sound)
 
     while True:
         task = invoice.inpt()
-        
+
         if task.lower() in delete_file_unspecified:
             deleteFileUnspecified()
         
@@ -132,7 +132,7 @@ What would you like me to do?""", sound = sound)
             voice_io.show("Where would you like me to paste it? (Example : Desktop or Desktop/My folder)")
             destination = invoice.inpt()
                             
-            file_operations.copy(obj_name= = obj_name,search_dir = search_dir, dest_dir = destination)
+            file_operations.copy(obj_name = obj_name,search_dir = search_dir, dest_dir = destination)
 
         elif task.lower() in rename:
             search_dir = ""

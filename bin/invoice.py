@@ -42,14 +42,14 @@ What would you like me to do?""", sound = sound)
 
                 elif entered_data.lower() in "exitquitend":
                     print(entered_data.lower() in "exitquitend")
-                    voice_io.show("\n\nBye and have a nice day!", sound = sound)
+                    voice_io.show("\nBye and have a nice day!", sound = sound)
                     exit()
 
                 else:        
                     return entered_data
 
             except KeyboardInterrupt:#exits from the program when ctrl+c is pressed
-                voice_io.show("\n\nBye and have a nice day!", sound = sound)
+                voice_io.show("\nBye and have a nice day!", sound = sound)
                 exit()
             
     else:
