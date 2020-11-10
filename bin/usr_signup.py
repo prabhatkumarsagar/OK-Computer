@@ -1,7 +1,7 @@
 import pickle as pk
 import os
 import getpass
-
+import webbrowser
 from bin import get_dirs
 from bin import clear
 from bin import voice_io
@@ -13,13 +13,21 @@ def setNewUser():
     usr_info_dic={}
     clear.clear()
 
-    voice_io.show("What shall i call you? ", sound = sound)
+    voice_io.show("What shall i call you Master? ", sound = sound)
     nm = invoice.inpt() #Name of the user i.e the name by which the assistant will call him/her
     voice_io.show("And you are, Master or Miss, master? ", sound = sound) #Gender of the user which the assistant will refer to again and again
     gnd = invoice.inpt()
-    voice_io.show("Now What would be your email? (incase i run into some errors and you feel like reporting and blah blah) ", sound = sound)#usr email address
+    voice_io.show("Now What would be your email address? I will be needing this for my email operations so that i can help you with sending automated emails to others without you lifting a finger and also for helping you send feedback to my developers regarding bugs or minor issues, which i would hope doesn't happen :D", sound = sound)#usr email address
     eml = invoice.inpt()
-    pswd = getpass.getpass(voice_io.show("And lastly please set up a password (incase you want to tweak stuff around later on you'll be needing this) ",show_output = False, sound = sound) + "\nPassword :")#use password
+    pswd = getpass.getpass(voice_io.show("And lastly what is your email password? Note: All these personal information is stored only and only on your local machine and hence there's no way i can compromise your data, In short you can trust me ;) ",show_output = False, sound = sound) + "\nPassword :")#use password
+    voice_io.show("Regarding email operations, please note that for properly executing them you will have to make sure to turn on \"Less Secure Apps\" for your google account.", sound = sound)
+    voice_io.show("Which if you want to do now, please enter 'YES' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account right away and just by clicking on that the program will be good to go! Otherwise enter 'NO' and you can always do it later in assistant settings.", sound = sound)
+    ch = invoice.inpt()
+    if ch.lower()=="yes":
+        print("Okay! Here you go!")
+        webbrowser.open("https://myaccount.google.com/lesssecureapps?")
+    elif ch.lower()=="no" or ch.lower()=="":
+        print("Alright!")
 
     usr_info_dic['name']=nm
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
@@ -37,6 +45,7 @@ def setNewUser():
     usr_info_dic['email']=eml
     usr_info_dic['password']=pswd
     info_in(usr_info_dic)
+    
 #print(usr_info_dic)
 
 def info_in(x):
@@ -122,7 +131,7 @@ def info_update():
             in_upd_entr()
         elif ch=='5':
             print("Sorry but i currently cannot update all the values at once! please try doing it separately!")
-            break
+            return
         elif ch=='6':
             break
         else:

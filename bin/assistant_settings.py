@@ -189,4 +189,6 @@ while True:
         print("Invalid Input! Please Try Again!")
         continue
 """
-#ass_settings_input()
+
+def first_run():
+    ass_settings_input()

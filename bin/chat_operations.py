@@ -155,7 +155,7 @@ def pda_help():
         assistant_settings.ass_settings_update()
     elif x=="2":
         assistant_settings.ass_settings_reset()
-    #elif x=="2":
+    #elif x=="3":
     #    ass_ui_stng_update() #WILL DO LATER IF TIME AND TANMAY ALLOWS
     else:
         print("Invalid Input! Please make sure you're entering a valid input!")
