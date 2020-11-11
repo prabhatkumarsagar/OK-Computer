@@ -125,7 +125,7 @@ def copy(obj_name, search_dir, dest_dir):
                 parent_dir = file_search_results[choice]['root']
                 voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
-                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
             
             elif choice - (count_files - 1) in count_folders - 1:
                 choice -= (count_files - 1)
@@ -133,7 +133,7 @@ def copy(obj_name, search_dir, dest_dir):
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
-                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
 
             else:
                 voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
@@ -145,7 +145,7 @@ def copy(obj_name, search_dir, dest_dir):
         if len(folder_search_results) == 1:
             voice_io.show(f"Copying folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{dest_dir}'.....")
             shutil.copy2(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
-            voice_io.show(f"Successfully copied '{folder_search_results[0]['file']}' to '{dest_dir}'")
+            voice_io.show(f"Successfully copied '{folder_search_results[0]['file']}' to '{dest_dir}'!")
         
         else:
             sno = 0
@@ -160,7 +160,7 @@ def copy(obj_name, search_dir, dest_dir):
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
-                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
 
             except IndexError:
                 voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
@@ -172,7 +172,7 @@ def copy(obj_name, search_dir, dest_dir):
         if len(file_search_results) == 1:
             voice_io.show(f"Copying file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{dest_dir}''.....")
             shutil.copy2(file_search_results[0]["root"] + "/" + file_search_results[0]["file"], dest_dir)
-            voice_io.show(f"Successfully copied '{file_search_results[0]['file']}' to '{dest_dir}'")
+            voice_io.show(f"Successfully copied '{file_search_results[0]['file']}' to '{dest_dir}'!")
 
         else:
             sno = 0
@@ -187,7 +187,7 @@ def copy(obj_name, search_dir, dest_dir):
                 parent_dir = file_search_results[choice]['root']
                 voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
-                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'")
+                voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
 
             except IndexError:
                 voice_io.show("Copying failed : Sorry, but the entered number is not within the range of available options.")
@@ -201,6 +201,11 @@ def copy(obj_name, search_dir, dest_dir):
 def rname(obj_name, new_name, search_dir):
     folder_search_results = folderSearch(obj_name, search_dir)
     file_search_results = fileSearch(obj_name, search_dir)
+    new_file_name = ""
+    new_ext = ""
+    old_file_name = ""
+    old_ext = ""
+    
     if folder_search_results != [] and file_search_results != 0:
         count_files = len(file_search_results)
         count_folders = len(folder_search_results)
@@ -217,12 +222,30 @@ def rname(obj_name, new_name, search_dir):
         choice = int(invoice.inpt())
         choice -= 1
         try:
-            if choice in count_files - 1:
+            if choice in count_files - 1:                
                 f_name = file_search_results[choice]['file']
+                new_name = new_name.split('.')
+                new_file_name = new_name[0]
+                if len(new_name) > 2:
+                    for i in range(1, len(new_name) - 2):
+                        new_file_name += "." + new_name[i]
+                
+                if len(new_name) > 1:
+                    new_ext = new_name[len(new_name) - 1]
+                    if new_ext == new_file_name:
+                        new_ext = ""
+
+                if len(f_name.split(".")) > 1:
+                    old_ext = f_name.split(".")[len(f_name.split(".")) - 1]
+                    if new_ext == "" and old_ext != f_name.split('.')[0]:
+                        new_ext = old_ext
+
+                new_full_name = new_file_name + "." + new_ext
+
                 parent_dir = file_search_results[choice]['root']
-                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_name}''.....")
-                os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
+                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_full_name}'.....")
+                os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_full_name)
+                voice_io.show(f"Successfully renamed '{f_name}' to '{new_full_name}'!")
             
             elif choice - (count_files - 1) in count_folders - 1:
                 choice -= (count_files - 1)
@@ -230,7 +253,7 @@ def rname(obj_name, new_name, search_dir):
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Renaming folder '{f_name}' from '{parent_dir}' to '{new_name}''.....")
                 os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
+                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'!")
 
             else:
                 voice_io.show("Renaming failed : Sorry, but the entered number is not within the range of available options.")
@@ -244,7 +267,7 @@ def rname(obj_name, new_name, search_dir):
             f_name = folder_search_results[0]["folder"]
             voice_io.show(f"Renaming folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{new_name}'.....")
             os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-            voice_io.show(f"Successfully renamed '{folder_search_results[0]['file']}' to '{new_name}'")
+            voice_io.show(f"Successfully renamed '{folder_search_results[0]['file']}' to '{new_name}'!")
         
         else:
             sno = 0
@@ -259,7 +282,7 @@ def rname(obj_name, new_name, search_dir):
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Renaming folder '{f_name}' from '{parent_dir}' to '{new_name}'.....")
                 os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
+                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'!")
 
             except IndexError:
                 voice_io.show("Renaming failed : Sorry, but the entered number is not within the range of available options.")
@@ -271,9 +294,27 @@ def rname(obj_name, new_name, search_dir):
         if len(file_search_results) == 1:
             parent_dir = file_search_results[0]["root"]
             f_name = file_search_results[0]["file"]
-            voice_io.show(f"Renaming file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{new_name}''.....")
-            os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-            voice_io.show(f"Successfully renamed '{file_search_results[0]['file']}' to '{new_name}'")
+            new_name = new_name.split('.')
+            new_file_name = new_name[0]
+            if len(new_name) > 2:
+                for i in range(1, len(new_name) - 2):
+                    new_file_name += "." + new_name[i]
+
+            if len(new_name) > 1:
+                new_ext = new_name[len(new_name) - 1]
+                if new_ext == new_file_name:
+                    new_ext = ""
+            
+            if len(f_name.split(".")) > 1:
+                old_ext = f_name.split(".")[len(f_name.split(".")) - 1]
+                if new_ext == "" and old_ext != f_name.split('.')[0]:
+                    new_ext = old_ext
+                
+            new_full_name = new_file_name + "." + new_ext
+
+            voice_io.show(f"Renaming file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{new_full_name}''.....")
+            os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_full_name)
+            voice_io.show(f"Successfully renamed '{file_search_results[0]['file']}' to '{new_full_name}'!")
 
         else:
             sno = 0
@@ -285,10 +326,28 @@ def rname(obj_name, new_name, search_dir):
             choice -= 1
             try:
                 f_name = file_search_results[choice]['file']
+                new_name = new_name.split('.')
+                new_file_name = new_name[0]
+                if len(new_name) > 2:
+                    for i in range(1, len(new_name) - 2):
+                        new_file_name += "." + new_name[i]
+
+                if len(new_name) > 1:
+                    new_ext = new_name[len(new_name) - 1]
+                    if new_ext == new_file_name:
+                        new_ext = ""
+                
+                if len(f_name.split(".")) > 1:
+                    old_ext = f_name.split(".")[len(f_name.split(".")) - 1]
+                    if new_ext == "" and old_ext != f_name.split('.')[0]:
+                        new_ext = old_ext
+                    
+                new_full_name = new_file_name + "." + new_ext
+
                 parent_dir = file_search_results[choice]['root']
-                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_name}'.....")
-                os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-                voice_io.show(f"Successfully renamed '{f_name}' to '{new_name}'")
+                voice_io.show(f"Renaming file '{f_name}' from '{parent_dir}' to '{new_full_name}'.....")
+                os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_full_name)
+                voice_io.show(f"Successfully renamed '{f_name}' to '{new_full_name}'!")
 
             except IndexError:
                 voice_io.show("Renaming failed : Sorry, but the entered number is not within the range of available options.")

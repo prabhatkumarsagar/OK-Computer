@@ -168,7 +168,7 @@ What would you like me to do?""", sound = sound)
                 voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
                 search_dir = home
             
-            voice_io.show(f"What should be the new name for '{obj_name}'")
+            voice_io.show(f"What should be the new name for '{obj_name}'?")
             new_name = invoice.inpt()
                             
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)

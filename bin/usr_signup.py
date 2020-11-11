@@ -2,14 +2,14 @@ import pickle as pk
 import os
 import getpass
 import webbrowser
-#from bin import get_dirs
-#from bin import clear
-#from bin import voice_io
-#from bin import invoice
-import get_dirs
-import clear
-import voice_io
-import invoice
+from bin import get_dirs
+from bin import clear
+from bin import voice_io
+from bin import invoice
+#import get_dirs
+#import clear
+#import voice_io
+#import invoice
 sound = False
 #sound = True
 

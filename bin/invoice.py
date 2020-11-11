@@ -1,21 +1,21 @@
 #from bin.get_dirs import FILE_USR_DATA
-from get_dirs import FILE_USR_DATA
+from bin.get_dirs import FILE_USR_DATA
 import os
 
-#from bin import get_dirs
-#from bin import clear
-import get_dirs
-import clear
+from bin import get_dirs
+from bin import clear
+#import get_dirs
+#import clear
 
 def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
     usr_name = ""
     if os.path.exists(FILE_USR_DATA):
-        #from bin import usr_signup
-        import usr_signup
+        from bin import usr_signup
+        #import usr_signup
         usr_name = usr_signup.main(operation = "fetch", data_type = "name")
     if audio_io:
-        #from bin import voice_io
-        import voice_io
+        from bin import voice_io
+        #import voice_io
         
         while True:
             try:
