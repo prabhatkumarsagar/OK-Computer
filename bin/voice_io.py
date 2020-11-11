@@ -9,8 +9,8 @@ import pyttsx3
 import pyaudio
 import bs4
 import speech_recognition as sr
-
-from bin import get_dirs
+import get_dirs
+#from bin import get_dirs
 
 def is_connected():
     try:

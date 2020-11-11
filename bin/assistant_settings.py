@@ -137,6 +137,7 @@ def ass_settings_update():
     print("2. Assistant Voice Volume")
     print("3. Assistant Voice Rate")
     print("4. Assistant Voice Language")
+    print("5. ")
     x=input("Enter Choice: ")
     if x=="1":
         u=input("Enter New Value(Male/Female): ")

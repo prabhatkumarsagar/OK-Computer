@@ -5,6 +5,7 @@ import usr_signup
 import random
 import datetime
 import assistant_settings
+import mailer
 
 #jokes
 def joke():  
@@ -147,23 +148,24 @@ def op_help():
 #3. Python Desktop Assistant Help (pda_help)
 def pda_help():
     print("Select from the following what Assistant Setting can i help you with?")
-    print("1. Assistant User Settings Update")
-    print("2. Assitant User Settings Reset")
+    print("1. Assistant Settings Update")
+    print("2. Assitant Settings Reset")
+    print("3. User Data Update") 
     #print("3. Assistant UI Settings Update")   
     x=input("Enter Choice: ")
     if x=="1":
         assistant_settings.ass_settings_update()
     elif x=="2":
         assistant_settings.ass_settings_reset()
-    #elif x=="3":
-    #    ass_ui_stng_update() #WILL DO LATER IF TIME AND TANMAY ALLOWS
+    elif x=="3":
+        usr_signup.info_update()
     else:
         print("Invalid Input! Please make sure you're entering a valid input!")
 
 #feedback()
 def feedback():
-    pass
-#TBDL
+    mailer.feedback_sender()
+
 
 def help():
     while True:
@@ -219,8 +221,13 @@ def greet():
         else:
             tm="Evening"
         print("Good",tm,gnd)
+
+    def talk():
+        pass
+    #tbdl
         
     #tm_hello()
 #greet()
         
 #help()
+feedback()

@@ -16,6 +16,5 @@ PICTURES = HOME + "/Pictures"
 VIDEOS = HOME + "/Videos"
 
 #Assistant data directories
-	
 PATH_USR_DATA = HOME + "/Documents/python_assistant_userdata/"
 FILE_USR_DATA = HOME + "/Documents/python_assistant_userdata/user_info.dat"
