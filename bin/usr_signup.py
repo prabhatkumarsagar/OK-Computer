@@ -46,8 +46,11 @@ def setNewUser():
     usr_info_dic['email']=eml
     usr_info_dic['password']=pswd
     info_in(usr_info_dic)
-    print(usr_info_dic)
-    exit()
+    print("Well then now you're good to go!")
+    if __name__ == "__main__":
+        exit()
+    else:
+        return
 
 def info_in(x):
     f1=open("./usr_info.dat",'wb+')

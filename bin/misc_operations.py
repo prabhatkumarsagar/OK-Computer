@@ -7,6 +7,7 @@ import datetime
 import wolframalpha
 import webbrowser
 import smtplib
+import mailer
 from urllib import request
 from bs4 import BeautifulSoup as soup
 #import vlc #pip install python-vlc
@@ -182,42 +183,8 @@ def datentime():
 #Send Emails
 
 def sendEmail(): 
-    #THIS IS FUCKIN BIBLICAL MATE, IT MIGHT AND MIGHTN'T WORK DEPENDING ON THE FUCKIN EMAIL SERVER AND THE SENDER'S EMAIL SECURITY SO IN SHORT WE NEED AN ALTERNATIVE OR MAYBE WE CAN JUST EXTERMINATE THIS CHARADE ALL THE SAME.
-    try:
-        sender=input("Enter your email: ")
-        sender_pass=input("Enter you email's password: ")
-        recipient=input("Enter the recepient's email: ")
-        content=input("Enter the content of the email to be sent: ")
-        mail = smtplib.SMTP('smtp.gmail.com', 587)
-        mail.ehlo()
-        mail.starttls()
-        mail.login(sender,sender_pass)
-        mail.sendmail(sender,recipient,content)
-        mail.close()
-        print('Email has been sent successfuly. You can check your inbox.')
-    except:
-        print("Sorry it looks like i'm having trouble doing that right now, maybe try again later.")
+    mailer.mail_sender()
     
-"""
-    x=input("Enter your email address: ")
-    y=input("Enter email password: ")
-    server = smtplib.SMTP('smtp.gmail.com', 587) 
-    server.ehlo() 
-    server.starttls() 
-    server.login(x,y) 
-    server.sendmail(x, to, content) 
-    server.close() 
-
-try: 
-    u=input("What should I say? ")  
-    z=input(" ") 
-    sendEmail(z, u) 
-    print("Email has been sent !") 
-except Exception as e: 
-    print(e) 
-    print("I am not able to send this email") 
-"""
-
 #sendEmail()
 
 #Play Offline/Online Songs
@@ -332,5 +299,3 @@ def news():
             print("Sorry couldn't fetch records, maybe try again later.")
         
 #news()
-
-

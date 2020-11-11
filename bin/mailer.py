@@ -4,59 +4,49 @@ import usr_signup
 
 def sendMail(sndr_mail,sndr_pw,rcpnt,msg_sub,msg_body):
     with smtplib.SMTP('smtp.gmail.com',587) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login(sndr_mail, sndr_pw)
-        subject=msg_sub
-        body=msg_body
-        msg=f'Subject: {subject}\n\n{body}'
         try:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login(sndr_mail, sndr_pw)
+            subject=msg_sub
+            body=msg_body
+            msg=f'Subject: {subject}\n\n{body}'
             smtp.sendmail(sndr_mail,rcpnt,msg)
             print("Email Sent Successfully!")
         except:
-            print("Connection to the email server was unsuccessful! Please check the account credentials and also make sure that \"Less Secure Apps\" for your google account is turned on in order for the program to function! Please Note that we do not save your account info to ourselves and hence we cannot possibly compromise your information but that cannot be said for other 'less secure apps', hence it's solely your call. P.S. we'd soon update the email operation to work more safely and securely, so if you don't mind you can wait for future updates.")
-            y=input("But if you're okay with all of this, enter 'YES' or 'OK' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account and just by clicking on that the program will be good to go! Else enter 'NO' and act wise!")
-            if y.lower()=="yes" or y.lower()=="ok" or y.lower()=="okay":
+            print("Uh-oh! It looks like i ran into some trouble doing that, my best guess would be that, either your email credentials don't work, which if is the case then you can always go to the help section and to the user data one and update your email and/or password, or maybe you're just entering a wrong recepient's email, or, and this one is a big OR, \"Less Secure Apps\" is not turned on for your google account!\n")
+            y=input("Which if you want i can do it for you now, just enter 'YES' or 'OK' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account and just by doing that, the program will be good to go! Otherwise enter 'NO' and you can always do it later. (If you've already have that turned on, please ignore this by entering 'NO' and check whether your problem is one of the other potential problems that i've mentioned) \n>>> ")
+            if y.lower()=="yes" or y.lower()=="ok" or y.lower()=="okay" or y.lower()=="":
                 print("Great! Here you go!")
                 webbrowser.open("https://myaccount.google.com/lesssecureapps?")
                 return
             elif y.lower()=="no" or y.lower()=="nope":
-                print("Alright!")
+                print("Alright then later it is!")
                 return
 
 
 def mail_sender():
     sender=usr_signup.info_out("email")
-    if sender=="":
-        print("Hey you haven't told me your email yet, you might wanna do it first if you want to proceed with this operation.")
-        return
     sender_pass=usr_signup.info_out("password")
     recepient=input("Enter the recepient's email: ")
     x=input("Will there be a subject in the email? ")
-    x_n=["no","not really","nope","nah",""]
-    x_y=["yes","yep","yeas","yeah"]
-    if x.lower() in x_n:
-        print("Alright, no subject it is, so enter the body of the email to be sent!")
-        sub=""
-        body=input("Here: ")
-    elif x.lower() in x_y:
+    x_y=["yes","yep","yeas","yeah","yeap"]
+    if x.lower() in x_y:
         print("Alright, enter the subject of the email then!")
         sub=input("Here: ")
-        print("and now the body!")
+        print("and the body!")
+        body=input("Here: ")  
+    else:
+        print("Alright then, no subject it is, enter the body of the email though!")
+        sub=""
         body=input("Here: ")
-    try:
-        sendMail(sender,sender_pass,recepient,sub,body)
-    except:
-        print("Uh-oh! It looks like i ran into some trouble doing that, you mind doing it later?")
+    sendMail(sender,sender_pass,recepient,sub,body)
 
 #mail_sender()
 
 def feedback_sender():
     sender=usr_signup.info_out("email")
-    if sender=="":
-        print("Hey you haven't told me your email yet, you might wanna do it first if you want to proceed with this operation.")
-        return
     sender_pass=usr_signup.info_out("password")
     def pda_feedback(x,y):
         sendMail(sender,sender_pass,["sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com","duttashaan107@gmail.com","duttashaan102@gmail.com"],x,y)
