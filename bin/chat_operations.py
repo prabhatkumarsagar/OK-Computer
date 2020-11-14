@@ -250,5 +250,48 @@ def greet():
     #tm_hello()
     
 #greet()  
-#help()
-#feedback()
+
+#chat
+#query=input("What you say: ")
+def chat(query):
+    query=query.lower()
+    if "hello" in query:
+        gnd_hello()
+        return
+    elif "good" in query:
+        tm_hello()
+        return
+    elif "who are you" in query or "tell me about yourself" in query:
+        print("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or not, hehe. ")
+        return
+    elif "who made you" in query or "who is your developer" in query or "who's your creator" in query or "who's your maker" in query or "who created you" or "who's your daddy" in query:
+        print("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their Computer Science School Project. Would you like to know more about them?")
+        x=input()
+        x=x.lower()
+        if "yes" in x or "ok" in x or "yeah" in x:
+            print("Alright!")
+            webbrowser.open("https://github.com/prabhatkumarsagar")
+            webbrowser.open("https://github.com/DuttaAB-dev")
+            return
+        elif "no" in x or "nope" in x or "not" in x:
+            print("Alright!")
+            return
+        else:
+            return
+
+    elif "how are you" in query or "how do you do" in query or "how you doing" in query:
+        print("Oh I am Grand, How are you master?")
+        x=input()
+        x=x.lower()
+        if "good" in x or "great" in x or "fine" in x or "well" in x or "grand" in x or "nice" in x or "ok" in x or "okay" in x:
+            print("Good to hear! Keep having fun!")
+            return
+        else:
+            print("Well everything will be good soon, just keep smiling, it suits you.")
+            return
+    else:
+        print("Well well well, i don't think i can help you with that?")
+        return
+
+
+#chat("heElO bitch")
