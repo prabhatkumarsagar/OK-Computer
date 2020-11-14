@@ -22,8 +22,8 @@ def setup():
         else:
             if name == "pyaudio":
                 if os.name == "posix":
-                    print("Your system is missing the python package PyAudio which is required by this program for voice functions.")
-                    print("Please install 'python3-pyaudio' manually from your distro repos and run this program again.")
+                     voice_io.show("Your system is missing the python package PyAudio which is required by this program for voice functions.")
+                     voice_io.show("Please install 'python3-pyaudio' manually from your distro repos and run this program again.")
                     return False
             sub.check_output(commands[name], shell = True)
     return True

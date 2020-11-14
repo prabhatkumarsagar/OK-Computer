@@ -20,7 +20,7 @@ def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
         while True:
             try:
                 entered_data = input(text)
-                #print("input = ",entered_data)
+                # voice_io.show("input = ",entered_data)
                 
                 if entered_data == "voice":
                     i = 0
@@ -29,7 +29,7 @@ def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
                         try:
                             voice_io.show("I am listening......", sound = sound)
                             voice_data = entered_data = voice_io.voice_in()
-                            print(voice_data)
+                             voice_io.show(voice_data)
                             i += 1
                             if i >= 1:
                                 voice_io.show("\nSorry, could not get that! Please try again..\n", sound = sound)
@@ -53,7 +53,7 @@ What would you like me to do?""", sound = sound)
 
 
                 elif entered_data.lower() in "exitquitend":
-                    print(entered_data.lower() in "exitquitend")
+                     voice_io.show(entered_data.lower() in "exitquitend")
                     voice_io.show("\nBye and have a nice day!", sound = sound)
                     exit()
 

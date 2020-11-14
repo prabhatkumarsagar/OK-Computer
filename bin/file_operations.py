@@ -358,8 +358,21 @@ def rname(obj_name, new_name, search_dir):
     else:
         voice_io.show("Sorry, could not find file/folder '{obj_name}'!")
 
-def createFile(self):
-    pass
+def createFile(f_name, path, type):
+    path = get_dirs.HOME + '/' + path
+    os.mkdir(path)
+    if type == "txt":
+        f = open(f_name + ".txt", "w")
+        f.close()
+    
+    if type == "doc":
+        f = open(f_name + ".docx", "w")
+        f.close()
 
-def createFolder(self):
-    pass
+    if type == "ppt":
+        f = open(f_name + ".pptx", "w")
+        f.close()
+    
+    if type == "sheet":
+        f = open(f_name + ".xls", "w")
+        f.close()
