@@ -3,6 +3,7 @@ import os
 import requests 
 import datetime
 import webbrowser
+import random
 
 from bin import get_dirs
 from bin import clear
@@ -50,7 +51,7 @@ delete_general = ["delete", "del", "remove", "erase", "rm"]
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"]
 copy = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
 rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
-
+help = []
 #chat operation commands
 joke = ["tell me a joke", "tell a joke", "joke", "make me laugh", "make laugh", "say a joke", "say me a joke"]
 
@@ -63,6 +64,7 @@ locate_videos = ["6"]
 locate_home = ["7"]
 
 sound = False
+usr_name = ""
 
 def main():
     global sound
@@ -75,14 +77,13 @@ def main():
     else:
         sound = userSetup()
 
+    global usr_name
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
 
-    clear.clear()
-    voice_io.show(f"""Hey {usr_name}! 
-        
-What would you like me to do?""", sound = sound)
+    gnd_ns()
 
     while True:
+        clear.clear()
         task = invoice.inpt()
 
         if task.lower() in delete_file_unspecified:
@@ -102,7 +103,9 @@ What would you like me to do?""", sound = sound)
             else:
                 voice_io.show("Oops! it looks like i ran out of my jokes, why don't you try again later.")
 
-
+        elif task == "clear":
+            gnd_ns()
+            continue
 
         elif task.lower() in delete_general:
             voice_io.show(f"What do you want to {task}, a file or a folder?")
@@ -115,36 +118,7 @@ What would you like me to do?""", sound = sound)
 
             else:
                 voice_io.show("Unable to understand your command, please try again with the proper command.", sound = sound)
-
-        elif task.lower() in help:
-            while True:
-                voice_io.show("Hello Hello! What is it that i can help you with, today?")
-                voice_io.show("1. Assistant Settings")
-                voice_io.show("2. Assistant Services")
-                voice_io.show("3. Assistant Operations")
-                voice_io.show("4. Feedback (Suggest Improvements/Report Bugs/...)")
-                voice_io.show("5. Exit")
-                x=input("Enter Choice: ")
-                if x=="1":
-                    pda_help()
-                    continue
-                elif x=="2":
-                    srvc_help()
-                    continue
-                elif x=="3":
-                    op_help()
-                    continue
-                elif x=="4":
-                    feedback()
-                    continue
-                elif x=="5":
-                    exit()
-                else:
-                    voice_io.show("Invalid Input! Please Try Again!")
-                    continue
-
-
-
+                
         elif task.lower() in rename:
             search_dir = ""
             voice_io.show("Which file/folder would you like to rename?", sound = sound)
@@ -184,6 +158,31 @@ What would you like me to do?""", sound = sound)
                             
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
             
+        elif task.lower() in help:
+                voice_io.show("Hello Hello! What is it that i can help you with, today?")
+                voice_io.show("1. Assistant Settings")
+                voice_io.show("2. Assistant Services")
+                voice_io.show("3. Assistant Operations")
+                voice_io.show("4. Feedback (Suggest Improvements/Report Bugs/...)")
+                voice_io.show("5. Exit")
+                x=input("Enter Choice: ")
+                if x=="1":
+                    pda_help()
+                    
+                elif x=="2":
+                    srvc_help()
+                    
+                elif x=="3":
+                    op_help()
+                    
+                elif x=="4":
+                    feedback()
+                    
+                elif x=="5":
+                    exit()
+                else:
+                    voice_io.show("Invalid Input! Please Try Again!")
+    
     
 def userSetup():
     return_val = True
@@ -462,8 +461,14 @@ def gnd():
 gnd=gnd()
 
 def gnd_hello(): 
-    voice_io.show("Hello "+gnd)
+    voice_io.show("Hello "+ gnd + usr_name, sound = sound)
     return
+
+def gnd_ns():# greeting on a new session
+    voice_io.show(f"""Hey {gnd} {usr_name}! 
+            
+What would you like me to do?
+""", sound = sound)
 
 def tm_hello():
     time=datetime.datetime.now().strftime("%H")  
@@ -474,7 +479,7 @@ def tm_hello():
         tm="Afternoon"
     else:
         tm="Evening"
-    voice_io.show("Good",tm,gnd)
+    voice_io.show("Good",tm,gnd, sound = sound)
 
 
 main()

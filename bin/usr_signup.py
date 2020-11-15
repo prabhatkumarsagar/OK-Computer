@@ -27,10 +27,10 @@ def setNewUser():
     ch = invoice.inpt()
 
     if ch.lower()=="yes":
-         voice_io.show("Okay! Here you go!")
+        voice_io.show("Okay! Here you go!")
         webbrowser.open("https://myaccount.google.com/lesssecureapps?")
     elif ch.lower()=="no" or ch.lower()=="":
-         voice_io.show("Alright!")
+        voice_io.show("Alright!")
     
     usr_info_dic['name']=nm
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
@@ -46,7 +46,7 @@ def setNewUser():
     usr_info_dic['email']=eml
     usr_info_dic['password']=pswd
     info_in(usr_info_dic)
-     voice_io.show("Well then now you're good to go!")
+    voice_io.show("Well then now you're good to go!")
     if __name__ == "__main__":
         exit()
     else:
@@ -117,12 +117,12 @@ def in_upd_entr():
 def info_update():
     global u
     while True:
-         voice_io.show("What do you wanna Update?")
-         voice_io.show("1. Name")
-         voice_io.show("2. Gender")
-         voice_io.show("3. Email")
-         voice_io.show("4. Password")
-         voice_io.show("5. Nothing (Exit)")
+        voice_io.show("What do you wanna Update?")
+        voice_io.show("1. Name")
+        voice_io.show("2. Gender")
+        voice_io.show("3. Email")
+        voice_io.show("4. Password")
+        voice_io.show("5. Nothing (Exit)")
         ch=input("What entry do you want to update? ")
         if ch=='1':
             u='name'
@@ -143,9 +143,9 @@ def info_update():
         elif ch=='5':
             return
         else:
-             voice_io.show("Invalid Input!")
+            voice_io.show("Invalid Input!")
             return
-     voice_io.show("Data Updated Successfully!")
+    voice_io.show("Data Updated Successfully!")
 
 def main(**kwargs):
     global sound

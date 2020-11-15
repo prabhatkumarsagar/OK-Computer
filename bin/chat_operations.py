@@ -1,4 +1,8 @@
 #chat operations go here!
+
+"""please note that all of the operations here has been migrated to the main.py file.
+Thus any further modifications must be done in that file for convenience sake!"""
+
 import random
 import datetime
 import requests
@@ -256,10 +260,10 @@ def greet():
 def chat(query):
     query=query.lower()
     if "hello" in query:
-        gnd_hello()
+        greet.gnd_hello()
         return
     elif "good" in query:
-        tm_hello()
+        greet.tm_hello()
         return
     elif "who are you" in query or "tell me about yourself" in query:
         print("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or not, hehe. ")
