@@ -67,9 +67,9 @@ def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
     st = st.rstrip()
     if sound:
         if show_output:
-             voice_io.show(st, end = end)
+            print(st, end = end)
         voice_out(st)
     else:
         if show_output:
-             voice_io.show(st, end = end, sep = sep)
+            print(st, end = end, sep = sep)
     return st

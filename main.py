@@ -80,10 +80,10 @@ def main():
     global usr_name
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
 
+    clear.clear()
     gnd_ns()
 
     while True:
-        clear.clear()
         task = invoice.inpt()
 
         if task.lower() in delete_file_unspecified:
@@ -104,8 +104,8 @@ def main():
                 voice_io.show("Oops! it looks like i ran out of my jokes, why don't you try again later.")
 
         elif task == "clear":
+            clear.clear()
             gnd_ns()
-            continue
 
         elif task.lower() in delete_general:
             voice_io.show(f"What do you want to {task}, a file or a folder?")

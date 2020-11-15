@@ -1,4 +1,5 @@
 import pickle as pk
+from bin import voice_io
 """
 Assistant Voice Settings:
 - assistant voice gender (male/female) **WINDOWS ONLY
@@ -25,7 +26,7 @@ import pyttsx3
 engine=pyttsx3.init()
 voices=engine.getProperty('voices') 
 for i in range(len(voices)):
-     voice_io.show(voices[i])
+    voice_io.show(voices[i])
 engine.setProperty('voice',voices=="english")
 engine.say("the quick brown fox jumped over the lazy dog")
 engine.runAndWait()
@@ -57,7 +58,7 @@ def write():
 def read():
     f2=open("assistant_settings.dat","rb+")
     r=pk.load(f2)
-     voice_io.show(r)
+    voice_io.show(r)
     f2.close()
 #read()
 
@@ -81,7 +82,7 @@ def ass_settings_input():
         elif as_vc_gnd in vc_gnd2:
             return "Female"
         else:
-             voice_io.show("Invalid Input! Please Try Again!")
+            voice_io.show("Invalid Input! Please Try Again!")
             vc_gnd_inp()
     #vc_gnd_inp()
 
@@ -91,10 +92,10 @@ def ass_settings_input():
             if as_vc_vol >= 0 and as_vc_vol <= 1:
                 return as_vc_vol
             else:
-                 voice_io.show("Invalid Input! Please Try Again!")
+                voice_io.show("Invalid Input! Please Try Again!")
                 return vc_vol_inp()
         except:
-             voice_io.show("Invalid Input! Please Try Again!")
+            voice_io.show("Invalid Input! Please Try Again!")
     #vc_vol_inp()
 
     def vc_rate_inp():
@@ -102,7 +103,7 @@ def ass_settings_input():
             as_vc_rate=int(input("Enter the assistant voice rate (Words per minute): ")) #DEF=200 wpm
             return as_vc_rate
         except:
-             voice_io.show("Invalid Input! Please Try Again!")
+            voice_io.show("Invalid Input! Please Try Again!")
             return vc_rate_inp()
     #vc_rate_inp()
 
@@ -118,7 +119,7 @@ def ass_settings_input():
                 as_vc_lng="Default"
                 return as_vc_lng
         except:
-             voice_io.show("Invalid Input! Please Try Again!")
+            voice_io.show("Invalid Input! Please Try Again!")
             vc_lng_inp()
     #vc_lng_inp()
     usr_ass_settings['vc_gnd']=vc_gnd_inp()
@@ -132,12 +133,12 @@ def ass_settings_input():
 
 #UPDATE
 def ass_settings_update():
-     voice_io.show("What do you wanna update?")
-     voice_io.show("1. Assistant Voice Gender")
-     voice_io.show("2. Assistant Voice Volume")
-     voice_io.show("3. Assistant Voice Rate")
-     voice_io.show("4. Assistant Voice Language")
-     voice_io.show("5. ")
+    voice_io.show("What do you wanna update?")
+    voice_io.show("1. Assistant Voice Gender")
+    voice_io.show("2. Assistant Voice Volume")
+    voice_io.show("3. Assistant Voice Rate")
+    voice_io.show("4. Assistant Voice Language")
+    voice_io.show("5. ")
     x=input("Enter Choice: ")
     if x=="1":
         u=input("Enter New Value(Male/Female): ")
@@ -156,7 +157,7 @@ def ass_settings_update():
         update('vc_lng',u)
         read()
     else:
-         voice_io.show("Invalid Input")
+        voice_io.show("Invalid Input")
 #ass_settings_update()
 
 def ass_settings_reset():
