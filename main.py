@@ -19,21 +19,22 @@ if not os.path.exists(get_dirs.PATH_USR_DATA):
 
     os.mkdir(get_dirs.PATH_USR_DATA)
 
-#from bin import assistant_settings
-
 try:
     #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
     from bin import usr_signup
     from bin import voice_io
     from bin import invoice
     from bin import file_operations
-    from bin import mailer    
+    from bin import mailer
+    from bin import assistant_settings   
+
 except ModuleNotFoundError:    
     clear.clear()
     print("\nInstalling required packages.....\n")
     if ip.install():
         input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
         print()
+        
     else:
         print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
         exit()
@@ -43,6 +44,7 @@ except ModuleNotFoundError:
     from bin import invoice
     from bin import file_operations
     from bin import mailer
+    from bin import assistant_settings
 
 file_user_data = get_dirs.FILE_USR_DATA
 home = get_dirs.HOME
