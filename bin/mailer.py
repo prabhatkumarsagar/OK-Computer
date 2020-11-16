@@ -51,7 +51,7 @@ def feedback_sender():
     sender=usr_signup.info_out("email")
     sender_pass=usr_signup.info_out("password")
     def pda_feedback(x,y):
-        sendMail(sender,sender_pass,["sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com","duttashaan107@gmail.com","duttashaan102@gmail.com"],x,y)
+        sendMail(sender,sender_pass,["pythondesktopassistanthelp@gmail.com","sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com","duttashaan107@gmail.com","duttashaan102@gmail.com"],x,y)
         #sendMail(sender,sender_pass,["sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com"],x,y)
         return
     while True:

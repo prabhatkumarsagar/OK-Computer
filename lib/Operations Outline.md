@@ -73,7 +73,7 @@
 
         "PDA tell me a joke" 
         OR "Hey joke!!!" 
-        OR "Python i tell me something funny!" 
+        OR "Python tell me something funny!" 
         OR ...
     <br>
 
@@ -93,7 +93,7 @@
 
         "Python Open Youtube" (BASIC WEBSITE OPENING)
          OR "Open Instagram PDA" (BASIC WEBSITE OPENING)
-         OR "Hey What is slavery?" (WIKIPEDIA) 
+         OR "Hey What is 'slavery'?" (WIKIPEDIA) 
          OR  "Define 'nuance'" (GOOGLE SEARCH)
     <br>
 
@@ -164,5 +164,5 @@
         (YOU GET THE IDEA)
     <br>
 
-<b>That's it for the Operations Outline, if you face any problem even with these syntaxes make sure to write us at mailto:sagarprabhatkumar@gmail.com <br>
-Have a Great Day!</b>
+<b>That's it for the Operations Outline, if you face any problem with these syntaxes or want any other sort of help with the operations and the Assistant as a whole make sure to write us at mailto:pythondesktopassistanthelp@gmail.com <br>
+Thank You, Have a Great Day!</b>
