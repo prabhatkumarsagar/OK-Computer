@@ -1,5 +1,0 @@
-This here is a list of all the Modules(incl. python built-in modules) that the program uses and hence must be installed properly on your machine for the program's all-round functioning:
-i. mysql.connector
-ii. pickle
-iii. webbrowser
-...
