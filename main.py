@@ -63,7 +63,7 @@ copy = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
 rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
 
 #chat operation commands
-joke = ["tell me a joke", "tell a joke", "joke", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
+joke = ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
 greet_hello = []
 greet_time = []
 abt_assistant = []

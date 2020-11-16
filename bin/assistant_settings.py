@@ -46,27 +46,28 @@ russian 56
 tamil 62
 Mandarin 67
 """
+from bin.get_dirs import FILE_ASSISTANT_SETTINGS
 
 usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us'}
 
 def write():
-    f1=open("assistant_settings.dat","wb+")
+    f1=open(FILE_ASSISTANT_SETTINGS,"wb+")
     pk.dump(usr_ass_settings,f1)
     f1.close()
 #write()
 
 def read():
-    f2=open("assistant_settings.dat","rb+")
+    f2=open(FILE_ASSISTANT_SETTINGS,"rb+")
     r=pk.load(f2)
-    voice_io.show(r)
+    #voice_io.show(r)
     f2.close()
 #read()
 
 def update(x,y):
-    f2=open("assistant_settings.dat","rb+")
+    f2=open(FILE_ASSISTANT_SETTINGS,"rb+")
     newc=pk.load(f2)
     f2.close()
-    f3=open("assistant_settings.dat","wb+")
+    f3=open(FILE_ASSISTANT_SETTINGS,"wb+")
     newc[x]=y
     pk.dump(newc,f3)
     f3.close()
