@@ -63,7 +63,7 @@ def voice_in():
 def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
     st = ""
     for i in args:
-        st = st + i + sep
+        st = st + str(i) + sep
     st = st.rstrip()
     if sound:
         if show_output:
@@ -71,5 +71,6 @@ def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
         voice_out(st)
     else:
         if show_output:
-            print(st, end = end, sep = sep)
-    return st
+            print(st, end = end)
+    if not show_output:
+        return st

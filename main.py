@@ -533,8 +533,7 @@ def gnd():
         return gndmm[random.randint(0,2)]
 
 def gnd_hello(): 
-    voice_io.show("Hello "+ gnd() + usr_name, sound = sound)
-    return
+    voice_io.show("Hello ", gnd(), usr_name, sound = sound)
 
 def gnd_ns():# greeting on a new session
     voice_io.show(f"""Hey {gnd()} {usr_name}! 
@@ -551,7 +550,7 @@ def tm_hello():
         tm="Afternoon"
     else:
         tm="Evening"
-    voice_io.show("Good",tm,gnd(), sound = sound)
+    voice_io.show("Good", tm, gnd(), sound = sound)
 
 
 main()
