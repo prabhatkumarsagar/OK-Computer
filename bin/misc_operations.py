@@ -1,6 +1,7 @@
 #miscellaneous operations go here!
 import requests
 import json
+import os
 import re
 import wikipedia
 import datetime
@@ -16,9 +17,10 @@ from bs4 import BeautifulSoup as soup
 import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
+from bin import voice_io
 import geocoder #pip install geocoder
 g = geocoder.ip('me')
-# voice_io.show(g.latlng)
+#voice_io.show(g.latlng)
 ct=(g.city)
 #BeautifulSoup("html.parser")
 #weather
@@ -30,7 +32,7 @@ def weather_curr(city): #to be replaced with - elif 'weather' in command:
     response = requests.get(url)  
     x = response.json()  
     if x["cod"] == "404":  
-         voice_io.show("Oops! it looks like i ran into a problem fetching your request, maybe try again later?")
+        voice_io.show("Oops! it looks like i ran into a problem fetching your request, maybe try again later?")
     else:
         y = x["main"]  
         curr_temperature = y["temp"]  
@@ -38,7 +40,7 @@ def weather_curr(city): #to be replaced with - elif 'weather' in command:
         curr_humidity = y["humidity"]  
         z = x["weather"]  
         weather_desc = z[0]["description"]  
-         voice_io.show("The current temperatre in %s (in Celcius Scale) is " % city +str(round(curr_temperature-273))+" degree celsius" +". It's a " +str(weather_desc))  
+        voice_io.show("The current temperatre in %s (in Celcius Scale) is " % city +str(round(curr_temperature-273))+" degree celsius" +". It's a " +str(weather_desc))  
 
 #weather_curr(ct)
 
@@ -51,11 +53,11 @@ def weather_forec(city):
     weather = loc.weather
     temp = weather.temperature(unit='celsius')
     #for key,val in temp.items():
-    #     voice_io.show(f'{key} => {val}')
+    #    voice_io.show(f'{key} => {val}')
     loa = mgr.forecast_at_place(city,'3h')
     tomorrow=timestamps.tomorrow()
     forecasttt=loa.get_weather_at(tomorrow)
-     voice_io.show(forecasttt)
+    voice_io.show(forecasttt)
 
 #weather_forec(ct)
 
@@ -73,7 +75,7 @@ def notrems():
                 con=sql.connect(host="localhost",user=usr,password=pwd)
                 break
             except:
-                 voice_io.show("MySQL Error")
+                voice_io.show("MySQL Error")
                 break
         cur=con.cursor()
         cur.execute("create database if not exists pydeskassist;")
@@ -84,7 +86,7 @@ def notrems():
         con.commit()
         cur.execute("select * from notes;")
         c=cur.fetchall()
-         voice_io.show(c)
+        voice_io.show(c)
         con.close()
 
     #notes()
@@ -99,7 +101,7 @@ def notrems():
                 con=sql.connect(host="localhost",user=usr,password=pwd)
                 break
             except:
-                 voice_io.show("MySQL Error")
+                voice_io.show("MySQL Error")
                 break
         cur=con.cursor()
         cur.execute("create database if not exists pydeskassist;")
@@ -116,7 +118,7 @@ def notrems():
             con.commit()
         cur.execute("select * from reminders;")
         c=cur.fetchall()
-         voice_io.show(c) 
+        voice_io.show(c) 
         con.close()
 
     #reminders()
@@ -131,12 +133,12 @@ def Calculation():
     nquery=""
     for i in range(len(query)):
         if query[i]=="+":
-            # voice_io.show("i lob bobs n vagene")
+            #voice_io.show("i lob bobs n vagene")
             nquery+=query[i-1]+" "
             nquery+=query[i]
             nquery+=" "+query[i+1]
     nquery=nquery.split()
-     voice_io.show(nquery)
+    voice_io.show(nquery)
     nurl=url
     for i in nquery:
         if i=='+':
@@ -145,11 +147,11 @@ def Calculation():
         else:
             nurl+=i
             nurl+='%20'    
-     voice_io.show(nurl)
+    voice_io.show(nurl)
     try:
         webbrowser.open(nurl)
     except:
-         voice_io.show("Sorry couldn't fetch records, maybe try again later!")
+        voice_io.show("Sorry couldn't fetch records, maybe try again later!")
 
 #Calculation()
 
@@ -157,22 +159,22 @@ def Calculation():
 def datentime():
     def date():
         x = datetime.datetime.now().strftime("%x")  
-         voice_io.show(x)
+        voice_io.show(x)
     def time():
         x=datetime.datetime.now().strftime("%H:%M:%S")     
-         voice_io.show(x) 
+        voice_io.show(x) 
 
     def year():
         x=datetime.datetime.now()
-         voice_io.show(x.strftime("%Y"))
+        voice_io.show(x.strftime("%Y"))
 
     def month():
         x=datetime.datetime.now()
-         voice_io.show(x.strftime("%B"))
+        voice_io.show(x.strftime("%B"))
 
     def day():
         x=datetime.datetime.now()
-         voice_io.show(x.strftime("%A"))
+        voice_io.show(x.strftime("%A"))
 
     #month()
     #day()
@@ -190,14 +192,14 @@ def sendEmail():
 #Play Offline/Online Songs
 def playsong():
     def offline():
-         voice_io.show("Alright, fetching your offline music playlist right away!")
+        voice_io.show("Alright, fetching your offline music playlist right away!")
         if os.name == "nt":
             music_dir = "C:\\Users\\Local\\Music"
         else:
             music_dir = "HOME$/Music"
         
         songs = os.listdir(music_dir)
-         voice_io.show(songs)
+        voice_io.show(songs)
         random = os.startfile(os.path.join(music_dir, songs[1]))
         
     def online():    
@@ -218,39 +220,39 @@ def web():
 
     if 'wikipedia' in query:
         try:
-             voice_io.show('Searching Wikipedia...')
+            voice_io.show('Searching Wikipedia...')
             #speak('Searching Wikipedia...')
             query = query.replace("wikipedia","")
             results = wikipedia.summary(query,sentences=3)
-             voice_io.show("According to Wikipedia")
-             voice_io.show(results)
+            voice_io.show("According to Wikipedia")
+            voice_io.show(results)
             #speak(results)
         except:
-             voice_io.show("Please make sure you're entering a valid input!")
+            voice_io.show("Please make sure you're entering a valid input!")
 
 
     elif 'youtube' in query:
-         voice_io.show("Alright, opening Youtube right away!\n")
+        voice_io.show("Alright, opening Youtube right away!\n")
         webbrowser.open("youtube.com")
 
     elif 'google' in query:
-         voice_io.show("Alright, opening Google right away!\n")
+        voice_io.show("Alright, opening Google right away!\n")
         webbrowser.open("google.com")
 
     elif 'instagram' in query:
-         voice_io.show("Alright, opening Instagram right away!")
+        voice_io.show("Alright, opening Instagram right away!")
         webbrowser.open("instagram.com")
     
     elif 'twitter' in query:
-         voice_io.show("Alright, opening Instagram right away!")
+        voice_io.show("Alright, opening Instagram right away!")
         webbrowser.open("twitter.com")
     
     elif 'reddit' in query:
-         voice_io.show("Alright, opening Instagram right away!")
+        voice_io.show("Alright, opening Instagram right away!")
         webbrowser.open("reddit.com")
     
     elif 'facebook' in query:
-         voice_io.show("Alright, opening Instagram right away!")
+        voice_io.show("Alright, opening Instagram right away!")
         webbrowser.open("facebook.com")
 
     elif 'search' in query or 'play' in query:
@@ -262,7 +264,7 @@ def web():
     elif "where is" in query:
         query = query.replace("where is", "")
         location = query
-         voice_io.show("You asked to locate",location,"and here you go!")
+        voice_io.show("You asked to locate",location,"and here you go!")
         webbrowser.open("https://www.google.nl/maps/place/" + location + "")
 
     elif "news" in query:
@@ -272,15 +274,15 @@ def web():
         reg_ex = re.search('open (.+)', query)
         if reg_ex:
             domain = reg_ex.group(1)
-            # voice_io.show(domain)
+            #voice_io.show(domain)
             url='https://www.'+domain
             #webbrowser.open(url)
-             voice_io.show(url)
-             voice_io.show('The website you have requested has been opened for you.')
+            voice_io.show(url)
+            voice_io.show('The website you have requested has been opened for you.')
         else:
             pass
     else:
-         voice_io.show("LOL it ain't working! maybe try again later bitch!")
+        voice_io.show("LOL it ain't working! maybe try again later bitch!")
 #web()
 
 def news():
@@ -293,9 +295,9 @@ def news():
         news_list=soup_page.findAll("item")
         for news in news_list[:15]:
             x=news.title.text.encode('utf-8')
-             voice_io.show(x.decode())
+            voice_io.show(x.decode())
     except Exception as e:
-             voice_io.show(e)
-             voice_io.show("Sorry couldn't fetch records, maybe try again later.")
+            voice_io.show(e)
+            voice_io.show("Sorry couldn't fetch records, maybe try again later.")
         
 #news()
