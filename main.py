@@ -34,7 +34,7 @@ except ModuleNotFoundError:
     if ip.install():
         input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
         print()
-        
+
     else:
         print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
         exit()
@@ -66,21 +66,21 @@ rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folde
 
 #chat operation commands
 joke = ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
-greet_hello = []
-greet_time = []
+greet_hello = ["hello",]
+greet_time = ["good morning", "good evening", "good afternoon", "good noon", "good morrow", "good eve"]
 abt_assistant = []
 abt_creators = []
 ask_wellbeing = []
 
 help = []
 #chgices for file operations
-locate_desktop = ["1"]
-locate_downloads = ["2"]
-locate_documents = ["3"]
-locate_music = ["4"]
-locate_pictures = ["5"]
-locate_videos = ["6"]
-locate_home = ["7"]
+locate_desktop = ["1", "desktop"]
+locate_downloads = ["2", "downloads"]
+locate_documents = ["3", "documents"]
+locate_music = ["4", "music"]
+locate_pictures = ["5", "pictures"]
+locate_videos = ["6", "videos"]
+locate_home = ["7", "home"]
 
 sound = False
 usr_name = ""
