@@ -1,14 +1,25 @@
-
 import os
 import requests 
 import datetime
 import webbrowser
 import random
 
+from bin import install_packages as ip
 from bin import get_dirs
 from bin import clear
-from bin import mailer
-from bin import assistant_settings
+if not os.path.exists(get_dirs.PATH_USR_DATA):
+    clear.clear()
+    print("\nInstalling required packages.....\n")
+    if ip.install():
+        input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
+        print()
+    else:
+        print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
+        exit()
+
+    os.mkdir(get_dirs.PATH_USR_DATA)
+
+#from bin import assistant_settings
 
 try:
     #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
@@ -16,12 +27,11 @@ try:
     from bin import voice_io
     from bin import invoice
     from bin import file_operations
-    
-except ModuleNotFoundError:
-    from bin import install_packages as ip
+    from bin import mailer    
+except ModuleNotFoundError:    
     clear.clear()
     print("\nInstalling required packages.....\n")
-    if ip.setup():
+    if ip.install():
         input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
         print()
     else:
@@ -32,7 +42,7 @@ except ModuleNotFoundError:
     from bin import voice_io
     from bin import invoice
     from bin import file_operations
-
+    from bin import mailer
 
 file_user_data = get_dirs.FILE_USR_DATA
 home = get_dirs.HOME
@@ -75,8 +85,9 @@ def main():
         pass
 
     else:
-        sound = userSetup()
+        userSetup()
 
+    sound =True
     global usr_name
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
 
@@ -186,7 +197,7 @@ def main():
     
 def userSetup():
     return_val = True
-    voice_io.show("""Hii There!
+    voice_io.show("""Hi There!
 
 I am Python, your personal desktop Assistant.
 I will be present at all times, waiting for your command.
@@ -458,14 +469,13 @@ def gnd():
     else:
         gndmm=["Sir","Mister","Master"]
         return gndmm[random.randint(0,2)]
-gnd=gnd()
 
 def gnd_hello(): 
-    voice_io.show("Hello "+ gnd + usr_name, sound = sound)
+    voice_io.show("Hello "+ gnd() + usr_name, sound = sound)
     return
 
 def gnd_ns():# greeting on a new session
-    voice_io.show(f"""Hey {gnd} {usr_name}! 
+    voice_io.show(f"""Hey {gnd()} {usr_name}! 
             
 What would you like me to do?
 """, sound = sound)
@@ -479,7 +489,7 @@ def tm_hello():
         tm="Afternoon"
     else:
         tm="Evening"
-    voice_io.show("Good",tm,gnd, sound = sound)
+    voice_io.show("Good",tm,gnd(), sound = sound)
 
 
 main()

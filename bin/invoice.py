@@ -41,8 +41,8 @@ def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
                 elif "clear" in entered_data.lower() or entered_data.lower() in "clrcls":
                     return "clear"
 
-                elif entered_data.lower() in "exitquitend":
-                    voice_io.show(entered_data.lower() in "exitquitend")
+                elif entered_data.lower() in ["exit", "quit", "end", "bye", "good bye", "goodbye", "tata"]:
+                    #voice_io.show(entered_data.lower() in "exitquitend")
                     voice_io.show("\nBye and have a nice day!", sound = sound)
                     exit()
 
