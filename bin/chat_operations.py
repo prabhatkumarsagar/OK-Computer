@@ -297,5 +297,3 @@ def chat(query):
         print("Well well well, i don't think i can help you with that?")
         return
 
-
-#chat("heElO bitch")

@@ -99,27 +99,17 @@ def main():
     while True:
         task = invoice.inpt()
 
-        if task.lower() in delete_file_unspecified:
+        if task == "clear":
+            clear.clear()
+            gnd_ns()
+
+        #File/folder operations
+        elif task.lower() in delete_file_unspecified:
             deleteFileUnspecified()
-        
+
         elif task.lower() in delete_folder_unspecified:
             deleteFolderUnspecified()
         
-        elif task.lower() in joke:
-            res_j = requests.get(
-                'https://icanhazdadjoke.com/',
-                headers={"Accept":"application/json"}
-            )
-            if res_j.status_code == requests.codes.ok:
-                voice_io.show('Here is an awesome one for you! ') 
-                voice_io.show(str(res_j.json()['joke'])) 
-            else:
-                voice_io.show("Oops! it looks like i ran out of my jokes, why don't you try again later.")
-
-        elif task == "clear":
-            clear.clear()
-            gnd_ns()
-        #File/folder operations
         elif task.lower() in delete_general:
             voice_io.show(f"What do you want to {task}, a file or a folder?")
             choice = invoice.inpt().lower()
@@ -166,18 +156,66 @@ def main():
                 voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
                 search_dir = home
             
-            voice_io.show(f"What should be the new name for '{obj_name}'?")
+            voice_io.show(f"What should be the new name for '{obj_name}'?", sound = sound)
             new_name = invoice.inpt()
                             
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
+
+        #chat operations
+        elif task.lower() in greet_hello:
+            gnd_hello()
+
+        elif task.lower() in greet_time:
+            tm_hello()
+
+        elif task.lower() in abt_assistant:
+            voice_io.show("I am your Personal Desktop Assistant, here to help you \nwith your day to day tasks and queries. Why don't you try asking me \nsomething and i'll show you by practically doing it or not, hehe. ", sound = sound)
+
+        elif task.lower() in abt_creators:
+            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their Computer Science School Project. Would you like to know more about them?", sound = sound)
+            x=invoice.inpt().lower()
+            if "yes" in x or "ok" in x or "yeah" in x:
+                voice_io.show("Alright!")
+                webbrowser.open("https://github.com/prabhatkumarsagar")
+                webbrowser.open("https://github.com/DuttaAB-dev")
+                
+            elif "no" in x or "nope" in x or "not" in x:
+                voice_io.show("Alright!")
+    
+            else:
+                pass
+        elif task.lower() in ask_wellbeing:
+            voice_io.show("Oh I am Grand, How are you master?")
+            x=invoice.inpt().lower()
+            if "good" in x or "great" in x or "fine" in x or "well" in x or "grand" in x or "nice" in x or "ok" in x or "okay" in x:
+                voice_io.show("Good to hear! Keep having fun!")
+                
+            else:
+                voice_io.show("Well everything will be good soon, just keep smiling, it suits you.")
+                
+        elif task.lower() in joke:
+            if voice_io.is_connected():
+                res_j = requests.get(
+                    'https://icanhazdadjoke.com/',
+                    headers={"Accept":"application/json"}
+                )
+                if res_j.status_code == requests.codes.ok:
+                    voice_io.show('Here is an awesome one for you! ') 
+                    voice_io.show(str(res_j.json()['joke']))
+                
+                else:
+                    voice_io.show("Oops! It looks like i ran out of my jokes, why don't you try again later.")
             
+            else:
+                voice_io.show("Opps! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will loose all my humor!")
+        #Getting help about the assistant's functions
         elif task.lower() in help:
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
                 voice_io.show("1. Assistant Settings")
                 voice_io.show("2. Assistant Services")
                 voice_io.show("3. Assistant Operations")
                 voice_io.show("4. Feedback (Suggest Improvements/Report Bugs/...)")
-                voice_io.show("5. Exit")
+                #voice_io.show("5. Exit")
                 x=input("Enter Choice: ")
                 if x=="1":
                     pda_help()
@@ -191,8 +229,8 @@ def main():
                 elif x=="4":
                     feedback()
                     
-                elif x=="5":
-                    exit()
+                #elif x=="5":
+                #    exit()
                 else:
                     voice_io.show("Invalid Input! Please Try Again!")
     
