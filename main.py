@@ -61,10 +61,12 @@ delete_general = ["delete", "del", "remove", "erase", "rm"]
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"]
 copy = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
 rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
-help = []
+
 #chat operation commands
 joke = ["tell me a joke", "tell a joke", "joke", "make me laugh", "make laugh", "say a joke", "say me a joke"]
+help = []
 
+#dirs for file operations
 locate_desktop = ["1"]
 locate_downloads = ["2"]
 locate_documents = ["3"]
@@ -117,7 +119,7 @@ def main():
         elif task == "clear":
             clear.clear()
             gnd_ns()
-
+        #File/folder operations
         elif task.lower() in delete_general:
             voice_io.show(f"What do you want to {task}, a file or a folder?")
             choice = invoice.inpt().lower()
