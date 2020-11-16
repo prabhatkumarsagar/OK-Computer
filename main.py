@@ -63,10 +63,15 @@ copy = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
 rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
 
 #chat operation commands
-joke = ["tell me a joke", "tell a joke", "joke", "make me laugh", "make laugh", "say a joke", "say me a joke"]
-help = []
+joke = ["tell me a joke", "tell a joke", "joke", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
+greet_hello = []
+greet_time = []
+abt_assistant = []
+abt_creators = []
+ask_wellbeing = []
 
-#dirs for file operations
+help = []
+#chgices for file operations
 locate_desktop = ["1"]
 locate_downloads = ["2"]
 locate_documents = ["3"]
@@ -89,7 +94,7 @@ def main():
     else:
         userSetup()
 
-    sound =True
+    iterate_jokes = 0
     global usr_name
     usr_name = usr_signup.main(operation = "fetch", data_type = "name")
 
@@ -98,6 +103,9 @@ def main():
 
     while True:
         task = invoice.inpt()
+
+        if iterate_jokes > 0 and task.lower() not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+            iterate_jokes = 0
 
         if task == "clear":
             clear.clear()
@@ -194,20 +202,20 @@ def main():
                 voice_io.show("Well everything will be good soon, just keep smiling, it suits you.")
                 
         elif task.lower() in joke:
-            if voice_io.is_connected():
-                res_j = requests.get(
-                    'https://icanhazdadjoke.com/',
-                    headers={"Accept":"application/json"}
-                )
-                if res_j.status_code == requests.codes.ok:
-                    voice_io.show('Here is an awesome one for you! ') 
-                    voice_io.show(str(res_j.json()['joke']))
-                
-                else:
-                    voice_io.show("Oops! It looks like i ran out of my jokes, why don't you try again later.")
+            if not voice_io.is_connected():
+                if task.lower() not in  ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:  
+                    voice_io.show("Opps! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will won't be able to conquer the earth\nwith my humor!")
+            
             
             else:
-                voice_io.show("Opps! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will loose all my humor!")
+                if iterate_jokes == 0 and task.lower() not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                    fetch_joke('Here is an awesome one for you!\n')
+                    iterate_jokes += 1
+                
+                elif iterate_jokes > 0 and task.lower() in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                    fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
+
+
         #Getting help about the assistant's functions
         elif task.lower() in help:
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
@@ -356,6 +364,18 @@ def pda_help():
     else:
         voice_io.show("Invalid Input! Please make sure you're entering a valid input!")
 
+def fetch_joke(st):
+    res_j = requests.get(
+                    'https://icanhazdadjoke.com/',
+                    headers={"Accept":"application/json"}
+                )
+    if res_j.status_code == requests.codes.ok:
+        voice_io.show(st, sound = sound) 
+        voice_io.show(str(res_j.json()['joke']))
+    
+    else:
+        voice_io.show("Oops! It looks like i ran out of my jokes, why don't you try again later.", sound = sound)
+                
 def feedback():
     mailer.feedback_sender()
     
