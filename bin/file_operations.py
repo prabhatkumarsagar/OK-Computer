@@ -3,11 +3,14 @@
 from importlib.abc import FileLoader
 import os
 import shutil
-import playsound
+import multiprocessing
+from playsound import playsound
 
 from bin import get_dirs
 from bin import voice_io
 from bin import invoice
+
+audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
 def fileSearch(file_name, search_dir):
 #Searches for the given file name in the file tree(case sensitive)
@@ -148,7 +151,7 @@ def copy(obj_name, search_dir, dest_dir):
             voice_io.show(f"Successfully copied '{folder_search_results[0]['file']}' to '{dest_dir}'!")
         
         else:
-            sno = 0
+            sno = 1
             for i in folder_search_results:
                 voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
                 sno += 1
@@ -175,7 +178,7 @@ def copy(obj_name, search_dir, dest_dir):
             voice_io.show(f"Successfully copied '{file_search_results[0]['file']}' to '{dest_dir}'!")
 
         else:
-            sno = 0
+            sno = 1
             for i in file_search_results:
                 voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
                 sno += 1
@@ -270,7 +273,7 @@ def rname(obj_name, new_name, search_dir):
             voice_io.show(f"Successfully renamed '{folder_search_results[0]['file']}' to '{new_name}'!")
         
         else:
-            sno = 0
+            sno = 1
             for i in folder_search_results:
                 voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
                 sno += 1
@@ -317,7 +320,7 @@ def rname(obj_name, new_name, search_dir):
             voice_io.show(f"Successfully renamed '{file_search_results[0]['file']}' to '{new_full_name}'!")
 
         else:
-            sno = 0
+            sno = 1
             for i in file_search_results:
                 voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
                 sno += 1
@@ -376,3 +379,56 @@ def createFile(f_name, path, type):
     if type == "sheet":
         f = open(f_name + ".xls", "w")
         f.close()
+
+def playMusic(name, search_dir, sound = True):
+    file_search_results = fileSearch(file_name = name, search_dir = search_dir)
+    music_files = []
+    if len(file_search_results) > 0:
+        for file_obj in file_search_results:
+            f_name = file_obj['file']
+            for ext in audio_file_ext:
+                if ext in f_name:
+                    music_files.append(file_obj)
+                    break
+
+        if len(music_files) == 1:
+            f_name = music_files[0]['file']
+            directory = music_files[0]['root']
+            f_path = directory + '/' + f_name
+            voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.", sound = sound)
+            p = multiprocessing.Process(target=playsound, args=(f_path,))
+            p.start()
+            input("Press ENTER to stop playback")
+            p.terminate()
+            voice_io.show(f"Stopped playing '{f_name}'.", sound = sound)
+
+        elif len(music_files) > 1:
+            sno = 1
+            voice_io.show(f"Found {len(music_files)} files matching the given file name :-", sound = sound)
+            for i in music_files:
+                voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'", sound = sound)
+                sno += 1
+            voice_io.show("Select the number of the audio file which you would like to play.", sound = sound)
+            choice = int(invoice.inpt())
+            choice -= 1
+            try:
+                f_name = music_files[choice]['file']
+                directory = music_files[choice]['root']
+                f_path = directory + "/" + f_name
+                voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.", sound = sound)
+                p = multiprocessing.Process(target=playsound, args=(f_path,))
+                p.start()
+                input("Press ENTER to stop playback")
+                p.terminate()
+                voice_io.show(f"Stopped playing '{f_name}'.", sound = sound)
+            except IndexError:
+                voice_io.show("Playback failed : Sorry, but the entered number is not within the range of available options.", sound = sound)
+                    
+            except SyntaxError or TypeError:
+                voice_io.show("Playback failed : Sorry, but your entered data is not a number.", sound = sound) 
+        
+        else:
+            voice_io.show(f"Sorry, could not find any audio file with the name '{name}'", sound = sound)
+
+    else:
+        voice_io.show(f"Sorry, could not find any audio file with the name '{name}'", sound = sound)
