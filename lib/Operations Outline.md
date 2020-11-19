@@ -62,9 +62,9 @@
 
     a. Greet
 
-        "Hello Python" 
-        OR  "Python How are you" 
-        OR "PDA who made you?" 
+        "Hello" 
+        OR  "How are you" 
+        OR "Who made you?" 
         OR "Hey are you single?" 
         OR ...
     <br>
@@ -79,8 +79,8 @@
 
     c. Help
 
-        "PDA help" 
-        OR "Python help me" 
+        "Help" 
+        OR "Help me" 
         OR "Hey help me out" 
         OR ...
     <br>
@@ -91,8 +91,8 @@
 
      a. Web Search (everything incl. Wikipedia)
 
-        "Python Open Youtube" (BASIC WEBSITE OPENING)
-         OR "Open Instagram PDA" (BASIC WEBSITE OPENING)
+        "Open Youtube" (BASIC WEBSITE OPENING)
+         OR "Open Instagram" (BASIC WEBSITE OPENING)
          OR "Hey What is 'slavery'?" (WIKIPEDIA) 
          OR  "Define 'nuance'" (GOOGLE SEARCH)
     <br>
@@ -101,15 +101,15 @@
 
         "Hey tell me the time?" 
         OR "What's the time?" 
-        OR "Python what's the time?" 
-        OR "PDA what's the time?" 
+        OR "what's the time right now?" 
+        OR "what's the current time?" 
         OR "Tell me the current time!" 
         (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE "TIME" IS A PART OF THE QUERY)
 
         "Hey tell me the date?" 
         OR "What's today's date?" 
-        OR "Python what's the date?" 
-        OR "PDA what day is it?" 
+        OR "what's the date?" 
+        OR "what day is it?" 
         OR "Tell me what month it is!" 
         (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE "DATE"/"DAY"/"MONTH"/"YEAR" IS A PART OF THE QUERY)
     <br>
@@ -117,8 +117,8 @@
      c. Notes and Reminders
 
         "Python save a Note" 
-        OR "Save a Reminder PDA" 
-        OR "Python Add a Note" 
+        OR "Save a Reminder" 
+        OR "Add a Note" 
         (YOU GET THE IDEA)
     <br>    
 
@@ -126,14 +126,16 @@
 
         "Hey what is 5 times 2?" 
         OR "What is the square root of 25" 
-        OR "Python what's the cube of 69" 
-        OR "PDA what is 5 time 27 divided by 3" 
+        OR "what's the cube of 69" 
+        OR "what is 5 time 27 divided by 3" 
         (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE THAT IT IS A MATHEMATICAL QUERY)
     <br>
 
      e. E-mails
 
-        "Python help me send an email" 
+        "help me send an email" 
+        "send an email"
+        "EMAIL!!!"
         OR "Hey i need you to send an email" 
         (OR ANY OTHER SORT OF EMAIL QUERY)
     <br>
@@ -142,27 +144,27 @@
 
         "Hey tell me the weather?" 
         OR "What's the weather forecast for tomorrow?" 
-        OR "Python what's the temperature outside?" 
-        OR "PDA how's the josh?" 
+        OR "what's the temperature outside?" 
+        OR "how's the josh?" 
         OR "Tell me the weather forecast for the next 7 days" 
         (OR LITERALLY ANY OTHER WEATHER/WEATHER FORECAST/TEMPERATURE... QUERY)
     <br>
 
      g. Play Songs (*Online and Offline both!)
 
-        "Python Play Offline Songs" 
-        OR "PDA Play Genda Phool by Badshah" 
+        "Play Offline Songs" 
+        OR "Play Genda Phool by Badshah" 
         OR "Hey Play Arijit Singh's Songs" 
         (YOU GET THE IDEA)
     <br>
 
      h. News
 
-        "Python tell me today's news" 
+        "Tell me today's news" 
         OR "Hey read out today's top headlines" 
-        OR "PDA NEWS!" 
+        OR "NEWS!!!" 
         (YOU GET THE IDEA)
     <br>
 
-<b>That's it for the Operations Outline, if you face any problem with these syntaxes or want any other sort of help with the operations and the Assistant as a whole make sure to write us at mailto:pythondesktopassistanthelp@gmail.com <br>
+<b>That's it for the Operations Outline, if you face any problem with these syntaxes or want more insights to them or want any other sort of help with the operations and the Assistant as a whole make sure to write us at mailto:pythondesktopassistanthelp@gmail.com <br>
 Thank You, Have a Great Day!</b>

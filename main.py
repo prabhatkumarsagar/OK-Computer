@@ -14,7 +14,7 @@ if not os.path.exists(get_dirs.PATH_USR_DATA):
         input("\nAll packages have been successfully installed! Press Enter/Return to continue.")
         print()
     else:
-        print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
+        print("\nInstalling packages failed! Make sure you have a stable internet connection and all the requirements to install packages are fulfilled. Please try running this program again after resolving all issues, and if the problem still persists, contact the developer.")
         exit()
 
     os.mkdir(get_dirs.PATH_USR_DATA)
@@ -36,7 +36,7 @@ except ModuleNotFoundError:
         print()
 
     else:
-        print("\nInstalling packages failed! Please try running this program again after resolving all the issues, and if the problem still persists, contact the developer.")
+        print("\nInstalling packages failed! Make sure you have a stable internet connection and all the requirements to install packages are fulfilled. Please try running this program again after resolving all issues, and if the problem still persists, contact the developer.")
         exit()
 
     from bin import usr_signup
@@ -66,11 +66,11 @@ rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folde
 
 #chat operation commands
 joke = ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
-greet_hello = ["hello",]
+greet_hello = ["hello","hey","hi","hello there","hey there"]
 greet_time = ["good morning", "good evening", "good afternoon", "good noon", "good morrow", "good eve"]
-abt_assistant = []
-abt_creators = []
-ask_wellbeing = []
+abt_assistant = ["who are you?","hey what's your name?","what is your name?","tell me about you","tell me about yourself","hey who are you?"]
+abt_creators = ["who made you?", "hey who's your fada?", "who's you creator",""]
+ask_wellbeing = ["hey how are you","how do you do","how are you","howdy"]
 
 help = []
 #chgices for file operations
@@ -105,8 +105,8 @@ def main():
 
     while True:
         task = invoice.inpt()
-
-        if iterate_jokes > 0 and task.lower() not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+        task=task.lower()
+        if iterate_jokes > 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
         if task == "clear":
@@ -114,13 +114,13 @@ def main():
             gnd_ns()
 
         #File/folder operations
-        elif task.lower() in delete_file_unspecified:
+        elif task in delete_file_unspecified:
             deleteFileUnspecified()
 
-        elif task.lower() in delete_folder_unspecified:
+        elif task in delete_folder_unspecified:
             deleteFolderUnspecified()
         
-        elif task.lower() in delete_general:
+        elif task in delete_general:
             voice_io.show(f"What do you want to {task}, a file or a folder?")
             choice = invoice.inpt().lower()
             if choice == "file":
@@ -130,9 +130,9 @@ def main():
                 deleteFolderUnspecified()
 
             else:
-                voice_io.show("Unable to understand your command, please try again with the proper command.", sound = sound)
+                voice_io.show("Sorry i didn't get that, please try again with a proper command.", sound = sound)
                 
-        elif task.lower() in rename:
+        elif task in rename:
             search_dir = ""
             voice_io.show("Which file/folder would you like to rename?", sound = sound)
             obj_name = invoice.inpt()
@@ -163,7 +163,7 @@ def main():
                 search_dir = home
 
             else:
-                voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!", sound = sound)
                 search_dir = home
             
             voice_io.show(f"What should be the new name for '{obj_name}'?", sound = sound)
@@ -172,17 +172,17 @@ def main():
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
 
         #chat operations
-        elif task.lower() in greet_hello:
+        elif task in greet_hello:
             gnd_hello()
 
-        elif task.lower() in greet_time:
+        elif task in greet_time:
             tm_hello()
 
-        elif task.lower() in abt_assistant:
-            voice_io.show("I am your Personal Desktop Assistant, here to help you \nwith your day to day tasks and queries. Why don't you try asking me \nsomething and i'll show you by practically doing it or not, hehe. ", sound = sound)
+        elif task in abt_assistant:
+            voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ", sound = sound)
 
-        elif task.lower() in abt_creators:
-            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their Computer Science School Project. Would you like to know more about them?", sound = sound)
+        elif task in abt_creators:
+            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?", sound = sound)
             x=invoice.inpt().lower()
             if "yes" in x or "ok" in x or "yeah" in x:
                 voice_io.show("Alright!")
@@ -190,11 +190,11 @@ def main():
                 webbrowser.open("https://github.com/DuttaAB-dev")
                 
             elif "no" in x or "nope" in x or "not" in x:
-                voice_io.show("Alright!")
+                voice_io.show("Okay!")
     
             else:
                 pass
-        elif task.lower() in ask_wellbeing:
+        elif task in ask_wellbeing:
             voice_io.show("Oh I am Grand, How are you master?")
             x=invoice.inpt().lower()
             if "good" in x or "great" in x or "fine" in x or "well" in x or "grand" in x or "nice" in x or "ok" in x or "okay" in x:
@@ -203,30 +203,29 @@ def main():
             else:
                 voice_io.show("Well everything will be good soon, just keep smiling, it suits you.")
                 
-        elif task.lower() in joke:
+        elif task in joke:
             if not voice_io.is_connected():
-                if task.lower() not in  ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:  
-                    voice_io.show("Opps! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will won't be able to conquer the earth\nwith my humor!")
-            
+                if task not in  ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:  
+                    voice_io.show("Oops! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will won't be able to conquer the earth\nwith my humor! HAHA.")       
             
             else:
-                if iterate_jokes == 0 and task.lower() not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                if iterate_jokes == 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
                     fetch_joke('Here is an awesome one for you!\n')
                     iterate_jokes += 1
                 
-                elif iterate_jokes > 0 and task.lower() in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
                     fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
 
 
         #Getting help about the assistant's functions
-        elif task.lower() in help:
+        elif task in help:
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
                 voice_io.show("1. Assistant Settings")
                 voice_io.show("2. Assistant Services")
                 voice_io.show("3. Assistant Operations")
                 voice_io.show("4. Feedback (Suggest Improvements/Report Bugs/...)")
                 #voice_io.show("5. Exit")
-                x=input("Enter Choice: ")
+                x=invoice.inpt("Enter Choice: ")
                 if x=="1":
                     pda_help()
                     
@@ -259,7 +258,7 @@ But first, please do let me know you better.
 If you would like to disable sound, please type 'disable sound' and continue.
 else you can simply continue by pressing Enter/Return and disable sound 
 later on using the command 'disable sound'. You can also use the command 
-'enable sound' if you feel generous enough to give me my voice(s) back!
+'enable sound' if you feel generous enough to give me my voice back!
 
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
@@ -268,10 +267,10 @@ Press Enter/Return to continue.
     command = invoice.inpt(iterate = False)
 
 
-    if command == "disable sound":
+    if command.lower() == "disable sound":
         return_val =  False
     
-    elif command == None:
+    elif command.lower() == None:
         return_val =  True
     
     else:
@@ -356,7 +355,7 @@ def pda_help():
     voice_io.show("1. Assistant Settings Update")
     voice_io.show("2. Assitant Settings Reset")
     voice_io.show("3. User Data Update")    
-    x=input("Enter Choice: ")
+    x=invoice.inpt("Enter Choice: ")
     if x=="1":
         assistant_settings.ass_settings_update()
     elif x=="2":
@@ -383,7 +382,7 @@ def feedback():
     
 def op_help():
     voice_io.show("Alright, So What operations do you need help with? (just enter the operation, for example 'news', and i'll tell you its general syntax and what it does too.)")
-    x=input()
+    x=invoice.inpt()
     x=x.lower()
     if "news" in x:
         voice_io.show("With the News operation you can ask me to read out the top 15 news headlines of the moment.")
@@ -511,7 +510,7 @@ def op_help():
         return
 
 def srvc_help():
-    voice_io.show("Alright, here goes my domain of expertise. \")")
+    voice_io.show("Alright, here goes my domain of expertise. \n")")
     voice_io.show("1. I can open all sorts of websites and fetch web queries for you.")
     voice_io.show("2. I can open and close apps for you.")
     voice_io.show("3. I can open, rename, move and delete files and folders for you.")
@@ -521,7 +520,7 @@ def srvc_help():
     voice_io.show("7. I can send emails to your mail contacts for you.")
     voice_io.show("8. I can perform some calculations for you.")
     voice_io.show("9. I can play songs and even read out the date and time for you.")
-    voice_io.show("10. Alas, I can even chit-chat with you :)")
+    voice_io.show("10. Alas, I can even chit-chat with you and lighten up your mood. :)")
     return
 
 def gnd():
@@ -536,7 +535,7 @@ def gnd_hello():
     voice_io.show("Hello ", gnd(), usr_name, sound = sound)
 
 def gnd_ns():# greeting on a new session
-    voice_io.show(f"""Hey {gnd()} {usr_name}! 
+    voice_io.show(f"""Hello {gnd()} {usr_name}! 
             
 What would you like me to do?
 """, sound = sound)

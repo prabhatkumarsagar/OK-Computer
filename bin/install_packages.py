@@ -29,7 +29,7 @@ def install():
                 subprocess.check_output(commands[name], shell = True)
             except subprocess.CalledProcessError:
                 if os.name == "nt":
-                    print("Installation of required packages failed!\nPIP has not been installed in your system. Too install pip, please \nrerun the python setup process and make sure to check the 'Install PIP' check box!")
+                    print("Installation of required packages failed!\nPIP has not been installed in your system. To install pip, please \nre-run the python setup process and make sure to check the 'Install PIP' check box!")
                 
                 else :
                     print("PIP3 is not installed in your system! \nPlease install python3-pip from your distro repos and run this app again!")
