@@ -209,7 +209,7 @@ def rname(obj_name, new_name, search_dir):
     old_file_name = ""
     old_ext = ""
     
-    if folder_search_results != [] and file_search_results != 0:
+    if folder_search_results != [] and file_search_results != []:
         count_files = len(file_search_results)
         count_folders = len(folder_search_results)
         voice_io.show(f"Found {count_files} files and {count_folders} folders matching the given name! They are :-")
@@ -225,7 +225,7 @@ def rname(obj_name, new_name, search_dir):
         choice = int(invoice.inpt())
         choice -= 1
         try:
-            if choice in count_files - 1:                
+            if choice in range(count_files):                
                 f_name = file_search_results[choice]['file']
                 new_name = new_name.split('.')
                 new_file_name = new_name[0]
@@ -250,7 +250,7 @@ def rname(obj_name, new_name, search_dir):
                 os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_full_name)
                 voice_io.show(f"Successfully renamed '{f_name}' to '{new_full_name}'!")
             
-            elif choice - (count_files - 1) in count_folders - 1:
+            elif choice - (count_files - 1) in range(count_folders):
                 choice -= (count_files - 1)
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
@@ -270,7 +270,7 @@ def rname(obj_name, new_name, search_dir):
             f_name = folder_search_results[0]["folder"]
             voice_io.show(f"Renaming folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{new_name}'.....")
             os.rename(parent_dir + "/" + f_name, parent_dir + "/" + new_name)
-            voice_io.show(f"Successfully renamed '{folder_search_results[0]['file']}' to '{new_name}'!")
+            voice_io.show(f"Successfully renamed '{folder_search_results[0]['folder']}' to '{new_name}'!")
         
         else:
             sno = 1

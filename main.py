@@ -263,14 +263,14 @@ later on using the command 'disable sound'. You can also use the command
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
 Press Enter/Return to continue.
-""", sound = True)
+""", sound = False)
     command = invoice.inpt(iterate = False)
 
 
-    if command.lower() == "disable sound":
+    if command == "disable sound":
         return_val =  False
     
-    elif command.lower() == None:
+    elif command == "":
         return_val =  True
     
     else:
@@ -510,7 +510,7 @@ def op_help():
         return
 
 def srvc_help():
-    voice_io.show("Alright, here goes my domain of expertise. \n")")
+    voice_io.show("Alright, here goes my domain of expertise. \n")
     voice_io.show("1. I can open all sorts of websites and fetch web queries for you.")
     voice_io.show("2. I can open and close apps for you.")
     voice_io.show("3. I can open, rename, move and delete files and folders for you.")
