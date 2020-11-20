@@ -46,6 +46,10 @@ except ModuleNotFoundError:
     from bin import mailer
     from bin import assistant_settings
 
+except OSError:
+    print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
+    exit()
+
 file_user_data = get_dirs.FILE_USR_DATA
 home = get_dirs.HOME
 desktop = get_dirs.DESKTOP
@@ -61,15 +65,17 @@ delete_file_unspecified = ["delete a file", "file delete", "remove a file",]
 delete_folder_unspecified = ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"]
 delete_general = ["delete", "del", "remove", "erase", "rm"]
 rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"]
-copy = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
+copy_cmd = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
 rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
+music_from_a_file = ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"]
+video_from_a_file = []
 
 #chat operation commands
 joke = ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
 greet_hello = ["hello","hey","hi","hello there","hey there"]
 greet_time = ["good morning", "good evening", "good afternoon", "good noon", "good morrow", "good eve"]
-abt_assistant = ["who are you?","hey what's your name?","what is your name?","tell me about you","tell me about yourself","hey who are you?"]
-abt_creators = ["who made you?", "hey who's your fada?", "who's you creator",""]
+abt_assistant = ["who are you","hey what's your name","what is your name","tell me about you","tell me about yourself","hey who are you"]
+abt_creators = ["who made you", "hey who's your fada", "who's you creator",""]
 ask_wellbeing = ["hey how are you","how do you do","how are you","howdy"]
 
 help = []
@@ -111,7 +117,7 @@ def main():
 
         if task == "clear":
             clear.clear()
-            gnd_ns()
+            #gnd_ns()
 
         #File/folder operations
         elif task in delete_file_unspecified:
@@ -135,7 +141,7 @@ def main():
         elif task in rename:
             search_dir = ""
             voice_io.show("Which file/folder would you like to rename?", sound = sound)
-            obj_name = invoice.inpt()
+            obj_name = invoice.inpt(processed = False)
             voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
             locate = invoice.inpt().lower()
             if locate in locate_desktop:
@@ -167,9 +173,48 @@ def main():
                 search_dir = home
             
             voice_io.show(f"What should be the new name for '{obj_name}'?", sound = sound)
-            new_name = invoice.inpt()
+            new_name = invoice.inpt(processed = False)
                             
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
+
+        elif task in copy_cmd:
+            search_dir = ""
+            voice_io.show("Which file/folder would you like to copy?", sound = sound)
+            obj_name = invoice.inpt(processed = False)
+            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+            locate = invoice.inpt().lower()
+            if locate in locate_desktop:
+                search_dir = desktop
+
+            elif locate in locate_documents:
+                search_dir = documents
+
+            elif locate in locate_downloads:
+                search_dir = downloads
+
+            elif locate in locate_home:
+                search_dir = home
+                        
+            elif locate in locate_music:
+                search_dir = music
+            
+            elif locate in locate_pictures:
+                search_dir = pictures
+
+            elif locate in locate_videos:
+                search_dir = videos
+
+            elif locate in locate_home:
+                search_dir = home
+
+            else:
+                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!", sound = sound)
+                search_dir = home
+            
+            voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).", sound = sound)
+            dest_dir = invoice.inpt(processed = False)
+                            
+            file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
 
         #chat operations
         elif task in greet_hello:
@@ -184,7 +229,7 @@ def main():
         elif task in abt_creators:
             voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?", sound = sound)
             x=invoice.inpt().lower()
-            if "yes" in x or "ok" in x or "yeah" in x:
+            if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
                 voice_io.show("Alright!")
                 webbrowser.open("https://github.com/prabhatkumarsagar")
                 webbrowser.open("https://github.com/DuttaAB-dev")
@@ -242,6 +287,8 @@ def main():
                 #    exit()
                 else:
                     voice_io.show("Invalid Input! Please Try Again!")
+                
+        voice_io.show("\nNow, what to do?", sound = sound)
     
     
 def userSetup():
@@ -286,7 +333,7 @@ def deleteFileUnspecified():
     global sound
     search_dir = ""
     voice_io.show("Which file fo you want to delete?", sound = sound)
-    file_name = invoice.inpt()
+    file_name = invoice.inpt(processed = False)
     voice_io.show(f"Where would you like me to search for the file, {file_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
     locate = invoice.inpt().lower()
     if locate in locate_desktop:
@@ -320,7 +367,7 @@ def deleteFolderUnspecified():
     global sound
     search_dir = ""
     voice_io.show("Which folder do you want to delete?", sound = sound)
-    folder_name = invoice.inpt()
+    folder_name = invoice.inpt(processed = False)
     voice_io.show(f"Where would you like me to search for the folder, {folder_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
     locate = invoice.inpt().lower()
     if locate in locate_desktop:
@@ -544,12 +591,11 @@ def tm_hello():
     time=datetime.datetime.now().strftime("%H")  
     time=int(time)
     if time < 12:
-        tm="Morning"
+        tm="Morning"##$$
     elif 12 <= time < 18:
         tm="Afternoon"
     else:
         tm="Evening"
     voice_io.show("Good", tm, gnd(), sound = sound)
-
 
 main()
