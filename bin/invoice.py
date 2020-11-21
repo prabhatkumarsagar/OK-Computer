@@ -7,7 +7,7 @@ from bin import clear
 #import get_dirs
 #import clear
 
-def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
+def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True, processed = True):
     if audio_io:
         from bin import voice_io
         #import voice_io
@@ -46,7 +46,10 @@ def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
                     voice_io.show("\nBye and have a nice day!", sound = sound)
                     exit()
 
-                else:        
+                else:
+                    if processed:
+                        entered_data = processData(entered_data)
+                    print(entered_data)
                     return entered_data
 
             except KeyboardInterrupt:#exits from the program when ctrl+c is pressed
@@ -54,5 +57,24 @@ def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True):
                 exit()
             
     else:
-        input(text)
-        return text
+        entered_data = input(text)
+        if processed:
+            entered_data = processData(entered_data)
+
+        return entered_data
+
+def processData(data):
+    lst = data.split(" ")
+    data = ""
+    for i in lst:
+        n = ""
+        if i == " " or i == "":
+            continue
+        
+        for j in i:
+            if j.isalnum():
+                n += j 
+
+        data += " " + n
+    
+    return data.strip()
