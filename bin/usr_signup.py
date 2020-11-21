@@ -6,11 +6,13 @@ from bin import get_dirs
 from bin import clear
 from bin import voice_io
 from bin import invoice
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
 #import get_dirs
 #import clear
 #import voice_io
 #import invoice
-sound = False
+sound = sound_val
 #sound = True
 
 def setNewUser():

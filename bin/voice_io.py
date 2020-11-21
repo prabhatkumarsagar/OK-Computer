@@ -1,3 +1,5 @@
+import get_dirs
+#from bin import get_dirs
 import os
 from os import system
 import subprocess 
@@ -9,8 +11,8 @@ import pyttsx3
 import pyaudio
 import bs4
 import speech_recognition as sr
-#import get_dirs
-from bin import get_dirs
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
 
 def is_connected():
     try:
@@ -60,7 +62,7 @@ def voice_in():
     except:   
         return False   
 
-def show(*args, end = "\n", sep = " ", sound = True, show_output = True):
+def show(*args, end = "\n", sep = " ", sound = sound_val, show_output = True):
     st = ""
     for i in args:
         st = st + str(i) + sep

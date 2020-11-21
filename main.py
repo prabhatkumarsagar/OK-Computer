@@ -3,7 +3,8 @@ import requests
 import datetime
 import webbrowser
 import random
-
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
 from bin import install_packages as ip
 from bin import get_dirs
 from bin import clear
@@ -88,7 +89,7 @@ locate_pictures = ["5", "pictures"]
 locate_videos = ["6", "videos"]
 locate_home = ["7", "home"]
 
-sound = False
+sound = sound_val
 usr_name = ""
 
 def main():
@@ -310,18 +311,19 @@ later on using the command 'disable sound'. You can also use the command
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
 Press Enter/Return to continue.
-""", sound = False)
+""", sound = sound_val)
     command = invoice.inpt(iterate = False)
 
 
     if command == "disable sound":
-        return_val =  False
+        assistant_settings.assistant_sound_disable()
     
     elif command == "":
-        return_val =  True
+        assistant_settings.assistant_sound_enable()
     
     else:
-        voice_io.show("Unable to understand your command, continuing with sound.")
+        voice_io.show("Unable to understand your command, continuing without sound.")
+        assistant_settings.assistant_sound_disable()
     
     if not os.path.exists(get_dirs.PATH_USR_DATA):
         os.mkdir(get_dirs.PATH_USR_DATA)

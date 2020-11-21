@@ -5,10 +5,11 @@ import os
 import shutil
 import multiprocessing
 from playsound import playsound
-
 from bin import get_dirs
 from bin import voice_io
 from bin import invoice
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
 
 audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
@@ -380,7 +381,7 @@ def createFile(f_name, path, type):
         f = open(f_name + ".xls", "w")
         f.close()
 
-def playMusic(name, search_dir, sound = True):
+def playMusic(name, search_dir, sound = sound_val):
     file_search_results = fileSearch(file_name = name, search_dir = search_dir)
     music_files = []
     if len(file_search_results) > 0:

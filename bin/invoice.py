@@ -1,13 +1,14 @@
 #from bin.get_dirs import FILE_USR_DATA
 from bin.get_dirs import FILE_USR_DATA
 import os
-
 from bin import get_dirs
 from bin import clear
 #import get_dirs
 #import clear
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
 
-def inpt(text = ">>> ", sound = False, audio_io = True, iterate = True, processed = True):
+def inpt(text = ">>> ", sound = sound_val, audio_io = True, iterate = True, processed = True):
     if audio_io:
         from bin import voice_io
         #import voice_io

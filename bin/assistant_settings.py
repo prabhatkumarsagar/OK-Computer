@@ -1,5 +1,11 @@
 import pickle as pk
-from bin import voice_io
+import voice_io
+from get_dirs import FILE_ASSISTANT_SETTINGS
+from bin import ass_sound_val
+sound_val=ass_sound_val.value()
+#from bin import voice_io
+#from bin.get_dirs import FILE_ASSISTANT_SETTINGS
+
 """
 Assistant Voice Settings:
 - assistant voice gender (male/female) **WINDOWS ONLY
@@ -46,9 +52,8 @@ russian 56
 tamil 62
 Mandarin 67
 """
-from bin.get_dirs import FILE_ASSISTANT_SETTINGS
 
-usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us'}
+usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us','vc_sound':sound_val}
 
 def write():
     f1=open(FILE_ASSISTANT_SETTINGS,"wb+")
@@ -59,7 +64,7 @@ def write():
 def read():
     f2=open(FILE_ASSISTANT_SETTINGS,"rb+")
     r=pk.load(f2)
-    #voice_io.show(r)
+    return r
     f2.close()
 #read()
 
@@ -122,11 +127,26 @@ def ass_settings_input():
         except:
             voice_io.show("Invalid Input! Please Try Again!")
             vc_lng_inp()
+
+    def vc_sound_tf():
+        sound_tf=input("Enter the assistant voice output value (True/False): ") 
+        if sound_tf.lower()=="true":
+            sound_tf=True
+            return sound_tf
+        elif sound_tf.lower()=="false":
+            sound_tf=False
+            return sound_tf
+        else:
+            print("Invalid Input! Please Try Again")
+            vc_sound_tf()
+
+
     #vc_lng_inp()
     usr_ass_settings['vc_gnd']=vc_gnd_inp()
     usr_ass_settings['vc_vol']=vc_vol_inp()
     usr_ass_settings['vc_rate']=vc_rate_inp()
     usr_ass_settings['vc_lng']=vc_lng_inp()
+    usr_ass_settings['vc_sound']=vc_sound_tf()
     write()
     read()
 #ass_settings_input()
@@ -139,7 +159,7 @@ def ass_settings_update():
     voice_io.show("2. Assistant Voice Volume")
     voice_io.show("3. Assistant Voice Rate")
     voice_io.show("4. Assistant Voice Language")
-    voice_io.show("5. ")
+    voice_io.show("5. Assistant Voice Output (True/False)")
     x=input("Enter Choice: ")
     if x=="1":
         u=input("Enter New Value(Male/Female): ")
@@ -157,6 +177,10 @@ def ass_settings_update():
         u=input("Enter New Value: ")
         update('vc_lng',u)
         read()
+    elif x=="4":
+        u=input("Enter New Value: ")
+        update('vc_sound',u)
+        read()
     else:
         voice_io.show("Invalid Input")
 #ass_settings_update()
@@ -170,11 +194,11 @@ def ass_settings_reset():
 
 """
 while True:
-     voice_io.show("What do you wanna do?")
-     voice_io.show("1. New Assistant Settings")
-     voice_io.show("2. Update Assistant Settings")
-     voice_io.show("3. Reset Assistant Settings")
-     voice_io.show("4. Exit")
+    print("What do you wanna do?")
+    print("1. New Assistant Settings")
+    print("2. Update Assistant Settings")
+    print("3. Reset Assistant Settings")
+    print("4. Exit")
     x=input("Enter CHOICE: ")
     if x=="1":
         ass_settings_input()
@@ -189,9 +213,34 @@ while True:
         break
         exit()
     else:
-         voice_io.show("Invalid Input! Please Try Again!")
+        voice_io.show("Invalid Input! Please Try Again!")
         continue
 """
 
+
 def first_run():
     ass_settings_input()
+
+
+def assistant_sound_enable():
+    update('vc_sound',True)
+    sound_val()
+
+
+def assistant_sound_disable():
+    update('vc_sound',False)
+    sound_val()
+
+def sound_val():
+    r=read()
+    c=r['vc_sound']
+    f=open('ass_sound_val.dat','wb+')
+    pk.dump(c,f)
+    f.close()
+
+
+
+#assistant_sound_disable()
+#print(sound_val())
+#sound_val()
+#assistant_sound_enable()
