@@ -1,5 +1,5 @@
-import get_dirs
-#from bin import get_dirs
+#import get_dirs
+from bin import get_dirs
 import os
 from os import system
 import subprocess 

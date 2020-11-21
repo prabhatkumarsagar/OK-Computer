@@ -1,10 +1,10 @@
 import pickle as pk
-import voice_io
-from get_dirs import FILE_ASSISTANT_SETTINGS
+#import voice_io
+#from get_dirs import FILE_ASSISTANT_SETTINGS
 from bin import ass_sound_val
 sound_val=ass_sound_val.value()
-#from bin import voice_io
-#from bin.get_dirs import FILE_ASSISTANT_SETTINGS
+from bin import voice_io
+from bin.get_dirs import FILE_ASSISTANT_SETTINGS
 
 """
 Assistant Voice Settings:
