@@ -10,7 +10,12 @@ def install():
         "pyttsx3": "pip3 install pyttsx3",
         "pyaudio": "pip3 install PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
         "speech_recognition": "pip3 install SpeechRecognition",
-        "bs4": "pip3 install bs4"
+        "bs4": "pip3 install bs4",
+        "wolframalpha": "pip3 install wolframalpha",
+        "wikipedia": "pip3 install wikipedia",
+        'mysql.connector': "pip3 install mysql-connector-python",
+        "pyowm": "pip3 install pyowm",
+        "geocoder": "pip3 install geocoder"
     }
     # bs4 is a dependency for gtts
     #pyaudio is a dependency for speech_recognition

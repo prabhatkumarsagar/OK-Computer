@@ -77,6 +77,15 @@ def update(x,y):
     pk.dump(newc,f3)
     f3.close()
 #update('vc_gnd','female')
+def disableSound():
+    update('sound', 'False')
+
+def enableSound():
+    update('sound', 'True')
+
+def loadSound():
+    pass
+
 
 def ass_settings_input():
     def vc_gnd_inp():

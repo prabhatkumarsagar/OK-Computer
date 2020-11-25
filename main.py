@@ -28,7 +28,8 @@ try:
     from bin import file_operations
     from bin import mailer
     from bin import assistant_settings   
-
+    from bin import misc_operations
+    
 except ModuleNotFoundError:    
     clear.clear()
     print("\nInstalling required packages.....\n")
@@ -46,6 +47,7 @@ except ModuleNotFoundError:
     from bin import file_operations
     from bin import mailer
     from bin import assistant_settings
+    from bin import misc_operations
 
 except OSError:
     print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
@@ -216,6 +218,9 @@ def main():
             dest_dir = invoice.inpt(processed = False)
                             
             file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
+
+        elif task.lower() in music_from_a_file:
+            pass
 
         #chat operations
         elif task in greet_hello:
