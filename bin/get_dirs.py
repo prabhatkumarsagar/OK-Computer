@@ -18,4 +18,5 @@ VIDEOS = HOME + "/Videos"
 #Assistant data directories
 PATH_USR_DATA = HOME + "/Documents/python_assistant_userdata/"
 FILE_ASSISTANT_SETTINGS = PATH_USR_DATA + "assistant_settings.dat"
+FILE_SOUND_VALUE = PATH_USR_DATA + 'ass_sound_val.dat'
 FILE_USR_DATA = HOME + "/Documents/python_assistant_userdata/user_info.dat"

@@ -8,7 +8,15 @@ import datetime
 import wolframalpha
 import webbrowser
 import smtplib
-import mailer
+
+try:
+    import mailer
+    import voice_io
+
+except ModuleNotFoundError:
+    from bin import mailer
+    from bin import voice_io
+    
 from urllib import request
 from bs4 import BeautifulSoup as soup
 #import vlc #pip install python-vlc
@@ -17,7 +25,7 @@ from bs4 import BeautifulSoup as soup
 import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
-from bin import voice_io
+
 import geocoder #pip install geocoder
 g = geocoder.ip('me')
 #voice_io.show(g.latlng)

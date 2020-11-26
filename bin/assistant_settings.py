@@ -1,11 +1,9 @@
 import pickle as pk
+import os
 #import voice_io
 #from get_dirs import FILE_ASSISTANT_SETTINGS
-from bin import ass_sound_val
-sound_val=ass_sound_val.value()
 from bin import voice_io
 from bin.get_dirs import FILE_ASSISTANT_SETTINGS
-
 """
 Assistant Voice Settings:
 - assistant voice gender (male/female) **WINDOWS ONLY
@@ -53,12 +51,16 @@ tamil 62
 Mandarin 67
 """
 
-usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us','vc_sound':sound_val}
+usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us','vc_sound':True}
+
 
 def write():
     f1=open(FILE_ASSISTANT_SETTINGS,"wb+")
     pk.dump(usr_ass_settings,f1)
     f1.close()
+
+if not os.path.exists(FILE_ASSISTANT_SETTINGS):
+    write()
 #write()
 
 def read():
@@ -78,14 +80,14 @@ def update(x,y):
     f3.close()
 #update('vc_gnd','female')
 def disableSound():
-    update('sound', 'False')
+    update('vc_sound', False)
 
 def enableSound():
-    update('sound', 'True')
+    update('vc_sound', True)
 
 def loadSound():
-    pass
-
+    r = read()
+    return r['vc_sound']
 
 def ass_settings_input():
     def vc_gnd_inp():

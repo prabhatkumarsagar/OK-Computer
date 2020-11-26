@@ -1,10 +1,12 @@
+
 import os
 import requests 
 import datetime
 import webbrowser
 import random
-from bin import ass_sound_val
-sound_val=ass_sound_val.value()
+
+# from bin import ass_sound_val
+# sound_val=ass_sound_val.value()
 from bin import install_packages as ip
 from bin import get_dirs
 from bin import clear
@@ -91,7 +93,7 @@ locate_pictures = ["5", "pictures"]
 locate_videos = ["6", "videos"]
 locate_home = ["7", "home"]
 
-sound = sound_val
+#sound = sound_val
 usr_name = ""
 
 def main():
@@ -121,7 +123,6 @@ def main():
         if task == "clear":
             clear.clear()
             #gnd_ns()
-
         #File/folder operations
         elif task in delete_file_unspecified:
             deleteFileUnspecified()
@@ -139,13 +140,13 @@ def main():
                 deleteFolderUnspecified()
 
             else:
-                voice_io.show("Sorry i didn't get that, please try again with a proper command.", sound = sound)
+                voice_io.show("Sorry i didn't get that, please try again with a proper command.")
                 
         elif task in rename:
             search_dir = ""
-            voice_io.show("Which file/folder would you like to rename?", sound = sound)
+            voice_io.show("Which file/folder would you like to rename?")
             obj_name = invoice.inpt(processed = False)
-            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
             locate = invoice.inpt().lower()
             if locate in locate_desktop:
                 search_dir = desktop
@@ -172,19 +173,19 @@ def main():
                 search_dir = home
 
             else:
-                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!", sound = sound)
+                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
                 search_dir = home
             
-            voice_io.show(f"What should be the new name for '{obj_name}'?", sound = sound)
+            voice_io.show(f"What should be the new name for '{obj_name}'?")
             new_name = invoice.inpt(processed = False)
                             
             file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
 
         elif task in copy_cmd:
             search_dir = ""
-            voice_io.show("Which file/folder would you like to copy?", sound = sound)
+            voice_io.show("Which file/folder would you like to copy?")
             obj_name = invoice.inpt(processed = False)
-            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
             locate = invoice.inpt().lower()
             if locate in locate_desktop:
                 search_dir = desktop
@@ -211,10 +212,10 @@ def main():
                 search_dir = home
 
             else:
-                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!", sound = sound)
+                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
                 search_dir = home
             
-            voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).", sound = sound)
+            voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).")
             dest_dir = invoice.inpt(processed = False)
                             
             file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
@@ -230,10 +231,10 @@ def main():
             tm_hello()
 
         elif task in abt_assistant:
-            voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ", sound = sound)
+            voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ")
 
         elif task in abt_creators:
-            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?", sound = sound)
+            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?")
             x=invoice.inpt().lower()
             if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
                 voice_io.show("Alright!")
@@ -294,7 +295,7 @@ def main():
                 else:
                     voice_io.show("Invalid Input! Please Try Again!")
                 
-        voice_io.show("\nNow, what to do?", sound = sound)
+        voice_io.show("\nNow, what to do?")
     
     
 def userSetup():
@@ -316,30 +317,23 @@ later on using the command 'disable sound'. You can also use the command
 You can always use the command 'voice' if you would prefer to speak your commands 
 instead.
 Press Enter/Return to continue.
-""", sound = sound_val)
+""")
     command = invoice.inpt(iterate = False)
 
-
-    if command == "disable sound":
-        assistant_settings.assistant_sound_disable()
-    
-    elif command == "":
-        assistant_settings.assistant_sound_enable()
-    
+    if command == "":
+        pass    
     else:
-        voice_io.show("Unable to understand your command, continuing without sound.")
-        assistant_settings.assistant_sound_disable()
+        voice_io.show("Unable to understand your command, continuing with sound.")
     
     if not os.path.exists(get_dirs.PATH_USR_DATA):
         os.mkdir(get_dirs.PATH_USR_DATA)
 
-    usr_signup.main(operation = "new", sound = return_val)
-    return return_val
+    usr_signup.main(operation = "new")
 
 def deleteFileUnspecified():
     global sound
     search_dir = ""
-    voice_io.show("Which file fo you want to delete?", sound = sound)
+    voice_io.show("Which file fo you want to delete?")
     file_name = invoice.inpt(processed = False)
     voice_io.show(f"Where would you like me to search for the file, {file_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
     locate = invoice.inpt().lower()
@@ -365,7 +359,7 @@ def deleteFileUnspecified():
         search_dir = videos
                 
     else:
-        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!")
         search_dir = home
                     
     file_operations.deleteFile(file_name = file_name,search_dir = search_dir)
@@ -373,9 +367,9 @@ def deleteFileUnspecified():
 def deleteFolderUnspecified():
     global sound
     search_dir = ""
-    voice_io.show("Which folder do you want to delete?", sound = sound)
+    voice_io.show("Which folder do you want to delete?")
     folder_name = invoice.inpt(processed = False)
-    voice_io.show(f"Where would you like me to search for the folder, {folder_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+    voice_io.show(f"Where would you like me to search for the folder, {folder_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
     locate = invoice.inpt().lower()
     if locate in locate_desktop:
         search_dir = desktop
@@ -399,7 +393,7 @@ def deleteFolderUnspecified():
         search_dir = videos
                 
     else:
-        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!", sound = sound)
+        voice_io.show("Sorry but i can not find the given directory, going forward with the entire home directory!")
         search_dir = home
                     
     file_operations.deleteFolder(folder_name = folder_name,search_dir = search_dir)
@@ -425,11 +419,11 @@ def fetch_joke(st):
                     headers={"Accept":"application/json"}
                 )
     if res_j.status_code == requests.codes.ok:
-        voice_io.show(st, sound = sound) 
+        voice_io.show(st) 
         voice_io.show(str(res_j.json()['joke']))
     
     else:
-        voice_io.show("Oops! It looks like i ran out of my jokes, why don't you try again later.", sound = sound)
+        voice_io.show("Oops! It looks like i ran out of my jokes, why don't you try again later.")
                 
 def feedback():
     mailer.feedback_sender()
@@ -586,13 +580,13 @@ def gnd():
         return gndmm[random.randint(0,2)]
 
 def gnd_hello(): 
-    voice_io.show("Hello ", gnd(), usr_name, sound = sound)
+    voice_io.show("Hello ", gnd(), usr_name)
 
 def gnd_ns():# greeting on a new session
     voice_io.show(f"""Hello {gnd()} {usr_name}! 
             
 What would you like me to do?
-""", sound = sound)
+""")
 
 def tm_hello():
     time=datetime.datetime.now().strftime("%H")  
@@ -603,6 +597,6 @@ def tm_hello():
         tm="Afternoon"
     else:
         tm="Evening"
-    voice_io.show("Good", tm, gnd(), sound = sound)
+    voice_io.show("Good", tm, gnd())
 
 main()

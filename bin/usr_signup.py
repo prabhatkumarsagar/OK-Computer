@@ -6,26 +6,23 @@ from bin import get_dirs
 from bin import clear
 from bin import voice_io
 from bin import invoice
-from bin import ass_sound_val
-sound_val=ass_sound_val.value()
 #import get_dirs
 #import clear
 #import voice_io
 #import invoice
-sound = sound_val
 #sound = True
 
 def setNewUser():
     usr_info_dic={}
     clear.clear()
-    voice_io.show("What shall i call you Master? ", sound = sound)
+    voice_io.show("What shall i call you Master? ")
     nm = invoice.inpt() #Name of the user i.e the name by which the assistant will call him/her
-    voice_io.show("\nAnd you are, Master or Miss, master? ", sound = sound) #Gender of the user which the assistant will refer to again and again
+    voice_io.show("\nAnd you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     gnd = invoice.inpt()
-    voice_io.show("\nNow What would be your email address? I will be needing this for my email operations so that i can help you with sending automated emails to others without you lifting a finger and also for helping you send feedback to my developers regarding bugs or minor issues, which i would hope doesn't happen :D", sound = sound)#usr email address
+    voice_io.show("\nNow What would be your email address? I will be needing this for my email operations so that i can help you with sending automated emails to others without you lifting a finger and also for helping you send feedback to my developers regarding bugs or minor issues, which i would hope doesn't happen :D")#usr email address
     eml = invoice.inpt()
-    pswd = getpass.getpass(voice_io.show("\nAnd lastly what is your email password? Note: All these personal information is stored only and only on your local machine and hence there's no way i can compromise your data, In short you can trust me ;) ",show_output = False, sound = sound) + "\nPassword: ")#use password
-    voice_io.show("\nRegarding email operations, please note that for properly executing them you will have to make sure to turn on \"Less Secure Apps\" for your google account. \n\nWhich if you want to do now, please enter 'YES' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account right away and just by clicking on that the program will be good to go! Otherwise enter 'NO' and you can always do it later in assistant settings.", sound = sound)
+    pswd = getpass.getpass(voice_io.show("\nAnd lastly what is your email password? Note: All these personal information is stored only and only on your local machine and hence there's no way i can compromise your data, In short you can trust me ;) ",show_output = False) + "\nPassword: ")#use password
+    voice_io.show("\nRegarding email operations, please note that for properly executing them you will have to make sure to turn on \"Less Secure Apps\" for your google account. \n\nWhich if you want to do now, please enter 'YES' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account right away and just by clicking on that the program will be good to go! Otherwise enter 'NO' and you can always do it later in assistant settings.")
     ch = invoice.inpt()
 
     if ch.lower()=="yes":

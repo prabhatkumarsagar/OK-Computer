@@ -1,14 +1,14 @@
 #from bin.get_dirs import FILE_USR_DATA
+from bin import assistant_settings
 from bin.get_dirs import FILE_USR_DATA
 import os
 from bin import get_dirs
 from bin import clear
 #import get_dirs
 #import clear
-from bin import ass_sound_val
-sound_val=ass_sound_val.value()
+from bin import assistant_settings
 
-def inpt(text = ">>> ", sound = sound_val, audio_io = True, iterate = True, processed = True):
+def inpt(text = ">>> ", audio_io = True, iterate = True, processed = True):
     if audio_io:
         from bin import voice_io
         #import voice_io
@@ -18,19 +18,19 @@ def inpt(text = ">>> ", sound = sound_val, audio_io = True, iterate = True, proc
                 entered_data = input(text)
                 # voice_io.show("input = ",entered_data)
                 
-                if entered_data == "voice":
+                if processData(entered_data) == "voice":
                     i = 0
                     voice_data = False
                     while not voice_data:
                         try:
-                            voice_io.show("I am listening......", sound = sound)
+                            voice_io.show("I am listening......")
                             voice_data = entered_data = voice_io.voice_in()
                             i += 1
                             if i >= 1:
-                                voice_io.show("\nSorry, could not get that! Please try again..\n", sound = sound)
+                                voice_io.show("\nSorry, could not get that! Please try again..\n")
                     
                         except KeyboardInterrupt:#stops voice input when ctrl+c is pressed 
-                            voice_io.show("\nStopped listening", sound = sound)
+                            voice_io.show("\nStopped listening")
                             entered_data = ""
                             voice_data = True
 
@@ -39,22 +39,38 @@ def inpt(text = ">>> ", sound = sound_val, audio_io = True, iterate = True, proc
                         return ""                         
                     continue
 
-                elif "clear" in entered_data.lower() or entered_data.lower() in "clrcls":
+                elif processData(entered_data).lower() == "disable sound":
+                    assistant_settings.disableSound()
+                    if not iterate:
+                        return ""
+                    
+                    voice_io.show("Sound has been disabled! You can continue with your operation")
+                    continue
+
+                elif processData(entered_data).lower() == "enable sound":
+                    assistant_settings.enableSound()
+                    if not iterate:
+                        return ""
+
+                    voice_io.show("Sound has been enabled! You can continue with your operation")
+                    continue
+
+                elif "clear" in processData(entered_data).lower() or processData(entered_data).lower() in "clrcls":
                     return "clear"
 
-                elif entered_data.lower() in ["exit", "quit", "end", "bye", "good bye", "goodbye", "tata"]:
+                elif processData(entered_data).lower() in ["exit", "quit", "end", "bye", "good bye", "goodbye", "tata"]:
                     #voice_io.show(entered_data.lower() in "exitquitend")
-                    voice_io.show("\nBye and have a nice day!", sound = sound)
+                    voice_io.show("\nBye and have a nice day!")
                     exit()
 
                 else:
                     if processed:
                         entered_data = processData(entered_data)
-                    print(entered_data)
+
                     return entered_data
 
             except KeyboardInterrupt:#exits from the program when ctrl+c is pressed
-                voice_io.show("\nBye and have a nice day!", sound = sound)
+                voice_io.show("\nBye and have a nice day!")
                 exit()
             
     else:
