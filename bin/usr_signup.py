@@ -147,10 +147,7 @@ def info_update():
     voice_io.show("Data Updated Successfully!")
 
 def main(**kwargs):
-    global sound
-
     if kwargs["operation"] == "new":
-        sound = kwargs["sound"]
         setNewUser()
     
     elif kwargs["operation"] == "fetch":
