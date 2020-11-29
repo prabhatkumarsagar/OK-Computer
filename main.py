@@ -1,12 +1,8 @@
-
 import os
 import requests 
 import datetime
 import webbrowser
 import random
-
-# from bin import ass_sound_val
-# sound_val=ass_sound_val.value()
 from bin import install_packages as ip
 from bin import get_dirs
 from bin import clear
@@ -65,26 +61,6 @@ videos = get_dirs.VIDEOS
 pictures = get_dirs.PICTURES
 
 
-# file operation commands
-delete_file_unspecified = ["delete a file", "file delete", "remove a file",]
-delete_folder_unspecified = ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"]
-delete_general = ["delete", "del", "remove", "erase", "rm"]
-rename_unspecified = ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"]
-copy_cmd = ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"]
-rename = ["rname", "rename", "rename a file", "rename a folder", "rename a folder"]
-music_from_a_file = ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"]
-video_from_a_file = []
-
-#chat operation commands
-joke = ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "make laugh", "say a joke", "say me a joke", "another", "another one", "once more", "more", "again", "new one", "make me laugh again"]
-greet_hello = ["hello","hey","hi","hello there","hey there"]
-greet_time = ["good morning", "good evening", "good afternoon", "good noon", "good morrow", "good eve"]
-abt_assistant = ["who are you","hey what's your name","what is your name","tell me about you","tell me about yourself","hey who are you"]
-abt_creators = ["who made you", "hey who's your fada", "who's you creator",""]
-ask_wellbeing = ["hey how are you","how do you do","how are you","howdy"]
-help = ["help", "hey help me", "hey can you help me", "mind helping me", "i need your help"]
-
-#choices for file operations
 locate_desktop = ["1", "desktop"]
 locate_downloads = ["2", "downloads"]
 locate_documents = ["3", "documents"]
@@ -95,6 +71,49 @@ locate_home = ["7", "home"]
 
 #sound = sound_val
 usr_name = ""
+
+def operation(query):
+    op={"help":["help","help me","hey help me"],"greet_hello":["what's up","what's good","hi","hello","hey","hullo"],"greet_time":["good morning","good afternoon","good evening"],"joke":["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "another", "another one", "once more"], "abt_assistant":["who are you","what's your name","what is your name","tell me about yourself"], "abt_creators":["who made you", "hey who's your fada", "who's you creator","who created you"], "ask_wellbeing":["hey how are you","how do you do","how are you","howdy"], "delete_general":["delete", "del", "remove", "erase", "rm"], "delete_file_unspecified":["delete a file", "file delete", "remove a file"], "delete_folder_unspecified":["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], "rename_unspecified":["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"], "copy":["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"], "rename":["rname", "rename", "rename a file", "rename a folder", "rename a folder"], "music_from_a_file":["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], "web_search":["open","open google","open youtube","define","what's the meaning of","search","meaning of","google","what is"], "time":["time","current time","what's the time","tell me the time","what time it is"], "date":["date","today's date","what's the date","current date"], "date_day":["what's the day","day","what day is it","what day it is"], "date_month":["what's the month","month","what month is it","what month it is"], "date_year":["year","what's the year","what year is it","what year it is"], "notesrem_write":["reminder","write a note","save a note","save a reminder","add a note","write a reminder","add a reminder","note","remind me"], "notesrem_read":["are there any notes","notes","do i have any note","past notes","read notes","are there any reminders","do i have any reminders","reminders","read reminders","past reminders"], "email":["email","send a email","send an email","write an email","compose email","compose an email"], "weather":["weather","what's the weather","current weather","what's the temperature outside","how's the josh","temperature"], "weather_frcst":["weather forecast","what's the weather forecast","how's the weather going to be"], "song":["play","play song","play songs"], "news":["news","headlines","top headlines","today's news","tell me the news"]}
+    n=""
+    for i in op:
+        for j in op[i]:
+            if j in query:
+                n=i
+            else:
+                continue
+    return n
+
+"""
+POSSIBLE Operation() OUTPUTS! *D means Done i.e it's been implemented properly.
+help D
+greet_hello D
+greet_time D
+joke D
+abt_assistant D
+abt_creators D
+ask_wellbeing D
+delete_general D
+delete_file_unspecified D
+delete_folder_unspecified D
+rename_unspecified
+copy D
+rename D
+music_from_a_file 
+web_search 
+time
+date
+date_day
+date_month
+date_year
+notesrem_write
+notesrem_read
+email
+weather
+weather_frcst
+song
+news
+"""
+
 
 def main():
     global sound
@@ -120,163 +139,21 @@ def main():
         if iterate_jokes > 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
-        if task == "clear":
+        elif task == "clear":
             clear.clear()
-            #gnd_ns()
-        #File/folder operations
-        elif task in delete_file_unspecified:
-            deleteFileUnspecified()
 
-        elif task in delete_folder_unspecified:
-            deleteFolderUnspecified()
-        
-        elif task in delete_general:
-            voice_io.show(f"What do you want to {task}, a file or a folder?")
-            choice = invoice.inpt().lower()
-            if choice == "file":
-                deleteFileUnspecified()
-
-            elif choice == "folder":
-                deleteFolderUnspecified()
-
-            else:
-                voice_io.show("Sorry i didn't get that, please try again with a proper command.")
-                
-        elif task in rename:
-            search_dir = ""
-            voice_io.show("Which file/folder would you like to rename?")
-            obj_name = invoice.inpt(processed = False)
-            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
-            locate = invoice.inpt().lower()
-            if locate in locate_desktop:
-                search_dir = desktop
-
-            elif locate in locate_documents:
-                search_dir = documents
-
-            elif locate in locate_downloads:
-                search_dir = downloads
-
-            elif locate in locate_home:
-                search_dir = home
-                        
-            elif locate in locate_music:
-                search_dir = music
-            
-            elif locate in locate_pictures:
-                search_dir = pictures
-
-            elif locate in locate_videos:
-                search_dir = videos
-
-            elif locate in locate_home:
-                search_dir = home
-
-            else:
-                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
-                search_dir = home
-            
-            voice_io.show(f"What should be the new name for '{obj_name}'?")
-            new_name = invoice.inpt(processed = False)
-                            
-            file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
-
-        elif task in copy_cmd:
-            search_dir = ""
-            voice_io.show("Which file/folder would you like to copy?")
-            obj_name = invoice.inpt(processed = False)
-            voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
-            locate = invoice.inpt().lower()
-            if locate in locate_desktop:
-                search_dir = desktop
-
-            elif locate in locate_documents:
-                search_dir = documents
-
-            elif locate in locate_downloads:
-                search_dir = downloads
-
-            elif locate in locate_home:
-                search_dir = home
-                        
-            elif locate in locate_music:
-                search_dir = music
-            
-            elif locate in locate_pictures:
-                search_dir = pictures
-
-            elif locate in locate_videos:
-                search_dir = videos
-
-            elif locate in locate_home:
-                search_dir = home
-
-            else:
-                voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
-                search_dir = home
-            
-            voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).")
-            dest_dir = invoice.inpt(processed = False)
-                            
-            file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
-
-        elif task.lower() in music_from_a_file:
-            pass
-
-        #chat operations
-        elif task in greet_hello:
-            gnd_hello()
-
-        elif task in greet_time:
-            tm_hello()
-
-        elif task in abt_assistant:
-            voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ")
-
-        elif task in abt_creators:
-            voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?")
-            x=invoice.inpt().lower()
-            if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
-                voice_io.show("Alright!")
-                webbrowser.open("https://github.com/prabhatkumarsagar")
-                webbrowser.open("https://github.com/DuttaAB-dev")
-                
-            elif "no" in x or "nope" in x or "not" in x:
-                voice_io.show("Okay!")
-    
-            else:
-                pass
-        elif task in ask_wellbeing:
-            voice_io.show("Oh I am Grand, How are you master?")
-            x=invoice.inpt().lower()
-            if "good" in x or "great" in x or "fine" in x or "well" in x or "grand" in x or "nice" in x or "ok" in x or "okay" in x:
-                voice_io.show("Good to hear! Keep having fun!")
-                
-            else:
-                voice_io.show("Well everything will be good soon, just keep smiling, it suits you.")
-                
-        elif task in joke:
-            if not voice_io.is_connected():
-                if task not in  ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:  
-                    voice_io.show("Oops! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will won't be able to conquer the earth\nwith my humor! HAHA.")       
-            
-            else:
-                if iterate_jokes == 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
-                    fetch_joke('Here is an awesome one for you!\n')
-                    iterate_jokes += 1
-                
-                elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
-                    fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
-
-
-        #Getting help about the assistant's functions
-        elif task in help:
+        else:
+            result=operation(task)
+            result=result.lower()
+            if result=="":
+                print("Sorry i didn't get that please try again!")
+  
+            elif result=="help":
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
                 voice_io.show("1. Assistant Settings")
                 voice_io.show("2. Assistant Services")
                 voice_io.show("3. Assistant Operations")
                 voice_io.show("4. Feedback (Suggest Improvements/Report Bugs/...)")
-                #voice_io.show("5. Exit")
                 x=invoice.inpt("Enter Choice: ")
                 if x=="1":
                     pda_help()
@@ -290,13 +167,152 @@ def main():
                 elif x=="4":
                     feedback()
                     
-                #elif x=="5":
-                #    exit()
                 else:
                     voice_io.show("Invalid Input! Please Try Again!")
+            
+            elif result=="delete_file_unspecified":
+                deleteFileUnspecified()
+
+            elif result=="delete_folder_unspecified":
+                deleteFolderUnspecified()
         
-        #Miscellaneous Operations
-        elif  
+            elif result=="delete_general":
+                voice_io.show(f"What do you want to {task}, a file or a folder?")
+                choice = invoice.inpt().lower()
+                if choice == "file":
+                    deleteFileUnspecified()
+
+                elif choice == "folder":
+                    deleteFolderUnspecified()
+
+                else:
+                    voice_io.show("Sorry i didn't get that, please try again with a proper command.")
+                    
+            elif result=="rename":
+                search_dir = ""
+                voice_io.show("Which file/folder would you like to rename?")
+                obj_name = invoice.inpt(processed = False)
+                voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+                locate = invoice.inpt().lower()
+                if locate in locate_desktop:
+                    search_dir = desktop
+
+                elif locate in locate_documents:
+                    search_dir = documents
+
+                elif locate in locate_downloads:
+                    search_dir = downloads
+
+                elif locate in locate_home:
+                    search_dir = home
+                            
+                elif locate in locate_music:
+                    search_dir = music
+                
+                elif locate in locate_pictures:
+                    search_dir = pictures
+
+                elif locate in locate_videos:
+                    search_dir = videos
+
+                elif locate in locate_home:
+                    search_dir = home
+
+                else:
+                    voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
+                    search_dir = home
+                
+                voice_io.show(f"What should be the new name for '{obj_name}'?")
+                new_name = invoice.inpt(processed = False)
+                                
+                file_operations.rname(obj_name = obj_name,search_dir = search_dir, new_name = new_name)
+
+            elif result=="copy":
+                search_dir = ""
+                voice_io.show("Which file/folder would you like to copy?")
+                obj_name = invoice.inpt(processed = False)
+                voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+                locate = invoice.inpt().lower()
+                if locate in locate_desktop:
+                    search_dir = desktop
+
+                elif locate in locate_documents:
+                    search_dir = documents
+
+                elif locate in locate_downloads:
+                    search_dir = downloads
+
+                elif locate in locate_home:
+                    search_dir = home
+                            
+                elif locate in locate_music:
+                    search_dir = music
+                
+                elif locate in locate_pictures:
+                    search_dir = pictures
+
+                elif locate in locate_videos:
+                    search_dir = videos
+
+                elif locate in locate_home:
+                    search_dir = home
+
+                else:
+                    voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
+                    search_dir = home
+                
+                voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).")
+                dest_dir = invoice.inpt(processed = False)
+                                
+                file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
+
+            elif result=="music_from_a_file":
+                pass
+
+            elif result=="greet_hello":
+                gnd_hello()
+
+            elif result=="greet_time":
+                tm_hello()
+
+            elif result=="abt_assistant":
+                voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ")
+
+            elif result=="abt_creators":
+                voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?")
+                x=invoice.inpt().lower()
+                if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
+                    voice_io.show("Alright!")
+                    webbrowser.open("https://github.com/prabhatkumarsagar")
+                    webbrowser.open("https://github.com/DuttaAB-dev")
+                    
+                elif "no" in x or "nope" in x or "not" in x:
+                    voice_io.show("Okay!")
+        
+                else:
+                    pass
+
+            elif result=="ask_wellbeing":
+                voice_io.show("Oh I am Grand, How are you master?")
+                x=invoice.inpt().lower()
+                if "good" in x or "great" in x or "fine" in x or "well" in x or "grand" in x or "nice" in x or "ok" in x or "okay" in x:
+                    voice_io.show("Good to hear! Keep having fun!")
+                    
+                else:
+                    voice_io.show("Well everything will be good soon, just keep smiling, it suits you.")
+                    
+            elif result=="joke":
+                if not voice_io.is_connected():
+                    if task not in  ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:  
+                        voice_io.show("Oops! It looks like you are not connected to the Skynet!!!\nPlease stay online or I will won't be able to conquer the earth\nwith my humor! HAHA.")       
+                
+                else:
+                    if iterate_jokes == 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                        fetch_joke('Here is an awesome one for you!\n')
+                        iterate_jokes += 1
+                    
+                    elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+                        fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
 
         voice_io.show("\nNow, what to do?")
     
