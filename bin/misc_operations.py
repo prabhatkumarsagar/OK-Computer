@@ -9,13 +9,18 @@ import wolframalpha
 import webbrowser
 import smtplib
 
-try:
-    import mailer
-    import voice_io
 
-except ModuleNotFoundError:
+try:
     from bin import mailer
     from bin import voice_io
+    from bin import wolfy
+    from bin import clear
+
+except ModuleNotFoundError:
+    import mailer
+    import voice_io
+    import wolfy
+    import clear
     
 from urllib import request
 from bs4 import BeautifulSoup as soup
@@ -25,15 +30,13 @@ from bs4 import BeautifulSoup as soup
 import mysql.connector as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
-
 import geocoder #pip install geocoder
+
 g = geocoder.ip('me')
-#voice_io.show(g.latlng)
 ct=(g.city)
-#BeautifulSoup("html.parser")
+
 #weather
-def weather_curr(city): #to be replaced with - elif 'weather' in command:    
-    #api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}          
+def weather_curr(city):      
     api_key = "cd140d1c1404cba5de2dabf6bcd00f52" 
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     url = base_url + "&q=" + city + "&appid=" + api_key
@@ -55,25 +58,38 @@ def weather_curr(city): #to be replaced with - elif 'weather' in command:
 
 #weather forecaster
 def weather_forec(city):
+    voice_io.show("Sorry i am currently restricted to show weather forecast for tomorrow only. Look out for future updates and see if my handcuffs are set free. Here's tomorrow's weather forecast anyway.")
     owm = OWM('cd140d1c1404cba5de2dabf6bcd00f52')
     mgr=owm.weather_manager()
     loc = mgr.weather_at_place(city)
     weather = loc.weather
     temp = weather.temperature(unit='celsius')
-    #for key,val in temp.items():
-    #    voice_io.show(f'{key} => {val}')
+    for key,val in temp.items():
+        if key=="temp":
+            voice_io.show(f'The temperature tommorow will be around {val} degree celcius.')
+        else:
+            continue
     loa = mgr.forecast_at_place(city,'3h')
     tomorrow=timestamps.tomorrow()
     forecasttt=loa.get_weather_at(tomorrow)
-    voice_io.show(forecasttt)
-
+    status=(forecasttt.status)
+    voice_io.show(f'And the sky would be {status}')
 #weather_forec(ct)
 
-
+def date_con():
+    d=date=datetime.datetime.now().strftime("%d") 
+    m=date=datetime.datetime.now().strftime("%m") 
+    y=date=datetime.datetime.now().strftime("%Y") 
+    dt=[y,m,d]
+    date=""
+    for i in dt:
+        date+=i
+    date=int(date)
+    return date
 
 #Notes and Reminders
-def notrems():
-    def notes():
+def notrem_write():
+    def note_write():
         while True:
             try:
                 usr=input("Enter your MySQL Username: ")
@@ -81,25 +97,24 @@ def notrems():
                 if usr=="":
                     usr="root"
                 con=sql.connect(host="localhost",user=usr,password=pwd)
-                break
             except:
                 voice_io.show("MySQL Error")
                 break
-        cur=con.cursor()
-        cur.execute("create database if not exists pydeskassist;")
-        cur.execute("use pydeskassist;")
-        cur.execute("create table if not exists notes(date_added date, note longtext);")
-        x1=input("Enter Note: ")
-        cur.execute("insert into notes values(curdate(), '%s');"%x1)
-        con.commit()
-        cur.execute("select * from notes;")
-        c=cur.fetchall()
-        voice_io.show(c)
-        con.close()
+            cur=con.cursor()
+            cur.execute("create database if not exists pydeskassist;")
+            cur.execute("use pydeskassist;")
+            cur.execute("create table if not exists notes(date_added date, note longtext);")
+            voice_io.show("Okay so you wanna enter a new note? Here ya go!")
+            x1=input("Enter Note Here: ")
+            cur.execute("insert into notes values(curdate(), '%s');"%x1)
+            voice_io.show("Note Saved Successfully!")
+            con.commit()
+            con.close()
+            break
 
-    #notes()
+    #note_write()
 
-    def reminders():
+    def reminder_write():
         while True:
             try:
                 usr=input("Enter your MySQL Username: ")
@@ -107,61 +122,107 @@ def notrems():
                 if usr=="":
                     usr="root"
                 con=sql.connect(host="localhost",user=usr,password=pwd)
-                break
             except:
                 voice_io.show("MySQL Error")
                 break
-        cur=con.cursor()
-        cur.execute("create database if not exists pydeskassist;")
-        cur.execute("use pydeskassist;")
-        cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
-        x1=input("Enter Reminder: ")
-        x2=input("Enter Date to be Notified (YYYY:MM:DD) (OPTIONAL): ")
-        x3=input("Enter Time to be Notified (HH:MM:SS) (OPTIONAL): ")
-        if x2=='' and x3=='':
-            cur.execute("insert into reminders(date_added,reminder) values(curdate(), '%s');"%x1)
-            con.commit()
-        else:
-            cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
-            con.commit()
-        cur.execute("select * from reminders;")
-        c=cur.fetchall()
-        voice_io.show(c) 
-        con.close()
+            cur=con.cursor()
+            cur.execute("create database if not exists pydeskassist;")
+            cur.execute("use pydeskassist;")
+            cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
+            x1=input("Enter Reminder: ")
+            x2=input("Enter Date to be Notified (YYYYMMDD): ")
+            x3=input("Enter Time to be Notified (HHMMSS): ")
+            if x2=='' or x3=='':
+                voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
+                break
+            else:
+                cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
+                voice_io.show("Reminder Saved Successfully!")
+                con.commit()
+            con.close()
+            break
 
-    #reminders()
+    #reminder_write()
 
-#notrems()
+#notrem_write()
 
-#Calculations
-def Calculation():
-    url="https://google.com/search?q="
-    query=input("Enter Query: ")
-    query=query.lower()
-    nquery=""
-    for i in range(len(query)):
-        if query[i]=="+":
-            #voice_io.show("i lob bobs n vagene")
-            nquery+=query[i-1]+" "
-            nquery+=query[i]
-            nquery+=" "+query[i+1]
-    nquery=nquery.split()
-    voice_io.show(nquery)
-    nurl=url
-    for i in nquery:
-        if i=='+':
-            nurl+='%2B'
-            nurl+='%20'
-        else:
-            nurl+=i
-            nurl+='%20'    
-    voice_io.show(nurl)
-    try:
-        webbrowser.open(nurl)
-    except:
-        voice_io.show("Sorry couldn't fetch records, maybe try again later!")
+def notrem_read():
+    def note_read():
+        while True:
+            try:
+                usr=input("Enter your MySQL Username: ")
+                pwd=input("Enter you MySQL Password: ")
+                if usr=="":
+                    usr="root"
+                con=sql.connect(host="localhost",user=usr,password=pwd)
+            except:
+                voice_io.show("MySQL Error")
+                break
+            cur=con.cursor()
+            cur.execute("use pydeskassist;")
+            cur.execute("select * from notes;")
+            c=cur.fetchall()
+            voice_io.show("Here are all your notes: ")
+            voice_io.show(c)
+            con.close()
+            break
 
-#Calculation()
+    #note_read()
+
+    def reminder_read():
+        while True:
+            try:
+                usr=input("Enter your MySQL Username: ")
+                pwd=input("Enter you MySQL Password: ")
+                if usr=="":
+                    usr="root"
+                con=sql.connect(host="localhost",user=usr,password=pwd)
+            except:
+                voice_io.show("MySQL Error")
+                break
+            cur=con.cursor()
+            cur.execute("use pydeskassist;")  
+            voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature which you might see in the near future ;) so for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
+            voice_io.show("\nWhat saved reminders do you want to read?")
+            voice_io.show("1. Past Reminders")
+            voice_io.show("2. Future/Upcoming Reminders")
+            cho=input("Enter Choice: ")
+            date=datetime.datetime.now().strftime("%x") 
+            if cho=="1":
+                cur.execute("select * from reminders where date_tbn < curdate();")
+                c=cur.fetchall()
+                voice_io.show("Here are all your past reminders: ")
+                voice_io.show(c)
+                if c=="[]":
+                    voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
+                    break
+                else:
+                    z=input("Do you want to delete your past reminders? (Y/N) ")
+                    z=z.lower()
+                    if z=="y":
+                        cur.execute("delete from reminders where date_tbn < curdate();")
+                        con.commit()
+                        voice_io.show("Records Deleted Successfully!")
+                    elif z=="n":
+                        voice_io.show("Okay!")
+                    else:
+                        voice_io.show("Invalid Input!")
+
+            elif cho=="2":
+                cur.execute("select * from reminders where date_tbn >= curdate();")
+                c=cur.fetchall()
+                voice_io.show("Here are all your past reminders: ")
+                voice_io.show(c)   
+            else:
+                voice_io.show('Invalid Input!')
+                break
+            con.close()
+            break
+
+    #reminder_read()
+
+#notrem_read()
+
 
 #Time & Date
 def datentime():
@@ -198,76 +259,82 @@ def sendEmail():
 #sendEmail()
 
 #Play Offline/Online Songs
-def playsong():
-    def offline():
-        voice_io.show("Alright, fetching your offline music playlist right away!")
-        if os.name == "nt":
-            music_dir = "C:\\Users\\Local\\Music"
-        else:
-            music_dir = "HOME$/Music"
+def song_offline():
+    voice_io.show("Alright, fetching your offline music playlist right away!")
+    if os.name == "nt":
+        music_dir = "C:\\Users\\Local\\Music"
+    else:
+        music_dir = "HOME$/Music"
+    
+    songs = os.listdir(music_dir)
+    voice_io.show(songs)
+    random = os.startfile(os.path.join(music_dir, songs[1]))
         
-        songs = os.listdir(music_dir)
-        voice_io.show(songs)
-        random = os.startfile(os.path.join(music_dir, songs[1]))
-        
-    def online():    
-        song=input("Alright, what song do you wanna play? ")
+def song_online(query):    
+    reg_ex = re.search('play (.+)', query)
+    if reg_ex:
+        song = reg_ex.group(1)
         url="https://www.youtube.com/results?search_query="
         url1=song.split()
-        for i in url1:
-            url+=i
+        for i in range(len(url1)):
+            url+=url1[i]
+            if i!=-1:
+                url+="+"
+        #voice_io.show(url)
+        voice_io.show("Your requested song will now be searched on youtube in your default browser! Make sure to click the first video link to play it. SORRY FOR THE INCONVINIENCE, We're Working on it.")
         webbrowser.open(url)
-        #LET'S JUST KEEP IT TO THIS FOR NOW! LATER WE CAN MAYBE MAKE A WEBSCRAPER/DRIVER WHICH WILL OPEN THE YOUTUBE PAGE AND AUTOMATICALLY CLICK ON THE FIRST VIDEO AND PLAY IT ALL OF THIS BEING DONE IN BACKGROUND.
+    else:
+        voice_io.show("Uh-oh looks like i can't perform this operation right now, maybe try again later!")
 
-#playsong
 
 #Web Search
-def web():
-    query=input("Enter Web Command(some example of which are \"Open Youtube\" or \"Wikipedia What is Anarchy?\"): ")
+def web(query):
     query=query.lower()
-
-    if 'wikipedia' in query:
+    if 'what is the' in query:
         try:
             voice_io.show('Searching Wikipedia...')
-            #speak('Searching Wikipedia...')
-            query = query.replace("wikipedia","")
-            results = wikipedia.summary(query,sentences=3)
+            query1 = query.replace("what is the","")
+            results = wikipedia.summary(query1,sentences=1)
             voice_io.show("According to Wikipedia")
             voice_io.show(results)
-            #speak(results)
         except:
-            voice_io.show("Please make sure you're entering a valid input!")
+            try:
+                clear.clear()
+                voice_io.show(wolfy.wolfram_try(query))
+            except:
+                voice_io.show("Please make sure you're entering a valid input!")
 
-
-    elif 'youtube' in query:
-        voice_io.show("Alright, opening Youtube right away!\n")
-        webbrowser.open("youtube.com")
-
-    elif 'google' in query:
-        voice_io.show("Alright, opening Google right away!\n")
-        webbrowser.open("google.com")
-
-    elif 'instagram' in query:
-        voice_io.show("Alright, opening Instagram right away!")
-        webbrowser.open("instagram.com")
+    elif 'meaning of' in query:
+        try:
+            voice_io.show('Searching Wikipedia...')
+            query1 = query.replace("meaning of","")
+            results = wikipedia.summary(query1,sentences=1)
+            voice_io.show("According to Wikipedia")
+            voice_io.show(results)
+        except:
+            try:
+                clear.clear()
+                voice_io.show(wolfy.wolfram_try(query))
+            except:
+                voice_io.show("Please make sure you're entering a valid input!")
     
-    elif 'twitter' in query:
-        voice_io.show("Alright, opening Instagram right away!")
-        webbrowser.open("twitter.com")
-    
-    elif 'reddit' in query:
-        voice_io.show("Alright, opening Instagram right away!")
-        webbrowser.open("reddit.com")
-    
-    elif 'facebook' in query:
-        voice_io.show("Alright, opening Instagram right away!")
-        webbrowser.open("facebook.com")
+    elif 'define' in query:
+        try:
+            voice_io.show('Searching Wikipedia...')
+            query1 = query.replace("define","")
+            results = wikipedia.summary(query1,sentences=1)
+            voice_io.show("According to Wikipedia")
+            voice_io.show(results)
+        except:
+            try:
+                clear.clear()
+                voice_io.show(wolfy.wolfram_try(query))
+            except:
+                voice_io.show("Please make sure you're entering a valid input!")
 
-    elif 'search' in query or 'play' in query:
+    elif 'search' in query:
         query = query.replace("search", "")
-        query = query.replace("play", "")
         webbrowser.open(query)
-
 
     elif "where is" in query:
         query = query.replace("where is", "")
@@ -275,22 +342,47 @@ def web():
         voice_io.show("You asked to locate",location,"and here you go!")
         webbrowser.open("https://www.google.nl/maps/place/" + location + "")
 
-    elif "news" in query:
-        news()
-    
     elif "open" in query:
         reg_ex = re.search('open (.+)', query)
         if reg_ex:
             domain = reg_ex.group(1)
             #voice_io.show(domain)
-            url='https://www.'+domain
-            #webbrowser.open(url)
-            voice_io.show(url)
-            voice_io.show('The website you have requested has been opened for you.')
+            url='https://www.'+domain+".com"
+            webbrowser.open(url)
+            voice_io.show('The website you have requested will now be opened for you.')
         else:
             pass
+
+    elif 'youtube' in query:
+        voice_io.show("Alright, opening Youtube right away!\n")
+        webbrowser.open("https://www.youtube.com")
+
+    elif 'google' in query:
+        voice_io.show("Alright, opening Google right away!\n")
+        webbrowser.open("https://www.google.com")
+
+    elif 'instagram' in query:
+        voice_io.show("Alright, opening Instagram right away!")
+        webbrowser.open("https://www.instagram.com")
+    
+    elif 'twitter' in query:
+        voice_io.show("Alright, opening Twitter right away!")
+        webbrowser.open("https://www.twitter.com")
+    
+    elif 'reddit' in query:
+        voice_io.show("Alright, opening Reddit right away!")
+        webbrowser.open("https://www.reddit.com")
+    
+    elif 'facebook' in query:
+        voice_io.show("Alright, opening Facebook right away!")
+        webbrowser.open("https://www.facebook.com")
+
     else:
-        voice_io.show("LOL it ain't working! maybe try again later bitch!")
+        try:
+            voice_io.show(wolfy.wolfram_try(query))
+        except:
+            voice_io.show("Uh-oh! It looks like i ran into some problems, why don't you try again later?")
+
 #web()
 
 def news():
@@ -306,6 +398,6 @@ def news():
             voice_io.show(x.decode())
     except Exception as e:
             voice_io.show(e)
-            voice_io.show("Sorry couldn't fetch records, maybe try again later.")
+            voice_io.show("Sorry couldn't fetch any record, maybe try again later.")
         
 #news()

@@ -7,4 +7,4 @@ def wolfram_try(question):
     answer = next(res.results).text 
     return answer
 
-#print(wolfram_try("5+10"))
+#print(wolfram_try("define nuance"))
