@@ -8,8 +8,6 @@ from playsound import playsound
 from bin import get_dirs
 from bin import voice_io
 from bin import invoice
-from bin import ass_sound_val
-sound_val=ass_sound_val.value()
 
 audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
@@ -381,7 +379,7 @@ def createFile(f_name, path, type):
         f = open(f_name + ".xls", "w")
         f.close()
 
-def playMusic(name, search_dir, sound = sound_val):
+def playMusic(name, search_dir):
     file_search_results = fileSearch(file_name = name, search_dir = search_dir)
     music_files = []
     if len(file_search_results) > 0:
@@ -396,40 +394,40 @@ def playMusic(name, search_dir, sound = sound_val):
             f_name = music_files[0]['file']
             directory = music_files[0]['root']
             f_path = directory + '/' + f_name
-            voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.", sound = sound)
+            voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.")
             p = multiprocessing.Process(target=playsound, args=(f_path,))
             p.start()
             input("Press ENTER to stop playback")
             p.terminate()
-            voice_io.show(f"Stopped playing '{f_name}'.", sound = sound)
+            voice_io.show(f"Stopped playing '{f_name}'.")
 
         elif len(music_files) > 1:
             sno = 1
-            voice_io.show(f"Found {len(music_files)} files matching the given file name :-", sound = sound)
+            voice_io.show(f"Found {len(music_files)} files matching the given file name :-")
             for i in music_files:
-                voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'", sound = sound)
+                voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
                 sno += 1
-            voice_io.show("Select the number of the audio file which you would like to play.", sound = sound)
+            voice_io.show("Select the number of the audio file which you would like to play.")
             choice = int(invoice.inpt())
             choice -= 1
             try:
                 f_name = music_files[choice]['file']
                 directory = music_files[choice]['root']
                 f_path = directory + "/" + f_name
-                voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.", sound = sound)
+                voice_io.show(f"Playing the audio file '{f_name}' from '{directory}'.")
                 p = multiprocessing.Process(target=playsound, args=(f_path,))
                 p.start()
                 input("Press ENTER to stop playback")
                 p.terminate()
-                voice_io.show(f"Stopped playing '{f_name}'.", sound = sound)
+                voice_io.show(f"Stopped playing '{f_name}'.")
             except IndexError:
-                voice_io.show("Playback failed : Sorry, but the entered number is not within the range of available options.", sound = sound)
+                voice_io.show("Playback failed : Sorry, but the entered number is not within the range of available options.")
                     
             except SyntaxError or TypeError:
-                voice_io.show("Playback failed : Sorry, but your entered data is not a number.", sound = sound) 
+                voice_io.show("Playback failed : Sorry, but your entered data is not a number.") 
         
         else:
-            voice_io.show(f"Sorry, could not find any audio file with the name '{name}'", sound = sound)
+            voice_io.show(f"Sorry, could not find any audio file with the name '{name}'")
 
     else:
-        voice_io.show(f"Sorry, could not find any audio file with the name '{name}'", sound = sound)
+        voice_io.show(f"Sorry, could not find any audio file with the name '{name}'")
