@@ -73,7 +73,37 @@ locate_home = ["7", "home"]
 usr_name = ""
 
 def operation(query):
-    op={"help":["help","help me","hey help me"],"greet_hello":["what's up","what's good","hi","hello","hey","hullo"],"greet_time":["good morning","good afternoon","good evening"],"joke":["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "another", "another one", "once more"], "abt_assistant":["who are you","what's your name","what is your name","tell me about yourself"], "abt_creators":["who made you", "hey who's your fada", "who's you creator","who created you"], "ask_wellbeing":["hey how are you","how do you do","how are you","howdy"], "delete_general":["delete", "del", "remove", "erase", "rm"], "delete_file_unspecified":["delete a file", "file delete", "remove a file"], "delete_folder_unspecified":["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], "rename_unspecified":["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"], "copy":["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"], "rename":["rname", "rename", "rename a file", "rename a folder", "rename a folder"], "music_from_a_file":["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], "web_search":["open","where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], "time":["time","current time","what's the time","tell me the time","what time it is"], "date":["date","today's date","what's the date","current date"], "date_day":["what's the day","day","what day is it","what day it is"], "date_month":["what's the month","month","what month is it","what month it is"], "date_year":["year","what's the year","what year is it","what year it is"], "notesrem_write":["reminder","write a note","save a note","save a reminder","add a note","write a reminder","add a reminder","note","remind me"], "notesrem_read":["are there any notes","notes","do i have any note","past notes","read notes","are there any reminders","do i have any reminders","reminders","read reminders","past reminders"], "email":["email","send a email","send an email","write an email","compose email","compose an email"], "weather":["weather","what's the weather","current weather","what's the temperature outside","how's the josh","temperature"], "weather_frcst":["weather forecast","what's the weather forecast","how's the weather going to be"], "song":["play","play song","play songs"], "news":["news","headlines","top headlines","today's news","tell me the news"]}
+    op={
+        # chat operations
+        "help": ["help","help me","hey help me"],
+        "greet_hello": ["what's up","what's good","hi","hello","hey","hullo"],
+        "greet_time": ["good morning","good afternoon","good evening"],
+        "joke": ["tell me a joke", "tell a joke", "joke", "a joke", "jokes", "make me laugh", "another", "another one", "once more"], 
+        "abt_assistant": ["who are you","what's your name","what is your name","tell me about yourself"], 
+        "abt_creators": ["who made you", "hey who's your fada", "who's you creator","who created you"], 
+        "ask_wellbeing": ["hey how are you","how do you do","how are you","howdy"],
+        # file operations
+        "delete_general": ["delete", "del", "remove", "erase", "rm"], 
+        "delete_file_unspecified": ["delete a file", "file delete", "remove a file"], 
+        "delete_folder_unspecified": ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], 
+        "rename_unspecified": ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"], 
+        "copy": ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"], 
+        "rename": ["rname", "rename", "rename a file", "rename a folder", "rename a folder"], 
+        "music_from_a_file": ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], 
+        # misc operations
+        "web_search": ["open","where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], "time":["time","current time","what's the time","tell me the time","what time it is"], 
+        "date": ["date","today's date","what's the date","current date"], 
+        "date_day": ["what's the day","day","what day is it","what day it is"], 
+        "date_month": ["what's the month","month","what month is it","what month it is"], 
+        "date_year": ["year","what's the year","what year is it","what year it is"], 
+        "notesrem_write": ["reminder","write a note","save a note","save a reminder","add a note","write a reminder","add a reminder","note","remind me"], 
+        "notesrem_read": ["are there any notes","notes","do i have any note","past notes","read notes","are there any reminders","do i have any reminders","reminders","read reminders","past reminders"], 
+        "email": ["email","send a email","send an email","write an email","compose email","compose an email"], 
+        "weather": ["weather","weather today","what's the weather","current weather","what's the temperature outside","how's the josh","temperature"], 
+        "weather_frcst": ["weather forecast","weather tomorrow", "what's the weather forecast","how's the weather going to be"], 
+        "song": ["play","play song","play songs"], 
+        "news": ["news","headlines","top headlines","today's news","tell me the news"]
+    }
     n=""
     for i in op:
         for j in op[i]:
@@ -136,7 +166,7 @@ def main():
     while True:
         task = invoice.inpt()
         task=task.lower()
-        if iterate_jokes > 0 and task not in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
+        if iterate_jokes > 0 and task not in ["another", "another one","another joke", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
         elif task == "clear":
@@ -147,7 +177,7 @@ def main():
             result=result.lower()
             if result=="":
                 print("Sorry i didn't get that please try again!")
-  
+
             elif result=="help":
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
                 voice_io.show("1. Assistant Settings")
@@ -268,6 +298,13 @@ def main():
 
             elif result=="music_from_a_file":
                 pass
+            
+            # misc operations:
+            elif result == "weather":
+                misc_operations.weather_curr()
+
+            elif result == "weather_frcst":
+                misc_operations.weather_forec()
 
             elif result=="greet_hello":
                 gnd_hello()

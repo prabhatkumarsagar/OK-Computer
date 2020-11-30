@@ -36,10 +36,10 @@ g = geocoder.ip('me')
 ct=(g.city)
 
 #weather
-def weather_curr(city):      
+def weather_curr():      
     api_key = "cd140d1c1404cba5de2dabf6bcd00f52" 
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    url = base_url + "&q=" + city + "&appid=" + api_key
+    url = base_url + "&q=" + ct + "&appid=" + api_key
     response = requests.get(url)  
     x = response.json()  
     if x["cod"] == "404":  
@@ -51,29 +51,26 @@ def weather_curr(city):
         curr_humidity = y["humidity"]  
         z = x["weather"]  
         weather_desc = z[0]["description"]  
-        voice_io.show("The current temperatre in %s (in Celcius Scale) is " % city +str(round(curr_temperature-273))+" degree celsius" +". It's a " +str(weather_desc))  
-
-#weather_curr(ct)
-
+        voice_io.show(f"The current temperatre in {ct} is {str(round(curr_temperature-273))}°C" + ". It's a " +str(weather_desc))  
 
 #weather forecaster
-def weather_forec(city):
-    voice_io.show("Sorry i am currently restricted to show weather forecast for tomorrow only. Look out for future updates and see if my handcuffs are set free. Here's tomorrow's weather forecast anyway.")
+def weather_forec():
+    voice_io.show("Sorry i am currently restricted to show weather forecast for tomorrow only. \nLook out for future updates and see if my handcuffs are set free. Here's tomorrow's weather forecast anyway.")
     owm = OWM('cd140d1c1404cba5de2dabf6bcd00f52')
     mgr=owm.weather_manager()
-    loc = mgr.weather_at_place(city)
+    loc = mgr.weather_at_place(ct)
     weather = loc.weather
     temp = weather.temperature(unit='celsius')
     for key,val in temp.items():
         if key=="temp":
-            voice_io.show(f'The temperature tommorow will be around {val} degree celcius.')
+            voice_io.show(f'\nThe temperature tommorow will be around {val}°C.')
         else:
             continue
-    loa = mgr.forecast_at_place(city,'3h')
+    loa = mgr.forecast_at_place(ct,'3h')
     tomorrow=timestamps.tomorrow()
     forecasttt=loa.get_weather_at(tomorrow)
     status=(forecasttt.status)
-    voice_io.show(f'And the sky would be {status}')
+    voice_io.show(f'And the sky would remain {status}')
 #weather_forec(ct)
 
 def date_con():
@@ -218,11 +215,6 @@ def notrem_read():
                 break
             con.close()
             break
-
-    #reminder_read()
-
-#notrem_read()
-
 
 #Time & Date
 def datentime():
