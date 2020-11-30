@@ -593,7 +593,7 @@ def op_help():
         voice_io.show("With this operation you can ask me to rename a folder from a certain location for you.")
         voice_io.show("The General Syntax of this operation is: \n")
         voice_io.show("Rename foldername from foldername/location to newfoldername")
-        return
+        return 
     elif "delete file" in x:
         voice_io.show("With this operation you can ask me to delete a file from a certain location for you.")
         voice_io.show("The General Syntax of this operation is: \n")

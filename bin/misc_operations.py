@@ -9,7 +9,6 @@ import wolframalpha
 import webbrowser
 import smtplib
 
-
 try:
     from bin import mailer
     from bin import voice_io
