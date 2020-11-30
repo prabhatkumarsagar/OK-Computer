@@ -217,25 +217,27 @@ def notrem_read():
             break
 
 #Time & Date
-def datentime():
-    def date():
-        x = datetime.datetime.now().strftime("%x")  
-        voice_io.show(x)
-    def time():
-        x=datetime.datetime.now().strftime("%H:%M:%S")     
-        voice_io.show(x) 
+def date():
+    x = datetime.datetime.now().strftime("%x")  
+    voice_io.show(f"Today's date is {x}(MM/DD/YY)")
+def time():
+    x=datetime.datetime.now().strftime("%H:%M:%S")     
+    voice_io.show(f"The current time is, {x}") 
 
-    def year():
-        x=datetime.datetime.now()
-        voice_io.show(x.strftime("%Y"))
+def year():
+    x=datetime.datetime.now()
+    year = x.strftime("%Y")
+    voice_io.show(f"The current year is {year}")
 
-    def month():
-        x=datetime.datetime.now()
-        voice_io.show(x.strftime("%B"))
+def month():
+    x=datetime.datetime.now()
+    month = x.strftime("%B")
+    voice_io.show(f"The current month is {month}")
 
-    def day():
-        x=datetime.datetime.now()
-        voice_io.show(x.strftime("%A"))
+def day():
+    x=datetime.datetime.now()
+    day = x.strftime("%A")
+    voice_io.show(f"Today it's {day}")
 
     #month()
     #day()
@@ -282,54 +284,57 @@ def song_online(query):
 #Web Search
 def web(query):
     query=query.lower()
-    if 'what is the' in query:
+    if 'what is' in query:
         try:
-            voice_io.show('Searching Wikipedia...')
-            query1 = query.replace("what is the","")
-            results = wikipedia.summary(query1,sentences=1)
-            voice_io.show("According to Wikipedia")
+            voice_io.show('Searching Wikipedia...\n')
+            query1 = query.replace("what is ","")
+            results = wikipedia.summary(query1)
+            voice_io.show("According to Wikipedia,")
             voice_io.show(results)
         except:
             try:
-                clear.clear()
+                #clear.clear()
                 voice_io.show(wolfy.wolfram_try(query))
             except:
-                voice_io.show("Please make sure you're entering a valid input!")
+                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
 
     elif 'meaning of' in query:
         try:
             voice_io.show('Searching Wikipedia...')
-            query1 = query.replace("meaning of","")
+            query1 = query.replace("meaning of ","")
             results = wikipedia.summary(query1,sentences=1)
             voice_io.show("According to Wikipedia")
             voice_io.show(results)
         except:
             try:
-                clear.clear()
+                #clear.clear()
                 voice_io.show(wolfy.wolfram_try(query))
             except:
-                voice_io.show("Please make sure you're entering a valid input!")
+                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
     
     elif 'define' in query:
         try:
             voice_io.show('Searching Wikipedia...')
-            query1 = query.replace("define","")
+            query1 = query.replace("define ","")
             results = wikipedia.summary(query1,sentences=1)
             voice_io.show("According to Wikipedia")
             voice_io.show(results)
         except:
             try:
-                clear.clear()
+                #clear.clear()
                 voice_io.show(wolfy.wolfram_try(query))
             except:
-                voice_io.show("Please make sure you're entering a valid input!")
+                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
 
     elif 'search' in query:
-        query = query.replace("search", "")
-        webbrowser.open(query)
+        query = query.replace("search ", "")
+        voice_io.show(f"Searching google for '{query}'")
+        query = query.replace(" ", "+")
+        webbrowser.open(f"https://www.google.com/search?q={query}")
 
     elif "where is" in query:
-        query = query.replace("where is", "")
+        query = query.replace("where is ", "")
+        voice_io.show(f"Searching google maps for '{query}'")
         location = query
         voice_io.show("You asked to locate",location,"and here you go!")
         webbrowser.open("https://www.google.nl/maps/place/" + location + "")

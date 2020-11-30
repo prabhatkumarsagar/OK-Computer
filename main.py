@@ -1,3 +1,4 @@
+from bin.voice_io import is_connected
 import os
 import requests 
 import datetime
@@ -91,7 +92,8 @@ def operation(query):
         "rename": ["rname", "rename", "rename a file", "rename a folder", "rename a folder"], 
         "music_from_a_file": ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], 
         # misc operations
-        "web_search": ["open","where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], "time":["time","current time","what's the time","tell me the time","what time it is"], 
+        "web_search": ["open","where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], 
+        "time":["time","current time","what's the time","tell me the time","what time it is"], 
         "date": ["date","today's date","what's the date","current date"], 
         "date_day": ["what's the day","day","what day is it","what day it is"], 
         "date_month": ["what's the month","month","what month is it","what month it is"], 
@@ -306,6 +308,27 @@ def main():
             elif result == "weather_frcst":
                 misc_operations.weather_forec()
 
+            elif result == "date":
+                misc_operations.date()
+
+            elif result == "date_day":
+                misc_operations.day()
+
+            elif result == "date_month":
+                misc_operations.month()
+            
+            elif result == "date_year":
+                misc_operations.year()
+
+            elif result == "time":
+                misc_operations.time()
+
+            elif result == "web_search":
+                if not is_connected:
+                    voice_io.show("You need to be hooked up to the Skynet in order to perform any web operations.")
+                    continue
+                misc_operations.web(task)
+            # chat operarions
             elif result=="greet_hello":
                 gnd_hello()
 
@@ -316,15 +339,17 @@ def main():
                 voice_io.show("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or maybe not, hehe. ")
 
             elif result=="abt_creators":
-                voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project. Would you like to know more about them?")
-                x=invoice.inpt().lower()
-                if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
-                    voice_io.show("Alright!")
-                    webbrowser.open("https://github.com/prabhatkumarsagar")
-                    webbrowser.open("https://github.com/DuttaAB-dev")
-                    
-                elif "no" in x or "nope" in x or "not" in x:
-                    voice_io.show("Okay!")
+                voice_io.show("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their School Computer Science Project.") 
+                if voice_io.is_connected():    
+                    voice_io.show("Would you like to know more about them?")
+                    x=invoice.inpt().lower()
+                    if "yes" in x or "ok" in x or "yeah" in x or 'sure' in x:
+                        voice_io.show("Alright!")
+                        webbrowser.open("https://github.com/prabhatkumarsagar")
+                        webbrowser.open("https://github.com/DuttaAB-dev")
+                        
+                    elif "no" in x or "nope" in x or "not" in x:
+                        voice_io.show("Okay!")
         
                 else:
                     pass
