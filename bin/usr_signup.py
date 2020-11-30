@@ -24,7 +24,7 @@ def setNewUser():
     gnd = invoice.inpt()
     while True:
         voice_io.show(f"\nWhat is your MySQL Username, {gnd}?")
-        mysql_usr = invoice.input(processed = False)
+        mysql_usr = invoice.inpt(processed = False)
         mysql_pswd = getpass.getpass(voice_io.show("\nAnd  what is your MySQL Password?",show_output = False) + "\nPassword:" )
         try:
             import mysql.connector
@@ -70,7 +70,8 @@ def setNewUser():
     usr_info_dic['mysql_usr']=cipher_suite.encrypt(mysql_usr)
     usr_info_dic['mysql_pswd']=cipher_suite.encrypt(mysql_pswd)
     info_in(usr_info_dic)
-    voice_io.show("Well then now you're good to go!")
+    voice_io.show("Well then now you're good to go! Just press Enter/Return to get going!", end = "")
+    invoice.inpt("", iterate = False)
     if __name__ == "__main__":
         exit()
     else:
