@@ -13,7 +13,7 @@ def install():
         "bs4": "pip3 install bs4",
         "wolframalpha": "pip3 install wolframalpha",
         "wikipedia": "pip3 install wikipedia",
-        'mysql.connector': "pip3 install mysql-connector-python",
+        'mysql': "pip3 install mysql-connector-python",
         "pyowm": "pip3 install pyowm",
         "geocoder": "pip3 install geocoder",
         "cryptography": "pip3 install cryptography"
@@ -40,6 +40,10 @@ def install():
                 else :
                     print("PIP3 is not installed in your system! \nPlease install python3-pip from your distro repos and run this app again!")
                 
+                return False
+
+            except pip._vendor.urllib3.exceptions.ReadTimeoutError or socket.timeout:
+                print("Unable to download the required packages.\nTry connecting to the internet or using a faster connection.")
                 return False
                 
     return True
