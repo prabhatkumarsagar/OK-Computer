@@ -89,7 +89,7 @@ def processData(data):
             continue
         
         for j in i:
-            if j.isalnum():
+            if j.isalnum() or j in "+-*/%^":
                 n += j 
 
         data += " " + n
