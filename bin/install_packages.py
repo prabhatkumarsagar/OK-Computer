@@ -15,7 +15,7 @@ def install():
         "wikipedia": "pip3 install wikipedia",
         'mysql.connector': "pip3 install mysql-connector-python",
         "pyowm": "pip3 install pyowm",
-        "geocoder": "pip3 install geocoder"
+        "geocoder": "pip3 install geocoder",
         "cryptography": "pip3 install cryptography"
     }
     # bs4 is a dependency for gtts
