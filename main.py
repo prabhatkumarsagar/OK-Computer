@@ -182,7 +182,11 @@ def main():
             result=operation(task)
             result=result.lower()
             if result=="":
-                print("Sorry i didn't get that please try again!")
+                try:
+                    wolfy.wolfram_try(task)
+
+                except:
+                    voice_io.show("Sorry, but I can not help you with that!")
 
             elif result=="help":
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
@@ -408,12 +412,6 @@ def main():
                     elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
                         fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
             
-            else:
-                try:
-                    wolfy.wolfram_try(task)
-
-                except:
-                    voice_io.show("Sorry, but I can not help you with that!")
 
 
         voice_io.show("\nNow, what to do?")
