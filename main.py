@@ -1,10 +1,7 @@
-from bin.misc_operations import reminder_write
-from bin.voice_io import is_connected
 import os
 import requests 
 import datetime
 import webbrowser
-import wolframalpha
 import random
 from bin import install_packages as ip
 from bin import get_dirs
@@ -23,9 +20,11 @@ if not os.path.exists(get_dirs.PATH_USR_DATA):
 
 try:
     #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
+    import wolframalpha
     from bin import usr_signup
     from bin import voice_io
     from bin import invoice
+    from bin import wolfy
     from bin import file_operations
     from bin import mailer
     from bin import assistant_settings   
@@ -41,10 +40,11 @@ except ModuleNotFoundError:
     else:
         print("\nInstalling packages failed! Make sure you have a stable internet connection and all the requirements to install packages are fulfilled. Please try running this program again after resolving all issues, and if the problem still persists, contact the developer.")
         exit()
-
+    import wolframalpha
     from bin import usr_signup
     from bin import voice_io
     from bin import invoice
+    from bin import wolfy
     from bin import file_operations
     from bin import mailer
     from bin import assistant_settings
@@ -183,7 +183,7 @@ def main():
             result=result.lower()
             if result=="":
                 try:
-                    wolfy.wolfram_try(task)
+                    voice_io.show(wolfy.wolfram_try(task))
 
                 except:
                     voice_io.show("Sorry, but I can not help you with that!")
@@ -332,7 +332,7 @@ def main():
                 misc_operations.time()
 
             elif result == "web_search":
-                if not is_connected:
+                if not voice_io.is_connected():
                     voice_io.show("You need to be hooked up to the Skynet in order to perform any web operations.")
                     continue
                 misc_operations.web(task)
