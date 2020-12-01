@@ -92,7 +92,7 @@ def date_con():
 #Notes and Reminders
 
 def note_write():   
-    voice_io.input("Enter your mysql password")
+    voice_io.show("Enter your mysql password")
     pas = invoice.inpt(processed = False)
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
@@ -112,7 +112,7 @@ def note_write():
 
     #note_write()
 def reminder_write():
-    voice_io.input("Enter your mysql password")
+    voice_io.show("Enter your mysql password")
     pas = invoice.inpt(processed = False)
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
@@ -135,7 +135,7 @@ def reminder_write():
     con.close()
 
 def note_read():
-    voice_io.input("Enter your mysql password")
+    voice_io.show("Enter your mysql password")
     pas = invoice.inpt(processed = False)
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
@@ -153,7 +153,7 @@ def note_read():
     #note_read()
 
 def reminder_read():
-    voice_io.input("Enter your mysql password")
+    voice_io.show("Enter your mysql password")
     pas = invoice.inpt(processed = False)
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
