@@ -55,6 +55,10 @@ def setNewUser():
         with open(get_dirs.FILE_ENCRYPT_KEY, "wb+") as keyfile:
             keyfile.write(key)
             keyfile.close()
+    else:
+        with open(get_dirs.FILE_ENCRYPT_KEY, "rb+") as keyfile:
+            key = keyfile.read()
+            
     cipher_suite = Fernet(key)
     usr_info_dic['name']=cipher_suite.encrypt(nm)
     GND_FEMALE=["girl",'miss','missus','mrs','female','lady','woman']
