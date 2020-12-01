@@ -4,6 +4,7 @@ import os
 import requests 
 import datetime
 import webbrowser
+import wolframalpha
 import random
 from bin import install_packages as ip
 from bin import get_dirs
@@ -358,7 +359,7 @@ def main():
                         misc_operations.song_offline()
             elif result == "news":
                 misc_operations.news()
-                
+
             # chat operarions
             elif result=="greet_hello":
                 gnd_hello()
@@ -406,6 +407,14 @@ def main():
                     
                     elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
                         fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
+            
+            else:
+                try:
+                    wolfy.wolfram_try(task)
+
+                except:
+                    voice_io.show("Sorry, but I can not help you with that!")
+
 
         voice_io.show("\nNow, what to do?")
     
@@ -447,7 +456,7 @@ def deleteFileUnspecified():
     search_dir = ""
     voice_io.show("Which file fo you want to delete?")
     file_name = invoice.inpt(processed = False)
-    voice_io.show(f"Where would you like me to search for the file, {file_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory", sound = sound)
+    voice_io.show(f"Where would you like me to search for the file, {file_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
     locate = invoice.inpt().lower()
     if locate in locate_desktop:
         search_dir = desktop
