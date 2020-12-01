@@ -264,18 +264,19 @@ def web(query):
     query=query.lower()
     if 'what is' in query:
         try:
-            try:
-                #clear.clear()
-                voice_io.show(wolfy.wolfram_try(query))
-            except:
-                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
+            #clear.clear()
+            voice_io.show(wolfy.wolfram_try(query))
 
         except:
-            voice_io.show('Searching Wikipedia...\n')
-            query1 = query.replace("what is ","")
-            results = wikipedia.summary(query1)
-            voice_io.show("According to Wikipedia,")
-            voice_io.show(results)
+            try:
+                voice_io.show('Searching Wikipedia...\n')
+                query1 = query.replace("what is ","")
+                results = wikipedia.summary(query1)
+                voice_io.show("According to Wikipedia,")
+                voice_io.show(results)
+            except:
+                voice_io.show(f"Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
+
 
     elif 'meaning of' in query:
         try:
