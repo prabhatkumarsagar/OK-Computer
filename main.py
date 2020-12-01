@@ -1,3 +1,4 @@
+from bin.misc_operations import reminder_write
 from bin.voice_io import is_connected
 import os
 import requests 
@@ -98,8 +99,10 @@ def operation(query):
         "date_day": ["what's the day","day","what day is it","what day it is"], 
         "date_month": ["what's the month","month","what month is it","what month it is"], 
         "date_year": ["year","what's the year","what year is it","what year it is"], 
-        "notesrem_write": ["reminder","write a note","save a note","save a reminder","add a note","write a reminder","add a reminder","note","remind me"], 
-        "notesrem_read": ["are there any notes","notes","do i have any note","past notes","read notes","are there any reminders","do i have any reminders","reminders","read reminders","past reminders"], 
+        "notes_write": ["write a note","save a note","add a note","add a reminder","note",],
+        "reminder_write": ["reminder", "save a reminder", "write a reminder", "remind me"],
+        "notes_read": ["are there any notes","notes","do i have any note","past notes","read notes"], 
+        "reminder_read": ["are there any reminders","do i have any reminders","reminders","read reminders","past reminders"],
         "email": ["email","send a email","send an email","write an email","compose email","compose an email"], 
         "weather": ["weather","weather today","what's the weather","current weather","what's the temperature outside","how's the josh","temperature"], 
         "weather_frcst": ["weather forecast","weather tomorrow", "what's the weather forecast","how's the weather going to be"], 
@@ -328,6 +331,34 @@ def main():
                     voice_io.show("You need to be hooked up to the Skynet in order to perform any web operations.")
                     continue
                 misc_operations.web(task)
+
+            elif result == "notes_read":
+                misc_operations.note_read()
+
+            elif result == "notes_write":
+                misc_operations.note_write()
+
+            elif result == "reminder_read":
+                misc_operations.reminder_read()
+
+            elif result == "reminder_write":
+                misc_operations.reminder_write()
+
+            elif result == "email":
+                misc_operations.sendEmail()
+
+            elif result == "song":
+                if voice_io.is_connected():
+                    misc_operations.song_online(task)
+
+                else:
+                    voice_io.show("Sorry, but it seems that you are disconnected from the internet.\nWould you like me to play from your offline music playlist?")
+                    choice = invoice.inpt()
+                    if choice in ["yes", "sure", "yep", "y", "duh", "ovio", "of course", "yeah"]:
+                        misc_operations.song_offline()
+            elif result == "news":
+                misc_operations.news()
+                
             # chat operarions
             elif result=="greet_hello":
                 gnd_hello()

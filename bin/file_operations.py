@@ -122,14 +122,14 @@ def copy(obj_name, search_dir, dest_dir):
         choice = int(invoice.inpt())
         choice -= 1
         try:
-            if choice in count_files - 1:
+            if choice in range(count_files):
                 f_name = file_search_results[choice]['file']
                 parent_dir = file_search_results[choice]['root']
                 voice_io.show(f"Copying file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
             
-            elif choice - (count_files - 1) in count_folders - 1:
+            elif choice - (count_files - 1) in range(count_folders):
                 choice -= (count_files - 1)
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']

@@ -16,6 +16,7 @@ def install():
         'mysql.connector': "pip3 install mysql-connector-python",
         "pyowm": "pip3 install pyowm",
         "geocoder": "pip3 install geocoder"
+        "cryptography": "pip3 install cryptography"
     }
     # bs4 is a dependency for gtts
     #pyaudio is a dependency for speech_recognition

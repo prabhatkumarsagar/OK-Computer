@@ -23,8 +23,10 @@ def setNewUser():
     voice_io.show("\nAnd you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     gnd = invoice.inpt()
     while True:
-        voice_io.show(f"\nWhat is your MySQL Username, {gnd}?")
+        voice_io.show(f"\nWhat is your MySQL Username, {gnd}(default 'root')?")
         mysql_usr = invoice.inpt(processed = False)
+        if mysql_usr == "":
+            mysql_usr = "root"
         mysql_pswd = getpass.getpass(voice_io.show("\nAnd  what is your MySQL Password?",show_output = False) + "\nPassword:" )
         try:
             import mysql.connector
@@ -106,6 +108,14 @@ def info_out(x="all"):
         f.close()
 
     elif ch=="password":
+        return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
+        f.close()
+
+    elif ch == "mysql_usr":
+        return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
+        f.close()
+    
+    elif ch == "mysql_pswd":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
         f.close()
 

@@ -13,13 +13,19 @@ try:
     from bin import mailer
     from bin import voice_io
     from bin import wolfy
+    from bin import invoice
     from bin import clear
+    from bin import usr_signup
+    from bin import get_dirs
 
 except ModuleNotFoundError:
     import mailer
+    import invoice
     import voice_io
     import wolfy
     import clear
+    import usr_signup
+    import get_dirs
     
 from urllib import request
 from bs4 import BeautifulSoup as soup
@@ -84,136 +90,113 @@ def date_con():
     return date
 
 #Notes and Reminders
-def notrem_write():
-    def note_write():
-        while True:
-            try:
-                usr=input("Enter your MySQL Username: ")
-                pwd=input("Enter you MySQL Password: ")
-                if usr=="":
-                    usr="root"
-                con=sql.connect(host="localhost",user=usr,password=pwd)
-            except:
-                voice_io.show("MySQL Error")
-                break
-            cur=con.cursor()
-            cur.execute("create database if not exists pydeskassist;")
-            cur.execute("use pydeskassist;")
-            cur.execute("create table if not exists notes(date_added date, note longtext);")
-            voice_io.show("Okay so you wanna enter a new note? Here ya go!")
-            x1=input("Enter Note Here: ")
-            cur.execute("insert into notes values(curdate(), '%s');"%x1)
-            voice_io.show("Note Saved Successfully!")
-            con.commit()
-            con.close()
-            break
+
+def note_write():   
+    voice_io.input("Enter your mysql password")
+    pas = invoice.inpt(processed = False)
+    usr = usr_signup.info_out("mysql_usr")
+    pwd = usr_signup.info_out("mysql_pswd")
+    if pas != pwd:
+        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
+    con=sql.connect(host="localhost",user=usr,password=pwd)
+    cur=con.cursor()
+    cur.execute("create database if not exists pydeskassist;")
+    cur.execute("use pydeskassist;")
+    cur.execute("create table if not exists notes(date_added date, note longtext);")
+    voice_io.show("Okay so you wanna enter a new note? Here ya go!")
+    x1=input("Enter Note Here: ")
+    cur.execute("insert into notes values(curdate(), '%s');"%x1)
+    voice_io.show("Note Saved Successfully!")
+    con.commit()
+    con.close()
 
     #note_write()
+def reminder_write():
+    voice_io.input("Enter your mysql password")
+    pas = invoice.inpt(processed = False)
+    usr = usr_signup.info_out("mysql_usr")
+    pwd = usr_signup.info_out("mysql_pswd")
+    if pas != pwd:
+        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
+    con=sql.connect(host="localhost",user=usr,password=pwd)
+    cur=con.cursor()
+    cur.execute("create database if not exists pydeskassist;")
+    cur.execute("use pydeskassist;")
+    cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
+    x1=input("Enter Reminder: ")
+    x2=input("Enter Date to be Notified (YYYYMMDD): ")
+    x3=input("Enter Time to be Notified (HHMMSS): ")
+    if x2=='' or x3=='':
+        voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
+    else:
+        cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
+        voice_io.show("Reminder Saved Successfully!")
+        con.commit()
+    con.close()
 
-    def reminder_write():
-        while True:
-            try:
-                usr=input("Enter your MySQL Username: ")
-                pwd=input("Enter you MySQL Password: ")
-                if usr=="":
-                    usr="root"
-                con=sql.connect(host="localhost",user=usr,password=pwd)
-            except:
-                voice_io.show("MySQL Error")
-                break
-            cur=con.cursor()
-            cur.execute("create database if not exists pydeskassist;")
-            cur.execute("use pydeskassist;")
-            cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
-            x1=input("Enter Reminder: ")
-            x2=input("Enter Date to be Notified (YYYYMMDD): ")
-            x3=input("Enter Time to be Notified (HHMMSS): ")
-            if x2=='' or x3=='':
-                voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
-                break
-            else:
-                cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
-                voice_io.show("Reminder Saved Successfully!")
-                con.commit()
-            con.close()
-            break
-
-    #reminder_write()
-
-#notrem_write()
-
-def notrem_read():
-    def note_read():
-        while True:
-            try:
-                usr=input("Enter your MySQL Username: ")
-                pwd=input("Enter you MySQL Password: ")
-                if usr=="":
-                    usr="root"
-                con=sql.connect(host="localhost",user=usr,password=pwd)
-            except:
-                voice_io.show("MySQL Error")
-                break
-            cur=con.cursor()
-            cur.execute("use pydeskassist;")
-            cur.execute("select * from notes;")
-            c=cur.fetchall()
-            voice_io.show("Here are all your notes: ")
-            voice_io.show(c)
-            con.close()
-            break
+def note_read():
+    voice_io.input("Enter your mysql password")
+    pas = invoice.inpt(processed = False)
+    usr = usr_signup.info_out("mysql_usr")
+    pwd = usr_signup.info_out("mysql_pswd")
+    if pas != pwd:
+        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
+    con=sql.connect(host="localhost",user=usr,password=pwd)
+    cur=con.cursor()
+    cur.execute("use pydeskassist;")
+    cur.execute("select * from notes;")
+    c=cur.fetchall()
+    voice_io.show("Here are all your notes: ")
+    voice_io.show(c)
+    con.close()
 
     #note_read()
 
-    def reminder_read():
-        while True:
-            try:
-                usr=input("Enter your MySQL Username: ")
-                pwd=input("Enter you MySQL Password: ")
-                if usr=="":
-                    usr="root"
-                con=sql.connect(host="localhost",user=usr,password=pwd)
-            except:
-                voice_io.show("MySQL Error")
-                break
-            cur=con.cursor()
-            cur.execute("use pydeskassist;")  
-            voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature which you might see in the near future ;) so for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
-            voice_io.show("\nWhat saved reminders do you want to read?")
-            voice_io.show("1. Past Reminders")
-            voice_io.show("2. Future/Upcoming Reminders")
-            cho=input("Enter Choice: ")
-            date=datetime.datetime.now().strftime("%x") 
-            if cho=="1":
-                cur.execute("select * from reminders where date_tbn < curdate();")
-                c=cur.fetchall()
-                voice_io.show("Here are all your past reminders: ")
-                voice_io.show(c)
-                if c=="[]":
-                    voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
-                    break
-                else:
-                    z=input("Do you want to delete your past reminders? (Y/N) ")
-                    z=z.lower()
-                    if z=="y":
-                        cur.execute("delete from reminders where date_tbn < curdate();")
-                        con.commit()
-                        voice_io.show("Records Deleted Successfully!")
-                    elif z=="n":
-                        voice_io.show("Okay!")
-                    else:
-                        voice_io.show("Invalid Input!")
+def reminder_read():
+    voice_io.input("Enter your mysql password")
+    pas = invoice.inpt(processed = False)
+    usr = usr_signup.info_out("mysql_usr")
+    pwd = usr_signup.info_out("mysql_pswd")
+    if pas != pwd:
+        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
+    con=sql.connect(host="localhost",user=usr,password=pwd)
+    cur=con.cursor()
+    cur.execute("use pydeskassist;")  
+    voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature which you might see in the near future ;) so for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
+    voice_io.show("\nWhat saved reminders do you want to read?")
+    voice_io.show("1. Past Reminders")
+    voice_io.show("2. Future/Upcoming Reminders")
+    cho=input("Enter Choice: ")
+    date=datetime.datetime.now().strftime("%x") 
+    if cho=="1":
+        cur.execute("select * from reminders where date_tbn < curdate();")
+        c=cur.fetchall()
+        voice_io.show("Here are all your past reminders: ")
+        voice_io.show(c)
+        if c=="[]":
+            voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
 
-            elif cho=="2":
-                cur.execute("select * from reminders where date_tbn >= curdate();")
-                c=cur.fetchall()
-                voice_io.show("Here are all your past reminders: ")
-                voice_io.show(c)   
+        else:
+            z=input("Do you want to delete your past reminders? (Y/N) ")
+            z=z.lower()
+            if z=="y":
+                cur.execute("delete from reminders where date_tbn < curdate();")
+                con.commit()
+                voice_io.show("Records Deleted Successfully!")
+            elif z=="n":
+                voice_io.show("Okay!")
             else:
-                voice_io.show('Invalid Input!')
-                break
-            con.close()
-            break
+                voice_io.show("Invalid Input!")
+
+    elif cho=="2":
+        cur.execute("select * from reminders where date_tbn >= curdate();")
+        c=cur.fetchall()
+        voice_io.show("Here are all your past reminders: ")
+        voice_io.show(c)   
+    else:
+        voice_io.show('Invalid Input!')
+
+    con.close()
 
 #Time & Date
 def date():
@@ -254,11 +237,7 @@ def sendEmail():
 #Play Offline/Online Songs
 def song_offline():
     voice_io.show("Alright, fetching your offline music playlist right away!")
-    if os.name == "nt":
-        music_dir = "C:\\Users\\Local\\Music"
-    else:
-        music_dir = "HOME$/Music"
-    
+    music_dir = get_dirs.MUSIC
     songs = os.listdir(music_dir)
     voice_io.show(songs)
     random = os.startfile(os.path.join(music_dir, songs[1]))
