@@ -29,6 +29,7 @@ try:
     from bin import mailer
     from bin import assistant_settings   
     from bin import misc_operations
+    from bin import wolfy
     
 except ModuleNotFoundError:    
     clear.clear()
@@ -49,6 +50,7 @@ except ModuleNotFoundError:
     from bin import mailer
     from bin import assistant_settings
     from bin import misc_operations
+    from bin import wolfy
 
 except OSError:
     print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
@@ -171,23 +173,22 @@ def main():
 
     while True:
         task = invoice.inpt()
-        task=task.lower()
         if iterate_jokes > 0 and task not in ["another", "another one","another joke", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
-        elif task == "clear":
+        elif task.lower() == "clear":
             clear.clear()
 
         else:
-            result=operation(task)
+            result=operation(task.lower())
             result=result.lower()
             if result=="":
                 try:
                     voice_io.show(wolfy.wolfram_try(task))
 
                 except:
-                    voice_io.show("Sorry, but I can not help you with that!")
-
+                    voice_io.show("Sorry i couldn't help you with that. Please try a valid operation.")
+                    
             elif result=="help":
                 voice_io.show("Hello Hello! What is it that i can help you with, today?")
                 voice_io.show("1. Assistant Settings")
@@ -335,7 +336,7 @@ def main():
                 if not voice_io.is_connected():
                     voice_io.show("You need to be hooked up to the Skynet in order to perform any web operations.")
                     continue
-                misc_operations.web(task)
+                misc_operations.web(task.lower())
 
             elif result == "notes_read":
                 misc_operations.note_read()
@@ -354,7 +355,7 @@ def main():
 
             elif result == "song":
                 if voice_io.is_connected():
-                    misc_operations.song_online(task)
+                    misc_operations.song_online(task.lower())
 
                 else:
                     voice_io.show("Sorry, but it seems that you are disconnected from the internet.\nWould you like me to play from your offline music playlist?")
@@ -412,6 +413,8 @@ def main():
                     elif iterate_jokes > 0 and task in ["another", "another one", "once more", "more", "again", "new one", "make me laugh again"]:
                         fetch_joke(['Here is another one for you!\n', "Here goes another one\n", "I hope you will enjoy this one!\n"][random.randint(0,2)])
             
+            else:
+                voice_io.show("Sorry i couldn't help you with that. Please try a valid operation.")
 
 
         voice_io.show("\nNow, what to do?")
