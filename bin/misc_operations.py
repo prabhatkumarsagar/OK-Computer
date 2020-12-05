@@ -8,6 +8,7 @@ import datetime
 import wolframalpha
 import webbrowser
 import smtplib
+import getpass
 
 try:
     from bin import mailer
@@ -93,7 +94,7 @@ def date_con():
 
 def note_write():   
     voice_io.show("Enter your mysql password")
-    pas = invoice.inpt(processed = False)
+    pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
     if pas != pwd:
@@ -113,7 +114,7 @@ def note_write():
     #note_write()
 def reminder_write():
     voice_io.show("Enter your mysql password")
-    pas = invoice.inpt(processed = False)
+    pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
     if pas != pwd:
@@ -136,7 +137,7 @@ def reminder_write():
 
 def note_read():
     voice_io.show("Enter your mysql password")
-    pas = invoice.inpt(processed = False)
+    pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
     if pas != pwd:
@@ -154,7 +155,7 @@ def note_read():
 
 def reminder_read():
     voice_io.show("Enter your mysql password")
-    pas = invoice.inpt(processed = False)
+    pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
     pwd = usr_signup.info_out("mysql_pswd")
     if pas != pwd:
@@ -290,7 +291,7 @@ def web(query):
                 #clear.clear()
                 voice_io.show(wolfy.wolfram_try(query))
             except:
-                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
+                voice_io.show(f"Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
     
     elif 'define' in query:
         try:
@@ -304,7 +305,7 @@ def web(query):
                 #clear.clear()
                 voice_io.show(wolfy.wolfram_try(query))
             except:
-                voice_io.show("Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
+                voice_io.show(f"Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
 
     elif 'search' in query:
         query = query.replace("search ", "")
@@ -372,7 +373,7 @@ def news():
         news_list=soup_page.findAll("item")
         for news in news_list[:15]:
             x=news.title.text.encode('utf-8')
-            voice_io.show(x.decode())
+            voice_io.show(x.decode(), end = "\n\n")
     except Exception as e:
             voice_io.show(e)
             voice_io.show("Sorry couldn't fetch any record, maybe try again later.")
