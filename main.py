@@ -1,5 +1,4 @@
 import os
-import requests 
 import datetime
 import webbrowser
 import random
@@ -21,6 +20,7 @@ if not os.path.exists(get_dirs.PATH_USR_DATA):
 try:
     #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
     import wolframalpha
+    import requests 
     from bin import usr_signup
     from bin import voice_io
     from bin import invoice
@@ -42,6 +42,7 @@ except ModuleNotFoundError:
         print("\nInstalling packages failed! Make sure you have a stable internet connection and all the requirements to install packages are fulfilled. Please try running this program again after resolving all issues, and if the problem still persists, contact the developer.")
         exit()
     import wolframalpha
+    import requests 
     from bin import usr_signup
     from bin import voice_io
     from bin import invoice

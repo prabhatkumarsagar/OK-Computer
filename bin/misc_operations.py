@@ -354,7 +354,7 @@ def web(query):
     elif 'facebook' in query:
         voice_io.show("Alright, opening Facebook right away!")
         webbrowser.open("https://www.facebook.com")
-
+tell
     else:
         try:
             voice_io.show(wolfy.wolfram_try(query))
