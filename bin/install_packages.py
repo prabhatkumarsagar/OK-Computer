@@ -29,7 +29,7 @@ def install():
         elif (spec := importlib.util.find_spec(name)) is not None:
             pass
         else:
-            if name == "pipwin" and os.name() != "nt":
+            if name == "pipwin" and os.name != "nt":
                 continue
 
             if name == "pyaudio":
