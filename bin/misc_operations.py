@@ -149,7 +149,7 @@ def note_read():
     cur.execute("select * from notes;")
     c=cur.fetchall()
     voice_io.show("Here are all your notes: ")
-    voice_io.show(tabulate.tabulate(headers = ["Date", "Note"], c))
+    voice_io.show(tabulate.tabulate(c, headers = ["Date", "Note"]))
     con.close()
 
     #note_read()
