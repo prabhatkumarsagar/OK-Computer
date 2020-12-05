@@ -29,7 +29,6 @@ try:
     from bin import mailer
     from bin import assistant_settings   
     from bin import misc_operations
-    from bin import wolfy
     
 except ModuleNotFoundError:    
     clear.clear()
@@ -51,7 +50,6 @@ except ModuleNotFoundError:
     from bin import mailer
     from bin import assistant_settings
     from bin import misc_operations
-    from bin import wolfy
 
 except OSError:
     print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")

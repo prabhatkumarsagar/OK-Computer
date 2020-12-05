@@ -8,12 +8,13 @@ def install():
         "gtts": "pip3 install gTTS",
         "playsound": "pip3 install playsound",
         "pyttsx3": "pip3 install pyttsx3",
-        "pyaudio": "pip3 install PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
         "speech_recognition": "pip3 install SpeechRecognition",
         "bs4": "pip3 install bs4",
         "wolframalpha": "pip3 install wolframalpha",
         "wikipedia": "pip3 install wikipedia",
         'mysql': "pip3 install mysql-connector-python",
+        "pipwin": "pip3 install pipwin",
+        "pyaudio": "pipwin install PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
         "pyowm": "pip3 install pyowm",
         "geocoder": "pip3 install geocoder",
         "cryptography": "pip3 install cryptography",
@@ -27,6 +28,9 @@ def install():
         elif (spec := importlib.util.find_spec(name)) is not None:
             pass
         else:
+            if name == "pipwin" and os.name() != "nt":
+                continue
+
             if name == "pyaudio":
                 if os.name == "posix":
                     print("Your system is missing the python package PyAudio which is required by this program for voice functions.")

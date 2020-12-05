@@ -25,7 +25,7 @@ def is_connected():
 engine=pyttsx3.init()
 voices=engine.getProperty('voices')
 if os.name == "nt":
-    engine.setProperty('voice',voices[1].id)
+    engine.setProperty('voice',voices[0].id)
 else:
     engine.setProperty('voice',voices[10].id)
 engine.setProperty('rate',125) #Default Rate = 150
