@@ -18,7 +18,8 @@ def install():
         "pyowm": "pip3 install pyowm",
         "geocoder": "pip3 install geocoder",
         "cryptography": "pip3 install cryptography",
-        "lxml": "pip3 install lxml"
+        "lxml": "pip3 install lxml",
+        "tabulate": "pip3 install tabulate"
     }
     # bs4 is a dependency for gtts
     #pyaudio is a dependency for speech_recognition

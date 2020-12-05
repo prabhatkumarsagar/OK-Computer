@@ -9,6 +9,7 @@ import wolframalpha
 import webbrowser
 import smtplib
 import getpass
+import tabulate
 
 try:
     from bin import mailer
@@ -148,7 +149,7 @@ def note_read():
     cur.execute("select * from notes;")
     c=cur.fetchall()
     voice_io.show("Here are all your notes: ")
-    voice_io.show(c)
+    voice_io.show(tabulate.tabulate(["Date", "Note"], c))
     con.close()
 
     #note_read()
