@@ -14,7 +14,7 @@ def install():
         "wikipedia": "pip3 install wikipedia",
         'mysql': "pip3 install mysql-connector-python",
         "pipwin": "pip3 install pipwin",
-        "pyaudio": "pipwin install PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
+        "pyaudio": "pipwin install pyaudio",
         "pyowm": "pip3 install pyowm",
         "geocoder": "pip3 install geocoder",
         "cryptography": "pip3 install cryptography",
