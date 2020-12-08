@@ -12,17 +12,13 @@ from bin import invoice
 audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
 def copytree(src, dst, symlinks=False, ignore=None):
-    print(src)
     lst = src.split("/")
     f_name = lst[len(lst) -1]
     dst += "/" + f_name
     os.mkdir(dst)
-    print(dst)
     for item in os.listdir(src):
         s = os.path.join(src, item)
-        print(s)
         d = os.path.join(dst, item)
-        print(d)
         if os.path.isdir(s):
             shutil.copytree(s, d, symlinks, ignore)
         else:
