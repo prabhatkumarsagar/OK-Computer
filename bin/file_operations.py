@@ -11,6 +11,23 @@ from bin import invoice
 
 audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
+def copytree(src, dst, symlinks=False, ignore=None):
+    print(src)
+    lst = src.split("/")
+    f_name = lst[len(lst) -1]
+    dst += "/" + f_name
+    os.mkdir(dst)
+    print(dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        print(s)
+        d = os.path.join(dst, item)
+        print(d)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 def fileSearch(file_name, search_dir):
 #Searches for the given file name in the file tree(case sensitive)
     results = []
@@ -70,7 +87,7 @@ def deleteFolder(folder_name, search_dir):
     if folder_search_results != []:
         if len(folder_search_results) == 1:
             invoice.inpt("%s from %s will be permanently lost, press Enter to continue."%(folder_search_results[0]["folder"], folder_search_results[0]["root"]), iterate = False)
-            os.rmdir(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"])
+            shutil.rmtree(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"])
             voice_io.show(folder_name,"has been deleted successfully!")
             
         else:
@@ -87,7 +104,7 @@ def deleteFolder(folder_name, search_dir):
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
                 invoice.inpt(f"'{f_name}' from '{parent_dir}' will be permanently lost, press Enter to continue.", iterate = False)
-                os.remove(parent_dir + "/" + f_name)
+                shutil.rmtree(parent_dir + "/" + f_name)
                 voice_io.show(f"'{f_name}' has been deleted successfully!")
 
             except IndexError:
@@ -129,12 +146,12 @@ def copy(obj_name, search_dir, dest_dir):
                 shutil.copy2(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
             
-            elif choice - (count_files - 1) in range(count_folders):
-                choice -= (count_files - 1)
+            elif choice - (count_files) in range(count_folders):
+                choice -= count_files
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
-                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                copytree(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
 
             else:
@@ -146,7 +163,7 @@ def copy(obj_name, search_dir, dest_dir):
     elif folder_search_results != []:
         if len(folder_search_results) == 1:
             voice_io.show(f"Copying folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{dest_dir}'.....")
-            shutil.copy2(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
+            copytree(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
             voice_io.show(f"Successfully copied '{folder_search_results[0]['file']}' to '{dest_dir}'!")
         
         else:
@@ -161,7 +178,7 @@ def copy(obj_name, search_dir, dest_dir):
                 f_name = folder_search_results[choice]['folder']
                 parent_dir = folder_search_results[choice]['root']
                 voice_io.show(f"Copying folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
-                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                copytree(parent_dir + "/" + f_name, dest_dir)
                 voice_io.show(f"Successfully copied '{f_name}' to '{dest_dir}'!")
 
             except IndexError:
@@ -198,7 +215,114 @@ def copy(obj_name, search_dir, dest_dir):
                 voice_io.show("Copying failed : Sorry, but your entered data is not a number.") 
 
     else:
-        voice_io.show("Sorry, could not find file/folder '{obj_name}'!")
+        voice_io.show(f"Sorry, could not find file/folder '{obj_name}'!")
+
+def move(obj_name, search_dir, dest_dir):
+    dest_dir = get_dirs.HOME + "/" + dest_dir
+    if not os.path.isdir(dest_dir):
+        os.mkdir(dest_dir)
+
+    folder_search_results = folderSearch(obj_name, search_dir)
+    file_search_results = fileSearch(obj_name, search_dir)
+    if folder_search_results != [] and file_search_results != 0:
+        count_files = len(file_search_results)
+        count_folders = len(folder_search_results)
+        voice_io.show(f"Found {count_files} files and {count_folders} folders matching the given name! They are :-")
+        sno = 1
+        for i in file_search_results:
+            voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
+            sno += 1
+        
+        for i in folder_search_results:
+            voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
+            sno += 1
+        voice_io.show("Select the number of the file/folder which you would like to move.")
+        choice = int(invoice.inpt())
+        choice -= 1
+        try:
+            if choice in range(count_files):
+                f_name = file_search_results[choice]['file']
+                parent_dir = file_search_results[choice]['root']
+                voice_io.show(f"Moving file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                os.remove(parent_dir + "/" + f_name)
+                voice_io.show(f"Successfully moved '{f_name}' to '{dest_dir}'!")
+            
+            elif choice - (count_files) in range(count_folders):
+                choice -= (count_files)
+                f_name = folder_search_results[choice]['folder']
+                parent_dir = folder_search_results[choice]['root']
+                voice_io.show(f"Moving folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
+                copytree(parent_dir + "/" + f_name, dest_dir)
+                shutil.rmtree(parent_dir + "/" + f_name)
+                voice_io.show(f"Successfully moved '{f_name}' to '{dest_dir}'!")
+
+            else:
+                voice_io.show("Moving failed : Sorry, but the entered number is not within the range of available options.")
+            
+        except SyntaxError or TypeError:
+            voice_io.show("Moving failed : Sorry, but your entered data is not a number.")
+
+    elif folder_search_results != []:
+        if len(folder_search_results) == 1:
+            voice_io.show(f"Moving folder '{folder_search_results[0]['folder']}' from '{folder_search_results[0]['root']}' to '{dest_dir}'.....")
+            copytree(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"], dest_dir)
+            shutil.rmtree(folder_search_results[0]["root"] + "/" + folder_search_results[0]["folder"])
+            voice_io.show(f"Successfully moved '{folder_search_results[0]['file']}' to '{dest_dir}'!")
+        
+        else:
+            sno = 1
+            for i in folder_search_results:
+                voice_io.show(f"{sno}. folder '{i['folder']}', inside '{i['root']}'")
+                sno += 1
+            voice_io.show("Select the number of the folder which you would like to move.")
+            choice = int(invoice.inpt())
+            choice -= 1
+            try:
+                f_name = folder_search_results[choice]['folder']
+                parent_dir = folder_search_results[choice]['root']
+                voice_io.show(f"Moving folder '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
+                copytree(parent_dir + "/" + f_name, dest_dir)
+                shutil.rmtree(parent_dir + "/" + f_name)
+                voice_io.show(f"Successfully moved '{f_name}' to '{dest_dir}'!")
+
+            except IndexError:
+                voice_io.show("Moving failed : Sorry, but the entered number is not within the range of available options.")
+                
+            except SyntaxError or TypeError:
+                voice_io.show("Moving failed : Sorry, but your entered data is not a number.")  
+    
+    elif file_search_results != []:
+        if len(file_search_results) == 1:
+            voice_io.show(f"Moving file '{file_search_results[0]['file']}' from '{file_search_results[0]['root']}' to '{dest_dir}''.....")
+            shutil.copy2(file_search_results[0]["root"] + "/" + file_search_results[0]["file"], dest_dir)
+            os.remove(file_search_results[0]["root"] + "/" + file_search_results[0]["file"])
+            voice_io.show(f"Successfully moved '{file_search_results[0]['file']}' to '{dest_dir}'!")
+
+        else:
+            sno = 1
+            for i in file_search_results:
+                voice_io.show(f"{sno}. file '{i['file']}', inside '{i['root']}'")
+                sno += 1
+            voice_io.show("Select the number of the file which you would like to copy.")
+            choice = int(invoice.inpt())
+            choice -= 1
+            try:
+                f_name = file_search_results[choice]['file']
+                parent_dir = file_search_results[choice]['root']
+                voice_io.show(f"Moving file '{f_name}' from '{parent_dir}' to '{dest_dir}'.....")
+                shutil.copy2(parent_dir + "/" + f_name, dest_dir)
+                os.remove(parent_dir + "/" + f_name)
+                voice_io.show(f"Successfully moved '{f_name}' to '{dest_dir}'!")
+
+            except IndexError:
+                voice_io.show("Moving failed : Sorry, but the entered number is not within the range of available options.")
+                
+            except SyntaxError or TypeError:
+                voice_io.show("Moving failed : Sorry, but your entered data is not a number.") 
+
+    else:
+        voice_io.show(f"Sorry, could not find file/folder '{obj_name}'!")
 
 def rname(obj_name, new_name, search_dir):
     folder_search_results = folderSearch(obj_name, search_dir)

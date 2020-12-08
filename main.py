@@ -91,7 +91,8 @@ def operation(query):
         "delete_file_unspecified": ["delete a file", "file delete", "remove a file"], 
         "delete_folder_unspecified": ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], 
         "rename_unspecified": ["rename a folder", "rename a file", "rename folder", "rename file", "folder rename", "file rename", "rename directory", "directory rename", "rname"], 
-        "copy": ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"], 
+        "copy": ["copy", "cp", "clone", "replicate", "copy a file", "copy a folder"],
+        "move": ["move", "mv", "move a file", "move a folder"],
         "rename": ["rname", "rename", "rename a file", "rename a folder", "rename a folder"], 
         "music_from_a_file": ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], 
         # misc operations
@@ -305,6 +306,45 @@ def main():
                 dest_dir = invoice.inpt(processed = False)
                                 
                 file_operations.copy(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
+
+            elif result=="move":
+                search_dir = ""
+                voice_io.show("Which file/folder would you like to move?")
+                obj_name = invoice.inpt(processed = False)
+                voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+                locate = invoice.inpt().lower()
+                if locate in locate_desktop:
+                    search_dir = desktop
+
+                elif locate in locate_documents:
+                    search_dir = documents
+
+                elif locate in locate_downloads:
+                    search_dir = downloads
+
+                elif locate in locate_home:
+                    search_dir = home
+                            
+                elif locate in locate_music:
+                    search_dir = music
+                
+                elif locate in locate_pictures:
+                    search_dir = pictures
+
+                elif locate in locate_videos:
+                    search_dir = videos
+
+                elif locate in locate_home:
+                    search_dir = home
+
+                else:
+                    voice_io.show("Sorry but i cannot find the given directory, going forward with the entire home directory!")
+                    search_dir = home
+                
+                voice_io.show(f"What should be the destination for '{obj_name}'?\n(Example : 'Downloads' or 'Documents/New Folder', case sensitive and without quotes).")
+                dest_dir = invoice.inpt(processed = False)
+                                
+                file_operations.move(obj_name = obj_name, search_dir = search_dir, dest_dir = dest_dir)
 
             elif result=="music_from_a_file":
                 pass

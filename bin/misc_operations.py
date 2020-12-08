@@ -106,7 +106,7 @@ def note_write():
     cur.execute("use pydeskassist;")
     cur.execute("create table if not exists notes(date_added date, note longtext);")
     voice_io.show("Okay so you wanna enter a new note? Here ya go!")
-    x1=input("Enter Note Here: ")
+    x1=invoice.inpt("Enter Note Here: ", processed = False)
     cur.execute("insert into notes values(curdate(), '%s');"%x1)
     voice_io.show("Note Saved Successfully!")
     con.commit()
@@ -125,9 +125,9 @@ def reminder_write():
     cur.execute("create database if not exists pydeskassist;")
     cur.execute("use pydeskassist;")
     cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
-    x1=input("Enter Reminder: ")
-    x2=input("Enter Date to be Notified (YYYYMMDD): ")
-    x3=input("Enter Time to be Notified (HHMMSS): ")
+    x1=invoice.inpt("Enter Reminder: ", processed = False)
+    x2=invoice.inpt("Enter Date to be Notified (YYYYMMDD): ", processed = False)
+    x3=invoice.inpt("Enter Time to be Notified (HHMMSS): ", processed = False)
     if x2=='' or x3=='':
         voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
     else:
