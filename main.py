@@ -87,6 +87,7 @@ def operation(query):
         "abt_creators": ["who made you", "hey who's your fada", "who's you creator","who created you"], 
         "ask_wellbeing": ["hey how are you","how do you do","how are you","howdy"],
         # file operations
+        "open_file": ["open", "open a file", "open a folder", "open file", "open folder"],
         "delete_general": ["delete", "del", "remove", "erase", "rm"], 
         "delete_file_unspecified": ["delete a file", "file delete", "remove a file"], 
         "delete_folder_unspecified": ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], 
@@ -96,7 +97,7 @@ def operation(query):
         "rename": ["rname", "rename", "rename a file", "rename a folder", "rename a folder"], 
         "music_from_a_file": ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], 
         # misc operations
-        "web_search": ["open","where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], 
+        "web_search": ["where is","google","youtube","define","what's the meaning of","search","meaning of","what is"], 
         "time":["time","current time","what's the time","tell me the time","what time it is"], 
         "date": ["date","today's date","what's the date","current date"], 
         "date_day": ["what's the day","day","what day is it","what day it is"], 
@@ -229,6 +230,65 @@ def main():
                 else:
                     voice_io.show("Sorry i didn't get that, please try again with a proper command.")
                     
+            elif result == "open_file":
+                query = task.lower()
+                kwrd = ""
+                obj_name = ""
+                if "open a file" in query:
+                    kwrd = "file"
+
+                elif "open a folder" in query:
+                    kwrd = "folder"
+
+                elif "open" in query:
+                    obj_name = task.replace("open", "")
+                
+                elif "open file" in query:
+                    obj_name = task.replace("open file", "")
+
+                elif "open folder" in query:
+                    obj_name = task.replace("open folder", "")
+                    
+                obj_name = obj_name.strip()
+                if obj_name == "":
+                    voice_io.show(f"Which {kwrd} would you like me to open.")
+                    obj_name = invoice.inpt(processed = False)
+
+                voice_io.show(f"Where would you like me to search for {obj_name}?\n1. Desktop\n2. Downloads\n3. Documents\n4. Music\n5. Pictures\n6. Videos\n7. Entire home directory")
+                locate = invoice.inpt().lower()
+                if locate in locate_desktop:
+                    search_dir = desktop
+
+                elif locate in locate_documents:
+                    search_dir = documents
+
+                elif locate in locate_downloads:
+                    search_dir = downloads
+
+                elif locate in locate_home:
+                    search_dir = home
+                            
+                elif locate in locate_music:
+                    search_dir = music
+                
+                elif locate in locate_pictures:
+                    search_dir = pictures
+
+                elif locate in locate_videos:
+                    search_dir = videos
+
+                elif locate in locate_home:
+                    search_dir = home
+
+                else:
+                    voice_io.show("Sorry but i cannot find the given directory, \ngoing forward with the entire home directory!")
+                    search_dir = home
+                
+                file_operations.file_opener(obj_name, search_dir)
+                    
+            elif result == "search_file":
+                pass
+
             elif result=="rename":
                 search_dir = ""
                 voice_io.show("Which file/folder would you like to rename?")
