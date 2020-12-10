@@ -586,26 +586,32 @@ def rname(obj_name, new_name, search_dir):
 
     else:
         voice_io.show("Sorry, could not find file/folder '{obj_name}'!")
-
+"""
 def createFile(f_name, path, type):
     path = get_dirs.HOME + '/' + path
-    os.mkdir(path)
+    f_name = get_dirs.HOME + '/' + path + '/' + f_name
+    if not os.path.exists(path):
+        os.mkdir(path)
+    if os.path.exists(f_name):
+        voice_io.show()
+    f = None
     if type == "txt":
         f = open(f_name + ".txt", "w")
-        f.close()
     
     if type == "doc":
         f = open(f_name + ".docx", "w")
-        f.close()
 
     if type == "ppt":
         f = open(f_name + ".pptx", "w")
-        f.close()
     
     if type == "sheet":
         f = open(f_name + ".xls", "w")
-        f.close()
 
+    else:
+        return
+
+    f.close()
+"""
 def playMusic(name, search_dir):
     file_search_results = fileSearch(file_name = name, search_dir = search_dir)
     music_files = []
