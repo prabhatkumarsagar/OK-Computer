@@ -87,7 +87,7 @@ def operation(query):
         "abt_creators": ["who made you", "hey who's your fada", "who's you creator","who created you"], 
         "ask_wellbeing": ["hey how are you","how do you do","how are you","howdy"],
         # file operations
-        "search_file": "searchfile",
+        "search_file": ["searchfile","search file","search","search folder"],
         "open_file": ["open", "open a file", "open a folder", "open file", "open folder"],
         "delete_general": ["delete", "del", "remove", "erase", "rm"], 
         "delete_file_unspecified": ["delete a file", "file delete", "remove a file"], 
