@@ -321,8 +321,8 @@ def web(query):
         voice_io.show("You asked to locate",location,"and here you go!")
         webbrowser.open("https://www.google.nl/maps/place/" + location + "")
 
-    elif "open" in query:
-        reg_ex = re.search('open (.+)', query)
+    elif "open website" in query:
+        reg_ex = re.search('open website (.+)', query)
         if reg_ex:
             domain = reg_ex.group(1)
             #voice_io.show(domain)
