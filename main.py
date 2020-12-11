@@ -88,7 +88,7 @@ def operation(query):
         "ask_wellbeing": ["hey how are you","how do you do","how are you","howdy"],
         # file operations
         "search_file": ["searchfile","search file","search","search folder"],
-        "open_file": ["open a file", "open a folder", "open file", "open folder"],
+        "open_file": ["open ", "open a file", "open a folder", "open file", "open folder"],
         "delete_general": ["delete", "del", "remove", "erase", "rm"], 
         "delete_file_unspecified": ["delete a file", "file delete", "remove a file"], 
         "delete_folder_unspecified": ["delete a folder", "folder delete", "remove a folder", "remove directory", "rmdir"], 
@@ -98,7 +98,7 @@ def operation(query):
         "rename": ["rname", "rename", "rename a file", "rename a folder", "rename a folder"], 
         "music_from_a_file": ["play an audio file", "play an audio", "play a audio", "play a audio file", "play music from a file", "play audio from a file","play music file", "play audio file", "play music from file", "play audio from file"], 
         # misc operations
-        "web_search": ["open site","open website","where is","google","youtube","define","what's the meaning of","search ","meaning of","what is"], 
+        "web_search": ["opensite","openwebsite","where is","google","youtube","define","what's the meaning of","search ","meaning of","what is"], 
         "time":["time","current time","what's the time","tell me the time","what time it is"], 
         "date": ["date","today's date","what's the date","current date"], 
         "date_day": ["what's the day","day","what day is it","what day it is"], 
@@ -247,7 +247,12 @@ def main():
                 elif "open folder" in query:
                     obj_name = task.replace("open folder", "")
 
+                elif "open " in query:
+                    obj_name = task.replace("open ", "")
+
                 obj_name = obj_name.strip()
+                if kwrd == "":
+                    kwrd = "File or Folder"
                 if obj_name == "":
                     voice_io.show(f"Which {kwrd} would you like me to open.")
                     obj_name = invoice.inpt(processed = False)
