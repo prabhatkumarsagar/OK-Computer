@@ -22,6 +22,7 @@ def setNewUser():
     nm = bytes(invoice.inpt(), encoding = "utf-8") #Name of the user i.e the name by which the assistant will call him/her
     voice_io.show("\nAnd you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     gnd = invoice.inpt()
+    """
     while True:
         voice_io.show(f"\nWhat is your MySQL Username, {gnd}(default 'root')?")
         mysql_usr = invoice.inpt(processed = False)
@@ -38,6 +39,7 @@ def setNewUser():
 
     mysql_usr = bytes(mysql_usr, encoding = "utf-8")
     mysql_pswd = bytes(mysql_pswd, encoding = "utf-8")
+    """
     voice_io.show("\nNow What would be your email address? \nI will be needing this for my email operations so that i can help you with sending automated emails to others without you lifting a finger and also for helping you send feedback to my developers regarding bugs or minor issues, which i would hope doesn't happen :D")#usr email address
     eml = bytes(invoice.inpt(processed= False), encoding = "utf-8")
     pswd = bytes(getpass.getpass(voice_io.show("\nAnd lastly what is your email password? Note: All these personal information is stored only and only on your local machine and hence there's no way i can compromise your data, In short you can trust me ;) ",show_output = False) + "\nPassword: "), encoding = "utf-8")#use password
@@ -73,8 +75,8 @@ def setNewUser():
 
     usr_info_dic['email']=cipher_suite.encrypt(eml)
     usr_info_dic['password']=cipher_suite.encrypt(pswd)
-    usr_info_dic['mysql_usr']=cipher_suite.encrypt(mysql_usr)
-    usr_info_dic['mysql_pswd']=cipher_suite.encrypt(mysql_pswd)
+    # usr_info_dic['mysql_usr']=cipher_suite.encrypt(mysql_usr)
+    # usr_info_dic['mysql_pswd']=cipher_suite.encrypt(mysql_pswd)
     info_in(usr_info_dic)
     voice_io.show("Well then now you're good to go! Just press Enter/Return to get going!", end = "")
     invoice.inpt("", iterate = False)

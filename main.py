@@ -123,38 +123,6 @@ def operation(query):
                 continue
     return n
 
-"""
-POSSIBLE Operation() OUTPUTS! *D means Done i.e it's been implemented properly.
-help D
-greet_hello D
-greet_time D
-joke D
-abt_assistant D
-abt_creators D
-ask_wellbeing D
-delete_general D
-delete_file_unspecified D
-delete_folder_unspecified D
-rename_unspecified
-copy D
-rename D
-music_from_a_file 
-web_search 
-time
-date
-date_day
-date_month
-date_year
-notesrem_write
-notesrem_read
-email
-weather
-weather_frcst
-song
-news
-"""
-
-
 def main():
     global sound
     clear.clear()

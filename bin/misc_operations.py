@@ -34,7 +34,7 @@ from bs4 import BeautifulSoup as soup
 #import vlc #pip install python-vlc
 #from bs4 import BeautifulSoup
 #import youtube-dl #RIP
-import mysql.connector as sql
+import sqlite3 as sql
 from pyowm.owm import OWM  #pip install pyowm
 from pyowm.utils import timestamps
 import geocoder #pip install geocoder
@@ -93,7 +93,8 @@ def date_con():
 
 #Notes and Reminders
 
-def note_write():   
+def note_write():
+    """   
     voice_io.show("Enter your mysql password")
     pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
@@ -104,16 +105,20 @@ def note_write():
     cur=con.cursor()
     cur.execute("create database if not exists pydeskassist;")
     cur.execute("use pydeskassist;")
+    """
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
     cur.execute("create table if not exists notes(date_added date, note longtext);")
     voice_io.show("Okay so you wanna enter a new note? Here ya go!")
     x1=invoice.inpt("Enter Note Here: ", processed = False)
-    cur.execute("insert into notes values(curdate(), '%s');"%x1)
+    cur.execute("insert into notes values(datetime('now', 'localtime'), '%s');"%x1)
     voice_io.show("Note Saved Successfully!")
     con.commit()
     con.close()
 
     #note_write()
 def reminder_write():
+    """
     voice_io.show("Enter your mysql password")
     pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
@@ -124,6 +129,9 @@ def reminder_write():
     cur=con.cursor()
     cur.execute("create database if not exists pydeskassist;")
     cur.execute("use pydeskassist;")
+    """
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
     cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
     x1=invoice.inpt("Enter Reminder: ", processed = False)
     x2=invoice.inpt("Enter Date to be Notified (YYYYMMDD): ", processed = False)
@@ -131,12 +139,13 @@ def reminder_write():
     if x2=='' or x3=='':
         voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
     else:
-        cur.execute("insert into reminders values(curdate(), '%s', '%s', '%s');"%(x1,x2,x3))
+        cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s', '%s');"%(x1,x2,x3))
         voice_io.show("Reminder Saved Successfully!")
         con.commit()
     con.close()
 
 def note_read():
+    """
     voice_io.show("Enter your mysql password")
     pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
@@ -146,15 +155,19 @@ def note_read():
     con=sql.connect(host="localhost",user=usr,password=pwd)
     cur=con.cursor()
     cur.execute("use pydeskassist;")
+    """
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
     cur.execute("select * from notes;")
     c=cur.fetchall()
     voice_io.show("Here are all your notes: ")
-    voice_io.show(tabulate.tabulate(c, headers = ["Date", "Note"]))
+    voice_io.show(tabulate.tabulate(c, headers = ["Date and Time", "Note"]))
     con.close()
 
     #note_read()
 
 def reminder_read():
+    """
     voice_io.show("Enter your mysql password")
     pas = getpass.getpass()
     usr = usr_signup.info_out("mysql_usr")
@@ -164,7 +177,10 @@ def reminder_read():
     con=sql.connect(host="localhost",user=usr,password=pwd)
     cur=con.cursor()
     cur.execute("use pydeskassist;")  
-    voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature which you might see in the near future ;) so for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
+    """
+    con=sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur=con.cursor()
+    voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know,0\n I Know that i am not notifying you of your set reminders when the \ndate and time comes but that's not a bug you see, my developers are \nstill working on that feature which you might see in the near future ;) \nso for now you have to keep checking in here to keep up to date with your saved reminders. \nSorry again for the inconvienience caused but anyway,")
     voice_io.show("\nWhat saved reminders do you want to read?")
     voice_io.show("1. Past Reminders")
     voice_io.show("2. Future/Upcoming Reminders")
