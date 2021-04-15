@@ -566,7 +566,7 @@ def main():
                 voice_io.show("Sorry i couldn't help you with that. Please try a valid operation.")
 
 
-        voice_io.show("\nNow, what to do?")
+        voice_io.show("\nWhat do you want me to do Now?")
     
     
 def userSetup():

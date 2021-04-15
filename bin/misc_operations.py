@@ -93,22 +93,17 @@ def date_con():
 
 #Notes and Reminders
 
-def note_write():
-    """   
-    voice_io.show("Enter your mysql password")
-    pas = getpass.getpass()
-    usr = usr_signup.info_out("mysql_usr")
-    pwd = usr_signup.info_out("mysql_pswd")
-    if pas != pwd:
-        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
-    con=sql.connect(host="localhost",user=usr,password=pwd)
-    cur=con.cursor()
-    cur.execute("create database if not exists pydeskassist;")
-    cur.execute("use pydeskassist;")
-    """
+def note_rem_create():
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
     cur.execute("create table if not exists notes(date_added date, note longtext);")
+    cur.execute("create table if not exists reminders(datetime_added date, reminder longtext, date_tbn date, time_tbn time);")
+    con.close()
+
+def note_write():
+    note_rem_create()
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
     voice_io.show("Okay so you wanna enter a new note? Here ya go!")
     x1=invoice.inpt("Enter Note Here: ", processed = False)
     cur.execute("insert into notes values(datetime('now', 'localtime'), '%s');"%x1)
@@ -116,89 +111,62 @@ def note_write():
     con.commit()
     con.close()
 
-    #note_write()
+
 def reminder_write():
-    """
-    voice_io.show("Enter your mysql password")
-    pas = getpass.getpass()
-    usr = usr_signup.info_out("mysql_usr")
-    pwd = usr_signup.info_out("mysql_pswd")
-    if pas != pwd:
-        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
-    con=sql.connect(host="localhost",user=usr,password=pwd)
-    cur=con.cursor()
-    cur.execute("create database if not exists pydeskassist;")
-    cur.execute("use pydeskassist;")
-    """
+    note_rem_create()
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
-    cur.execute("create table if not exists reminders(date_added date, reminder longtext, date_tbn date, time_tbn time);") #TBN- To Be Notified (OPTIONAL, well yes but actually no)
     x1=invoice.inpt("Enter Reminder: ", processed = False)
-    x2=invoice.inpt("Enter Date to be Notified (YYYYMMDD): ", processed = False)
-    x3=invoice.inpt("Enter Time to be Notified (HHMMSS): ", processed = False)
-    if x2=='' or x3=='':
-        voice_io.show("Hey you left out a field empty that's not how reminders work mate, if this is how you wanna do it try the notes feature instead.")
-    else:
-        cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s', '%s');"%(x1,x2,x3))
-        voice_io.show("Reminder Saved Successfully!")
-        con.commit()
+    x2=invoice.inpt("Enter Date to be Notified (YYYY-MM-DD): ", processed = False)
+    x3=invoice.inpt("Enter Time to be Notified (HH:MM:SS): ", processed = False)
+    cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s', '%s');"%(x1,x2,x3))
+    voice_io.show("Reminder Saved Successfully!")
+    con.commit()
     con.close()
 
+
 def note_read():
-    """
-    voice_io.show("Enter your mysql password")
-    pas = getpass.getpass()
-    usr = usr_signup.info_out("mysql_usr")
-    pwd = usr_signup.info_out("mysql_pswd")
-    if pas != pwd:
-        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
-    con=sql.connect(host="localhost",user=usr,password=pwd)
-    cur=con.cursor()
-    cur.execute("use pydeskassist;")
-    """
+    note_rem_create()
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
     cur.execute("select * from notes;")
     c=cur.fetchall()
-    voice_io.show("Here are all your notes: ")
-    voice_io.show(tabulate.tabulate(c, headers = ["Date and Time", "Note"]))
+    if c==[]:
+        voice_io.show("There are no notes to be shown, try making new notes! :)")
+    else:
+        voice_io.show("Here are all your notes: ")
+        print()
+        voice_io.show(tabulate.tabulate(c, headers = ["Date and Time", "Note"]))
+        print()
+
+
     con.close()
 
-    #note_read()
 
 def reminder_read():
-    """
-    voice_io.show("Enter your mysql password")
-    pas = getpass.getpass()
-    usr = usr_signup.info_out("mysql_usr")
-    pwd = usr_signup.info_out("mysql_pswd")
-    if pas != pwd:
-        voice_io.show("The password you entered is incorrect! You are not authorised to complete this operation.")
-    con=sql.connect(host="localhost",user=usr,password=pwd)
-    cur=con.cursor()
-    cur.execute("use pydeskassist;")  
-    """
-    con=sql.connect(get_dirs.DB_NOTES_REMINDERS)
-    cur=con.cursor()
-    voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know,0\n I Know that i am not notifying you of your set reminders when the \ndate and time comes but that's not a bug you see, my developers are \nstill working on that feature which you might see in the near future ;) \nso for now you have to keep checking in here to keep up to date with your saved reminders. \nSorry again for the inconvienience caused but anyway,")
+    note_rem_create()
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
+    voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature and you'll see it in the near future ;) so just for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
     voice_io.show("\nWhat saved reminders do you want to read?")
     voice_io.show("1. Past Reminders")
     voice_io.show("2. Future/Upcoming Reminders")
     cho=input("Enter Choice: ")
-    date=datetime.datetime.now().strftime("%x") 
     if cho=="1":
-        cur.execute("select * from reminders where date_tbn < curdate();")
+        cur.execute("select * from reminders where date_tbn < date('now');")
         c=cur.fetchall()
-        voice_io.show("Here are all your past reminders: ")
-        voice_io.show(c)
-        if c=="[]":
+        if c==[]:
             voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
 
         else:
-            z=input("Do you want to delete your past reminders? (Y/N) ")
+            voice_io.show("Here are all your past reminders: ")
+            print()
+            voice_io.show(tabulate.tabulate(c, headers = ["Date and Time Added", "Reminder", "Date to be Notified", "Time to be Notified"]))
+            print()
+            z=input("Hey do you want to delete your past reminders? (Y/N) ")
             z=z.lower()
             if z=="y":
-                cur.execute("delete from reminders where date_tbn < curdate();")
+                cur.execute("delete from reminders where date_tbn < date('now');")
                 con.commit()
                 voice_io.show("Records Deleted Successfully!")
             elif z=="n":
@@ -207,14 +175,26 @@ def reminder_read():
                 voice_io.show("Invalid Input!")
 
     elif cho=="2":
-        cur.execute("select * from reminders where date_tbn >= curdate();")
+        cur.execute("select * from reminders where date_tbn > date('now');")
         c=cur.fetchall()
-        voice_io.show("Here are all your past reminders: ")
-        voice_io.show(c)   
+        if c==[]:
+            voice_io.show("Well it looks like you don't have any upcoming reminders. Is that a good thing or a bad thing? Hmmm")
+
+        else:
+            voice_io.show("Here are all your upcoming/future reminders: ")
+            print()
+            voice_io.show(tabulate.tabulate(c, headers = ["Date and Time Added", "Reminder", "Date to be Notified", "Time to be Notified"]))
+            print()
+
     else:
         voice_io.show('Invalid Input!')
 
     con.close()
+
+#so reminders and notes work properly for the most part right now but the actual logic for past and future reminders taking into count the date and time, needs to be worked upon soon alongwith the main thing that is the notification bs, i.e. the user is notified for their set reminders.
+#maybe reminderid and noteid too can be added for better management of notes and reminders, i.e editing/altering and deleting notes and reminders
+
+
 
 #Time & Date
 def date():
