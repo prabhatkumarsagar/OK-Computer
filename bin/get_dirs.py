@@ -16,9 +16,9 @@ PICTURES = HOME + "/Pictures"
 VIDEOS = HOME + "/Videos"
 
 #Assistant data directories
-PATH_USR_DATA = HOME + "/Documents/python_assistant_userdata/"
+PATH_USR_DATA = HOME + "/Documents/ok_computer_userdata/"
 FILE_ASSISTANT_SETTINGS = PATH_USR_DATA + "assistant_settings.dat"
 FILE_SOUND_VALUE = PATH_USR_DATA + 'ass_sound_val.dat'
-FILE_USR_DATA = HOME + "/Documents/python_assistant_userdata/user_info.dat"
+FILE_USR_DATA = PATH_USR_DATA + "user_info.dat"
 FILE_ENCRYPT_KEY = PATH_USR_DATA + "key.bin"
 DB_NOTES_REMINDERS = PATH_USR_DATA + "notes_reminders.db"

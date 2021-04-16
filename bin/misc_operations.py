@@ -97,7 +97,7 @@ def note_rem_create():
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
     cur.execute("create table if not exists notes(date_added date, note longtext);")
-    cur.execute("create table if not exists reminders(datetime_added date, reminder longtext, date_tbn date, time_tbn time);")
+    cur.execute("create table if not exists reminders(datetime_added date, reminder longtext, datetime_tbn date);")
     con.close()
 
 def note_write():
@@ -116,10 +116,11 @@ def reminder_write():
     note_rem_create()
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
-    x1=invoice.inpt("Enter Reminder: ", processed = False)
-    x2=invoice.inpt("Enter Date to be Notified (YYYY-MM-DD): ", processed = False)
-    x3=invoice.inpt("Enter Time to be Notified (HH:MM:SS): ", processed = False)
-    cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s', '%s');"%(x1,x2,x3))
+    x1=invoice.inpt("Enter Reminder: ")
+    x2=invoice.inpt("Enter Date to be Notified (YYYY-MM-DD): ")
+    x3=input("Enter Time to be Notified (HH:MM:SS): ")
+    x4=x2+' '+x3
+    cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s');"%(x1,x4))
     voice_io.show("Reminder Saved Successfully!")
     con.commit()
     con.close()
@@ -129,16 +130,46 @@ def note_read():
     note_rem_create()
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
-    cur.execute("select * from notes;")
+    cur.execute("select rowid, date_added, note from notes;")
     c=cur.fetchall()
     if c==[]:
         voice_io.show("There are no notes to be shown, try making new notes! :)")
     else:
         voice_io.show("Here are all your notes: ")
         print()
-        voice_io.show(tabulate.tabulate(c, headers = ["Date and Time", "Note"]))
+        voice_io.show(tabulate.tabulate(c, headers = ["NoteID","Date and Time Added", "Note"]))
         print()
+        prmpt=input("Would you like to delete or edit these notes? ")
+        prmpt=prmpt.lower()
+        if prmpt in ['yeah','yep','yes', 'ok']:
+            ch=int(input("\nAnd what do you want to do really? \n1. Edit \n2. Delete \nEnter Choice: "))
+            if ch==1:
+                noteid=int(input("Please Enter the NoteID of the Note you wanna edit: "))
+                newnote=input("Now enter the new updated note: ")
+                try:
+                    cur.execute("update notes set note='%s' where rowid=%i;"%(newnote,noteid))
+                    con.commit()
+                    voice_io.show("Note Updated Successfully!")
+                except:
+                    voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid NoteID or something else, why don't you try again later!?")
 
+            elif ch==2:
+                noteid=int(input("Please Enter the NoteID of the Note you wanna delete: "))
+                try:
+                    cur.execute("delete from notes where rowid=%i;"%(noteid))
+                    con.commit()
+                    voice_io.show("Note Deleted Successfully!")
+                except:
+                    voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid NoteID or something else, why don't you try again later!?")
+
+            else:
+                voice_io.show("Invalid Input!")
+
+        elif prmpt in ['no','nah','nope','not really']:
+            voice_io.show("Alright!")
+
+        else:
+            print("Okay!")
 
     con.close()
 
@@ -153,7 +184,7 @@ def reminder_read():
     voice_io.show("2. Future/Upcoming Reminders")
     cho=input("Enter Choice: ")
     if cho=="1":
-        cur.execute("select * from reminders where date_tbn < date('now');")
+        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from reminders where datetime_tbn < datetime('now');")
         c=cur.fetchall()
         if c==[]:
             voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
@@ -161,21 +192,42 @@ def reminder_read():
         else:
             voice_io.show("Here are all your past reminders: ")
             print()
-            voice_io.show(tabulate.tabulate(c, headers = ["Date and Time Added", "Reminder", "Date to be Notified", "Time to be Notified"]))
+            voice_io.show(tabulate.tabulate(c, headers = ["ReminderID","Date and Time Added", "Reminder", "Date and Time to be Notified"]))
             print()
-            z=input("Hey do you want to delete your past reminders? (Y/N) ")
-            z=z.lower()
-            if z=="y":
-                cur.execute("delete from reminders where date_tbn < date('now');")
-                con.commit()
-                voice_io.show("Records Deleted Successfully!")
-            elif z=="n":
-                voice_io.show("Okay!")
+
+            prmpt=input("Would you like to delete past reminders? ")
+            prmpt=prmpt.lower()
+            if prmpt in ['yeah','yep','yes', 'ok']:
+                remid=input("Please Enter the ReminderID of the Reminder you wanna delete or type 'all' if you want to delete all of them: ")
+                if remid.isnumeric()!=True:
+                    remid=remid.lower()
+                    if remid=='all':
+                        cur.execute("delete from reminders where datetime_tbn < datetime('now');")
+                        con.commit()
+                        voice_io.show("All past reminders deleted successfully!")
+                    else:
+                        voice_io.show("Invalid Input!")       
+
+                else: 
+                    remid=int(remid)
+                    try:
+                        cur.execute("delete from reminders where rowid=%i;"%(remid))
+                        con.commit()
+                        voice_io.show("Reminder Deleted Successfully!")
+                    except:
+                        voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid ReminderID or something else, why don't you try again later!?")
+
+
+            elif prmpt in ['no','nah','nope','not really']:
+                voice_io.show("Alright!")
+
             else:
-                voice_io.show("Invalid Input!")
+                print("Okay!")
+
+
 
     elif cho=="2":
-        cur.execute("select * from reminders where date_tbn > date('now');")
+        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from reminders where datetime_tbn > datetime('now');")
         c=cur.fetchall()
         if c==[]:
             voice_io.show("Well it looks like you don't have any upcoming reminders. Is that a good thing or a bad thing? Hmmm")
@@ -183,16 +235,72 @@ def reminder_read():
         else:
             voice_io.show("Here are all your upcoming/future reminders: ")
             print()
-            voice_io.show(tabulate.tabulate(c, headers = ["Date and Time Added", "Reminder", "Date to be Notified", "Time to be Notified"]))
+            voice_io.show(tabulate.tabulate(c, headers = ["ReminderID","Date and Time Added", "Reminder", "Date and Time to be Notified"]))
             print()
+
+            prmpt=input("Would you like to edit or delete these reminders? ")
+            prmpt=prmpt.lower()
+            if prmpt in ['yeah','yep','yes', 'ok']:
+                ch=int(input("\nAnd what do you want to do really? \n1. Edit \n2. Delete \nEnter Choice: "))
+                if ch==1:
+                    remid=int(input("Please Enter the ReminderID of the Reminder you wanna edit: "))
+                    ch2=int(input("And What exactly do you wanna edit? \n1. Reminder Content \n2. Reminder Date and Time \nEnter Choice: "))
+                    if ch2==1:
+                        newrem=input("Okay Enter the new updated Reminder: ")
+                        try:
+                            cur.execute("update reminders set reminder='%s' where rowid=%i;"%(newrem,remid))
+                            con.commit()
+                            voice_io.show("Reminder Updated Successfully!")
+                        except:
+                            voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid NoteID or something else, why don't you try again later!?")
+
+                    elif ch2==2:
+                        newdatetime=input("Okay Enter the new Date and Time (YYYY-MM-DD HH:MM:SS): ")
+                        try:
+                            cur.execute("update reminders set datetime_tbn='%s' where rowid=%i;"%(newdatetime,remid))
+                            con.commit()
+                            voice_io.show("Reminder Updated Successfully!")
+                        except:
+                            voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid NoteID or something else, why don't you try again later!?")
+
+                    else:
+                        voice_io.show("Invalid Input")
+                    
+                elif ch==2:
+                    remid=input("Please Enter the ReminderID of the Reminder you wanna delete or type 'all' if you want to delete all of them: ")
+                    if remid.isnumeric()!=True:
+                        remid=remid.lower()
+                        if remid=='all':
+                            cur.execute("delete from reminders where datetime_tbn > datetime('now');")
+                            con.commit()
+                            voice_io.show("All past reminders deleted successfully!")
+                        else:
+                            voice_io.show("Invalid Input!")       
+
+                    else: 
+                        remid=int(remid)
+                        try:
+                            cur.execute("delete from reminders where rowid=%i;"%(remid))
+                            con.commit()
+                            voice_io.show("Reminder Deleted Successfully!")
+                        except:
+                            voice_io.show("Sorry i couldn't process your request at the moment, maybe because you're not entering a valid ReminderID or something else, why don't you try again later!?")
+
+
+            elif prmpt in ['no','nah','nope','not really']:
+                voice_io.show("Alright!")
+
+            else:
+                print("Okay!")
+
+
 
     else:
         voice_io.show('Invalid Input!')
 
     con.close()
 
-#so reminders and notes work properly for the most part right now but the actual logic for past and future reminders taking into count the date and time, needs to be worked upon soon alongwith the main thing that is the notification bs, i.e. the user is notified for their set reminders.
-#maybe reminderid and noteid too can be added for better management of notes and reminders, i.e editing/altering and deleting notes and reminders
+#so notes and reminders are all set, for real, it works great every thing is just fricking set up, the only thing that remains now is the notification thingy, for which i'll have to learn a few stuff off the internet first and make a script or something or idk what i really have no idea how it's gonna be done but guess we'll just find out tomorrow, it may take some time but i'll get it done somehow, anyhow and notes and reminders will be done and dusted for good.
 
 
 
