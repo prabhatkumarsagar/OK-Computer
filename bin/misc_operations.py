@@ -10,6 +10,7 @@ import webbrowser
 import smtplib
 import getpass
 import tabulate
+import time as samay
 
 try:
     from bin import mailer
@@ -173,6 +174,15 @@ def note_read():
 
     con.close()
 
+def reminder_remind():
+    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+    cur = con.cursor()
+    cur.execute("select datetime_tbn from reminders where remid=1;")
+    c=cur.fetchall()
+    print(c)
+    print(type(x))
+    con.close()
+
 
 def reminder_read():
     note_rem_create()
@@ -306,26 +316,26 @@ def reminder_read():
 
 #Time & Date
 def date():
-    x = datetime.datetime.now().strftime("%x")  
-    voice_io.show(f"Today's date is {x}(MM/DD/YY)")
+    x = datetime.datetime.now().strftime("%d/%m/%Y")  
+    voice_io.show(f"Today's date is {x} (DD/MM/YYYY)")
+
 def time():
-    x=datetime.datetime.now().strftime("%H:%M:%S")     
-    voice_io.show(f"The current time is, {x}") 
+    #x=datetime.datetime.now().strftime("%H:%M:%S")    
+    localtime = samay.localtime()
+    x = samay.strftime("%I:%M:%S %p", localtime)
+    voice_io.show(f"The current time is {x}") 
 
 def year():
-    x=datetime.datetime.now()
-    year = x.strftime("%Y")
-    voice_io.show(f"The current year is {year}")
+    x=datetime.datetime.now().strftime("%Y")
+    voice_io.show(f"The current year is {x}")
 
 def month():
-    x=datetime.datetime.now()
-    month = x.strftime("%B")
-    voice_io.show(f"The current month is {month}")
+    x=datetime.datetime.now().strftime("%B")
+    voice_io.show(f"The current month is {x}") 
 
 def day():
-    x=datetime.datetime.now()
-    day = x.strftime("%A")
-    voice_io.show(f"Today it's {day}")
+    x=datetime.datetime.now().strftime("%A")
+    voice_io.show(f"Today it is a {x}")
 
     #month()
     #day()
