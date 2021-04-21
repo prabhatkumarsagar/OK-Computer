@@ -81,24 +81,18 @@ def weather_forec():
     voice_io.show(f'And the sky would remain {status}')
 #weather_forec(ct)
 
-def date_con():
-    d=date=datetime.datetime.now().strftime("%d") 
-    m=date=datetime.datetime.now().strftime("%m") 
-    y=date=datetime.datetime.now().strftime("%Y") 
-    dt=[y,m,d]
-    date=""
-    for i in dt:
-        date+=i
-    date=int(date)
-    return date
 
-#Notes and Reminders
+def time_now():
+    t = samay.localtime() 
+    time_now = samay.strftime("%Y-%m-%d %H:%M:%S", t)
+    return time_now
 
 def note_rem_create():
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
     cur.execute("create table if not exists notes(date_added date, note longtext);")
-    cur.execute("create table if not exists reminders(datetime_added date, reminder longtext, datetime_tbn date);")
+    cur.execute("create table if not exists past_reminders(datetime_added date, reminder longtext, datetime_tbn date);")
+    cur.execute("create table if not exists future_reminders(datetime_added date, reminder longtext, datetime_tbn date);")
     con.close()
 
 def note_write():
@@ -121,9 +115,29 @@ def reminder_write():
     x2=invoice.inpt("Enter Date to be Notified (YYYY-MM-DD): ")
     x3=input("Enter Time to be Notified (HH:MM:SS): ")
     x4=x2+' '+x3
-    cur.execute("insert into reminders values(datetime('now', 'localtime'), '%s', '%s');"%(x1,x4))
-    voice_io.show("Reminder Saved Successfully!")
-    con.commit()
+    datetime_now=time_now()
+
+    if x4<datetime_now:
+        prmpt=input("Hey you are entering a reminder for a date and time that has already passed, are you sure you want to continue? ")
+        prmpt=prmpt.lower()
+        if prmpt in ['yeah','yep','yes', 'ok']:
+            voice_io.show("Alright as you wish, master!")
+            cur.execute("insert into past_reminders values(datetime('now', 'localtime'), '%s', '%s');"%(x1,x4))
+            voice_io.show("Reminder Saved Successfully!")
+            con.commit()
+        elif prmpt in ['no','nah','nope','not really']:
+            voice_io.show("Okay!")
+        else:
+            voice_io.show("Invalid Input!")
+    
+    elif x4>datetime_now:
+        cur.execute("insert into future_reminders values(datetime('now', 'localtime'), '%s', '%s');"%(x1,x4))
+        voice_io.show("Reminder Saved Successfully!")
+        con.commit()
+    
+    else:
+        voice_io.show("An internal error occurred while processing your request, please make sure you've entered the values correctly and try again!")
+    
     con.close()
 
 
@@ -174,27 +188,18 @@ def note_read():
 
     con.close()
 
-def reminder_remind():
-    con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
-    cur = con.cursor()
-    cur.execute("select datetime_tbn from reminders where remid=1;")
-    c=cur.fetchall()
-    print(c)
-    print(type(x))
-    con.close()
-
 
 def reminder_read():
     note_rem_create()
     con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
     cur = con.cursor()
     voice_io.show("Hey there! Here's where all your reminders are stored! Yes I Know, I Know that i am not notifying you of your set reminders when the date and time comes but that's not a bug you see, my developers are still working on that feature and you'll see it in the near future ;) so just for now you have to keep checking in here to keep up to date with your saved reminders. Sorry again for the inconvienience caused but anyway,")
-    voice_io.show("\nWhat saved reminders do you want to read?")
+    voice_io.show("\nWhat reminders do you want to read?")
     voice_io.show("1. Past Reminders")
     voice_io.show("2. Future/Upcoming Reminders")
     cho=input("Enter Choice: ")
     if cho=="1":
-        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from reminders where datetime_tbn < datetime('now');")
+        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from past_reminders;")
         c=cur.fetchall()
         if c==[]:
             voice_io.show("Well it looks like you don't have any past reminders. Is that a good thing or a bad thing? Hmmm")
@@ -212,7 +217,7 @@ def reminder_read():
                 if remid.isnumeric()!=True:
                     remid=remid.lower()
                     if remid=='all':
-                        cur.execute("delete from reminders where datetime_tbn < datetime('now');")
+                        cur.execute("delete from past_reminders;")
                         con.commit()
                         voice_io.show("All past reminders deleted successfully!")
                     else:
@@ -221,7 +226,7 @@ def reminder_read():
                 else: 
                     remid=int(remid)
                     try:
-                        cur.execute("delete from reminders where rowid=%i;"%(remid))
+                        cur.execute("delete from past_reminders where rowid=%i;"%(remid))
                         con.commit()
                         voice_io.show("Reminder Deleted Successfully!")
                     except:
@@ -237,7 +242,7 @@ def reminder_read():
 
 
     elif cho=="2":
-        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from reminders where datetime_tbn > datetime('now');")
+        cur.execute("select rowid, datetime_added, reminder, datetime_tbn from future_reminders;")
         c=cur.fetchall()
         if c==[]:
             voice_io.show("Well it looks like you don't have any upcoming reminders. Is that a good thing or a bad thing? Hmmm")
@@ -258,7 +263,7 @@ def reminder_read():
                     if ch2==1:
                         newrem=input("Okay Enter the new updated Reminder: ")
                         try:
-                            cur.execute("update reminders set reminder='%s' where rowid=%i;"%(newrem,remid))
+                            cur.execute("update future_reminders set reminder='%s' where rowid=%i;"%(newrem,remid))
                             con.commit()
                             voice_io.show("Reminder Updated Successfully!")
                         except:
@@ -267,7 +272,7 @@ def reminder_read():
                     elif ch2==2:
                         newdatetime=input("Okay Enter the new Date and Time (YYYY-MM-DD HH:MM:SS): ")
                         try:
-                            cur.execute("update reminders set datetime_tbn='%s' where rowid=%i;"%(newdatetime,remid))
+                            cur.execute("update future_reminders set datetime_tbn='%s' where rowid=%i;"%(newdatetime,remid))
                             con.commit()
                             voice_io.show("Reminder Updated Successfully!")
                         except:
@@ -281,16 +286,16 @@ def reminder_read():
                     if remid.isnumeric()!=True:
                         remid=remid.lower()
                         if remid=='all':
-                            cur.execute("delete from reminders where datetime_tbn > datetime('now');")
+                            cur.execute("delete from future_reminders;")
                             con.commit()
-                            voice_io.show("All past reminders deleted successfully!")
+                            voice_io.show("All future reminders deleted successfully!")
                         else:
                             voice_io.show("Invalid Input!")       
 
                     else: 
                         remid=int(remid)
                         try:
-                            cur.execute("delete from reminders where rowid=%i;"%(remid))
+                            cur.execute("delete from future_reminders where rowid=%i;"%(remid))
                             con.commit()
                             voice_io.show("Reminder Deleted Successfully!")
                         except:
@@ -310,7 +315,61 @@ def reminder_read():
 
     con.close()
 
-#so notes and reminders are all set, for real, it works great every thing is just fricking set up, the only thing that remains now is the notification thingy, for which i'll have to learn a few stuff off the internet first and make a script or something or idk what i really have no idea how it's gonna be done but guess we'll just find out tomorrow, it may take some time but i'll get it done somehow, anyhow and notes and reminders will be done and dusted for good.
+
+"""
+def reminder_remind():
+import notify2
+import sqlite3 as sql
+import time
+
+def notify(reminder):
+    icon_path='/home/prabhat/Documents/photo.png'
+    notify2.init("OK-Computer")
+    n=notify2.Notification("Reminder", message=reminder, icon=icon_path)
+    n.set_urgency(notify2.URGENCY_NORMAL)
+    n.set_timeout(100)
+    n.show()
+
+def time_now():
+    t = time.localtime() 
+    time_now = time.strftime("%Y-%m-%d %H:%M:%S", t)
+    return time_now
+
+while True:
+    con = sql.connect("/home/prabhat/Documents/ok_computer_userdata/notes_reminders.db")
+    cur = con.cursor()
+    cur.execute("select datetime_tbn, reminder from future_reminders;")
+    c=cur.fetchall()
+    d1={}
+    for i in c:
+        d1[i[0]]=i[1]
+    #print(d1)
+    
+    d2={}
+    for i in sorted(d1.keys()):
+        d2[i]=d1[i]
+    print(d2)
+    for i in d2.keys():
+        if i==time_now():
+            notify(d2[i])
+            cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
+            cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
+            con.commit()
+            print("DONE!")
+        elif i<time_now():
+            notify(d2[i])
+            cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
+            cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
+            con.commit()
+        else:
+            time.sleep(1)
+            continue
+        #if i==time_now():
+        #    notify(d[i])
+    #time.sleep(1)
+    con.close()
+"""
+#reminder_remind needs working upon! 
 
 
 
