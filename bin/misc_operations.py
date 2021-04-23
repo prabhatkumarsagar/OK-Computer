@@ -11,6 +11,7 @@ import smtplib
 import getpass
 import tabulate
 import time as samay
+import notify2
 
 try:
     from bin import mailer
@@ -134,6 +135,7 @@ def reminder_write():
         cur.execute("insert into future_reminders values(datetime('now', 'localtime'), '%s', '%s');"%(x1,x4))
         voice_io.show("Reminder Saved Successfully!")
         con.commit()
+        #reminder_remind()
     
     else:
         voice_io.show("An internal error occurred while processing your request, please make sure you've entered the values correctly and try again!")
@@ -316,61 +318,54 @@ def reminder_read():
     con.close()
 
 
+#okay so reminder_remind() works completely fine when standalone, but the problem now is that when we run it here, the while loop takes away the terminal executing the commands every second and thus it's a lot fucked up then it should've been! so rather than continuing with this right now imma give this a pause for now and work on it later and develop a script thingy that when reminder_remind() is called it is done in the background and whatever whatever. MULTITHREADING is prolly where the key to this prob lies.
 """
 def reminder_remind():
-import notify2
-import sqlite3 as sql
-import time
+    def notify(reminder):
+        notify2.init("OK-Computer")
+        n=notify2.Notification("Reminder", message=reminder)
+        n.set_urgency(notify2.URGENCY_NORMAL)
+        n.set_timeout(10000)
+        n.show()
 
-def notify(reminder):
-    icon_path='/home/prabhat/Documents/photo.png'
-    notify2.init("OK-Computer")
-    n=notify2.Notification("Reminder", message=reminder, icon=icon_path)
-    n.set_urgency(notify2.URGENCY_NORMAL)
-    n.set_timeout(100)
-    n.show()
+    def time_now():
+        t = samay.localtime() 
+        time_now = samay.strftime("%Y-%m-%d %H:%M:%S", t)
+        return time_now
 
-def time_now():
-    t = time.localtime() 
-    time_now = time.strftime("%Y-%m-%d %H:%M:%S", t)
-    return time_now
+    while True:
+        con = sql.connect(get_dirs.DB_NOTES_REMINDERS)
+        cur = con.cursor()
+        cur.execute("select datetime_tbn, reminder from future_reminders;")
+        c=cur.fetchall()
+        d1={}
+        for i in c:
+            d1[i[0]]=i[1]
 
-while True:
-    con = sql.connect("/home/prabhat/Documents/ok_computer_userdata/notes_reminders.db")
-    cur = con.cursor()
-    cur.execute("select datetime_tbn, reminder from future_reminders;")
-    c=cur.fetchall()
-    d1={}
-    for i in c:
-        d1[i[0]]=i[1]
-    #print(d1)
-    
-    d2={}
-    for i in sorted(d1.keys()):
-        d2[i]=d1[i]
-    print(d2)
-    for i in d2.keys():
-        if i==time_now():
-            notify(d2[i])
-            cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
-            cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
-            con.commit()
-            print("DONE!")
-        elif i<time_now():
-            notify(d2[i])
-            cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
-            cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
-            con.commit()
+        d2={}
+        for i in sorted(d1.keys()):
+            d2[i]=d1[i]
+        if d2=={}:
+            #print("No Upcoming Reminders!")
+            break
         else:
-            time.sleep(1)
-            continue
-        #if i==time_now():
-        #    notify(d[i])
-    #time.sleep(1)
-    con.close()
+            print(d2)
+            for i in d2.keys():
+                if i==time_now():
+                    notify(d2[i])
+                    cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
+                    cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
+                    con.commit()
+                elif i<time_now():
+                    notify(d2[i])
+                    cur.execute("delete from future_reminders where datetime_tbn='%s';"%i)
+                    cur.execute("insert into past_reminders values(datetime('now','localtime'),'%s','%s');"%(d2[i],i))
+                    con.commit()
+                else:
+                    samay.sleep(1)
+                    continue
+        con.close()
 """
-#reminder_remind needs working upon! 
-
 
 
 #Time & Date
