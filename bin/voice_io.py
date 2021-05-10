@@ -31,6 +31,7 @@ else:
 engine.setProperty('rate',125) #Default Rate = 150
 
 def voice_out(qry): 
+    
     if is_connected():
         try:
             voice_ob = gtts.gTTS(qry)
