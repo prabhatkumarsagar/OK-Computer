@@ -1,4 +1,0 @@
-https://www.geeksforgeeks.org/create-a-directory-in-python/
-
-https://www.guru99.com/python-rename-file.html
-

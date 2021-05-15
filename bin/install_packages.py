@@ -17,7 +17,8 @@ def install():
         "geocoder": "pip3 install geocoder --user",
         "cryptography": "pip3 install cryptography --user",
         "lxml": "pip3 install lxml --user",
-        "tabulate": "pip3 install tabulate --user"
+        "tabulate": "pip3 install tabulate --user",
+        "notify2": "pip3 install notify2 --user"
     }
     # bs4 is a dependency for gtts
     #pyaudio is a dependency for speech_recognition
