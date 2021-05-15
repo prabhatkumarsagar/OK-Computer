@@ -51,7 +51,7 @@ def feedback_sender():
     sender=usr_signup.info_out("email")
     sender_pass=usr_signup.info_out("password")
     def pda_feedback(x,y):
-        sendMail(sender,sender_pass,["pythondesktopassistanthelp@gmail.com","sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com","duttashaan107@gmail.com","duttashaan102@gmail.com"],x,y)
+        sendMail(sender,sender_pass,["korihelpdesk@gmail.com","sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com","duttashaan107@gmail.com","duttashaan102@gmail.com"],x,y)
         #sendMail(sender,sender_pass,["sagarprabhatkumar@gmail.com","sagarprabhatkumar13@gmail.com"],x,y)
         return
     while True:
@@ -63,7 +63,7 @@ def feedback_sender():
         voice_io.show("5. Nothing (Exit)")
         x=input("Enter Choice: ")
         if x=="1":
-            subject="Python Desktop Assitant Feedback - Bug Report"
+            subject="Kori Feedback - Bug Report"
             body=input("Please specify the bug you've encountered: ")
             try:
                 pda_feedback(subject,body)
@@ -71,7 +71,7 @@ def feedback_sender():
                 voice_io.show("Uh-oh! It looks like i ran into some trouble doing that, you mind doing it later?")
                 return
         elif x=="2":
-            subject="Python Desktop Assitant Feedback - Improvements Suggestion"
+            subject="Kori Feedback - Improvements Suggestion"
             body=input("Please explain verbosely what improvement would you like to see in the future updates: ")
             try:
                 pda_feedback(subject,body)
@@ -79,7 +79,7 @@ def feedback_sender():
                 voice_io.show("Uh-oh! It looks like i ran into some trouble doing that, you mind doing it later?")
                 return
         elif x=="3":
-            subject="Python Desktop Assitant Feedback - User Contact"
+            subject="Kori Feedback - User Contact"
             body=input("What would you want to say to my developers: ")
             try:
                 pda_feedback(subject,body)
@@ -87,7 +87,7 @@ def feedback_sender():
                 voice_io.show("Uh-oh! It looks like i ran into some trouble doing that, you mind doing it later?")
                 return
         elif x=="4":
-            subject="Python Desktop Assitant Feedback - Feedback"
+            subject="Kori Feedback - Feedback"
             body=input("What would you like to say: ")
             try:
                 pda_feedback(subject,body)

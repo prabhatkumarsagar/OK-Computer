@@ -16,7 +16,7 @@ PICTURES = HOME + "/Pictures"
 VIDEOS = HOME + "/Videos"
 
 #Assistant data directories
-PATH_USR_DATA = HOME + "/Documents/ok_computer_userdata/"
+PATH_USR_DATA = HOME + "/Documents/kori_userdata/"
 FILE_ASSISTANT_SETTINGS = PATH_USR_DATA + "assistant_settings.dat"
 FILE_SOUND_VALUE = PATH_USR_DATA + 'ass_sound_val.dat'
 FILE_USR_DATA = PATH_USR_DATA + "user_info.dat"

@@ -49,53 +49,53 @@ def op_help():
     if "news" in x:
         voice_io.show("With the News operation you can ask me to read out the top 15 news headlines of the moment.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Python tell me today's news\" OR \"Hey read out today's top headlines\" OR \"PDA NEWS!\" (YOU GET THE IDEA)")
+        voice_io.show("\"Kori tell me today's news\" OR \"Hey read out today's top headlines\" OR \"Kori NEWS!\" (YOU GET THE IDEA)")
         return
     elif "website" in x:
         voice_io.show("With the website operation you can ask me to open certain websites in your default browser.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Python Open Youtube\" (BASIC WEBSITE OPENING) OR \"Open Instagram PDA\" (BASIC WEBSITE OPENING) OR \"Hey What is slavery?\" (WIKIPEDIA) OR  \"Define 'nuance'\" (GOOGLE SEARCH)")
+        voice_io.show("\"Kori Open Youtube\" (BASIC WEBSITE OPENING) OR \"Open Instagram Kori\" (BASIC WEBSITE OPENING) OR \"Hey What is slavery?\" (WIKIPEDIA) OR  \"Define 'nuance'\" (GOOGLE SEARCH)")
         return
     elif "email" in x:
         voice_io.show("With this operation you can ask me to send an email to a contact of yours. Note: for this to function properly you must enter your email and password at the time of Sign Up. If you haven't correctly or want to change the same, use help.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Python help me send an email\" OR \"Hey i need you to send an email\" (OR ANY OTHER SORT OF EMAIL QUERY)")
+        voice_io.show("\"Kori help me send an email\" OR \"Hey i need you to send an email\" (OR ANY OTHER SORT OF EMAIL QUERY)")
         return
     elif "song" in x:
         voice_io.show("With the website operation you can ask me to play both online and offline songs. Note: for offline songs, make sure that there are songs in the root Music Directory of your PC and in case of online songs, the song won't play automatically but instead you'll see a youtube page opened up with your song searched and you'll have to click on the first result yourself. SORRY FOR THE INCONVINIENCE, THIS WILL MOST LIKELY BE RECTIFIED IN THE COMING UPDATES. :D")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Python Play Offline Songs\" OR \"PDA Play Genda Phool by Badshah\" OR \"Hey Play Arijit Singh's Songs\" (YOU GET THE IDEA)")
+        voice_io.show("\"Kori Play Offline Songs\" OR \"Kori Play Genda Phool by Badshah\" OR \"Hey Play Arijit Singh's Songs\" (YOU GET THE IDEA)")
         return
     elif "weather" in x:
         voice_io.show("With this operation you can ask me about the current weather or the weather forecast for the next 7 days.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Hey tell me the weather?\" OR \"What's the weather forecast for tomorrow?\" OR \"Python what's the temperature outside?\" OR \"PDA how's the josh?\" OR \"Tell me the weather forecast for the next 7 days\" (OR LITERALLY ANY OTHER WEATHER/WEATHER FORECAST/TEMPERATURE... QUERY)")
+        voice_io.show("\"Hey tell me the weather?\" OR \"What's the weather forecast for tomorrow?\" OR \"Kori what's the temperature outside?\" OR \"Kori how's the josh?\" OR \"Tell me the weather forecast for the next 7 days\" (OR LITERALLY ANY OTHER WEATHER/WEATHER FORECAST/TEMPERATURE... QUERY)")
         return
     elif "time" in x or "date" in x:
         voice_io.show("With this operation you can ask me the current time and date.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Hey tell me the time?\" OR \"What's the time?\" OR \"Python what's the time?\" OR \"PDA what's the time?\" OR \"Tell me the current time!\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE \"TIME\" IS A PART OF THE QUERY)")
-        voice_io.show("\"Hey tell me the date?\" OR \"What's today's date?\" OR \"Python what's the date?\" OR \"PDA what day is it?\" OR \"Tell me what month it is!\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE \"DATE\"/\"DAY\"/\"MONTH\"/\"YEAR\" IS A PART OF THE QUERY)")
+        voice_io.show("\"Hey tell me the time?\" OR \"What's the time?\" OR \"Kori what's the time?\" OR \"Kori what's the time?\" OR \"Tell me the current time!\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE \"TIME\" IS A PART OF THE QUERY)")
+        voice_io.show("\"Hey tell me the date?\" OR \"What's today's date?\" OR \"Kori what's the date?\" OR \"Kori what day is it?\" OR \"Tell me what month it is!\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE \"DATE\"/\"DAY\"/\"MONTH\"/\"YEAR\" IS A PART OF THE QUERY)")
         return
     elif "calculation" in x:
         voice_io.show("With this you can ask me to perform mathematical operations like addition, subtraction and the likes.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Hey what is 5 times 2?\" OR \"What is the square root of 25\" OR \"Python what's the cube of 69\" OR \"PDA what is 5 time 27 divided by 3\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE THAT IT IS A MATHEMATICAL QUERY)")
+        voice_io.show("\"Hey what is 5 times 2?\" OR \"What is the square root of 25\" OR \"Kori what's the cube of 69\" OR \"Kori what is 5 time 27 divided by 3\" (OR LITERALLY ANYTHING ELSE BUT JUST MAKE SURE THAT IT IS A MATHEMATICAL QUERY)")
         return
     elif "notes" in x or "reminders" in x:
         voice_io.show("With this operation you can ask me to save your notes and remind you of your reminders? haha.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"Python save a Note\" OR \"Save a Reminder PDA\" OR \"Python Add a Note\" (YOU GET THE IDEA)")
+        voice_io.show("\"Kori save a Note\" OR \"Save a Reminder Kori\" OR \"Kori Add a Note\" (YOU GET THE IDEA)")
         return
     elif "joke" in x:
         voice_io.show("With the joke operation you can ask me to joke?")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"PDA tell me a joke\" OR \"Hey joke!!!\" OR \"Python i tell me something funny!\" OR ...")
+        voice_io.show("\"Kori tell me a joke\" OR \"Hey joke!!!\" OR \"Kori tell me something funny!\" OR ...")
         return
     elif "help" in x:
         voice_io.show("With the help operation you can ask me to help you around.")
         voice_io.show("The General Syntax of this operation is: \n")
-        voice_io.show("\"PDA help\" OR \"Python help me\" OR \"Hey help me out\" OR ...")
+        voice_io.show("\"PDA help\" OR \"Kori help me\" OR \"Hey help me out\" OR ...")
         return
     elif "open file" in x:
         voice_io.show("With this operation you can ask me to open a file from a certain location for you.")
@@ -171,7 +171,7 @@ def op_help():
         voice_io.show("20. Move folder")
         return
 
-#3. Python Desktop Assistant Help (pda_help)
+#3. Kori Help 
 def pda_help():
     voice_io.show("Select from the following Settings which can i help you with?")
     voice_io.show("1. Assistant Settings Update")
@@ -266,10 +266,10 @@ def chat(query):
         greet.tm_hello()
         return
     elif "who are you" in query or "tell me about yourself" in query:
-        print("I am your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or not, hehe. ")
+        print("I am Kori, your Personal Desktop Assistant, here to help you with your day to day tasks and queries. Why don't you try asking me something and i'll show you by practically doing it or not, hehe. ")
         return
     elif "who made you" in query or "who is your developer" in query or "who's your creator" in query or "who's your maker" in query or "who created you" or "who's your daddy" in query:
-        print("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their Computer Science School Project. Would you like to know more about them?")
+        print("I was made by Anirban Dutta and Prabhat Kumar Sagar as a part of their Computer Science School Project. But they fell in love with me just like you have and thought of developing me further, making me something really great, and oh boy they didn't fail at that. Would you like to know more about them?")
         x=input()
         x=x.lower()
         if "yes" in x or "ok" in x or "yeah" in x:

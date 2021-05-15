@@ -11,7 +11,8 @@ import smtplib
 import getpass
 import tabulate
 import time as samay
-import notify2
+from plyer import notification
+
 
 try:
     from bin import mailer
@@ -319,14 +320,14 @@ def reminder_read():
 
 
 #okay so reminder_remind() works completely fine when standalone, but the problem now is that when we run it here, the while loop takes away the terminal executing the commands every second and thus it's a lot fucked up then it should've been! so rather than continuing with this right now imma give this a pause for now and work on it later and develop a script thingy that when reminder_remind() is called it is done in the background and whatever whatever. MULTITHREADING is prolly where the key to this prob lies.
-"""
+
 def reminder_remind():
     def notify(reminder):
-        notify2.init("OK-Computer")
-        n=notify2.Notification("Reminder", message=reminder)
-        n.set_urgency(notify2.URGENCY_NORMAL)
-        n.set_timeout(10000)
-        n.show()
+        notification.notify(
+            title = "Reminder",
+            app_name = "Kori",
+            message = reminder,
+            timeout=10)
 
     def time_now():
         t = samay.localtime() 
@@ -365,7 +366,7 @@ def reminder_remind():
                     samay.sleep(1)
                     continue
         con.close()
-"""
+
 
 
 #Time & Date
