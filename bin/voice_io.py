@@ -16,7 +16,7 @@ from bin import get_dirs
 def is_connected():
     try:
         # connect to the host -- tells us if the host is actually reachable
-        socket.create_connection(("1.1.1.1", 53))
+        socket.create_connection(("8.8.8.8", 53))
         return True
     except OSError:
         pass

@@ -86,11 +86,11 @@ def setNewUser():
         return
 
 def info_in(x):
-    f1=open("./usr_info.dat",'wb+')
+    #f1=open("./usr_info.dat",'wb+')
     f2=open(get_dirs.FILE_USR_DATA,'wb+')
-    pk.dump(x,f1)
+    #pk.dump(x,f1)
     pk.dump(x,f2)
-    f1.close()
+    #f1.close()
     f2.close()
 
 
@@ -141,6 +141,7 @@ u=''
 
 def in_upd_entr():
     global u
+    
     f1=open("./usr_info.dat","rb+")
     f2=open("./usr_info1.dat","wb+")
     x=input("Enter new value: ")
