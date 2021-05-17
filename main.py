@@ -1,7 +1,11 @@
 import os
 import datetime
+from urllib.parse import non_hierarchical
 import webbrowser
 import random
+import getpass
+import base64
+
 from bin import install_packages as ip
 from bin import get_dirs
 from bin import clear
@@ -30,6 +34,7 @@ try:
     from bin import assistant_settings   
     from bin import misc_operations
     
+    
 except ModuleNotFoundError:    
     clear.clear()
     print("\nInstalling required packages.....\n")
@@ -54,6 +59,12 @@ except ModuleNotFoundError:
 except OSError:
     print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
     exit()
+
+import bcrypt
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 file_user_data = get_dirs.FILE_USR_DATA
 home = get_dirs.HOME
@@ -122,6 +133,23 @@ def operation(query):
             else:
                 continue
     return n
+key = None
+
+def fetch_password():
+    pswd = bytes(getpass.getpass(voice_io.show("\nPlease enter your password. ",show_output = False) + "\nPassword: "), encoding = "utf-8")#use password
+    salt = b'$2b$12$3hbla5Xs2Ekx9SGVYfWQuO'
+    hashed_pswd = bcrypt.hashpw(pswd, salt)
+    kdf = PBKDF2HMAC(
+                        algorithm=hashes.SHA256(),
+                        length=32,
+                        salt=salt,
+                        iterations=100000,
+                    )
+    global key
+    key = base64.urlsafe_b64encode(kdf.derive(hashed_pswd))
+    global usr_name
+    usr_name = False
+    usr_name = usr_signup.main(operation = "fetch", data_type = "name", key = key)
 
 def main():
     global sound
@@ -129,15 +157,17 @@ def main():
     #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
         #usr_data = open(path_user_data)
-        pass
+        fetch_password()
+        while usr_name == False:
+            voice_io.show("Invalid password! Press enter to proceed")
+            invoice.inpt(iterate = False)
+            fetch_password()
+
 
     else:
         userSetup()
 
     iterate_jokes = 0
-    global usr_name
-    usr_name = usr_signup.main(operation = "fetch", data_type = "name")
-
     clear.clear()
     gnd_ns()
 
@@ -599,8 +629,8 @@ Press Enter/Return to continue.
     
     if not os.path.exists(get_dirs.PATH_USR_DATA):
         os.mkdir(get_dirs.PATH_USR_DATA)
-
-    usr_signup.main(operation = "new")
+    global key, usr_name
+    key, usr_name = usr_signup.main(operation = "new")
 
 def deleteFileUnspecified():
     global sound
@@ -844,7 +874,7 @@ def srvc_help():
     return
 
 def gnd():
-    if usr_signup.info_out("gender")=="Female":
+    if usr_signup.info_out(key,"gender")=="Female":
         gndff=["Ma'am","Madam","Miss","Master"]
         return gndff[random.randint(0,3)]
     else:

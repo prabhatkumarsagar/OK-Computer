@@ -3,7 +3,12 @@ import os
 import getpass
 from platform import processor
 import webbrowser
+import base64
+import bcrypt
 from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 from bin import get_dirs
 from bin import clear
@@ -15,33 +20,29 @@ from bin import invoice
 #import invoice
 #sound = True
 
+key = ""
 def setNewUser():
     usr_info_dic={}
     clear.clear()
-    voice_io.show("What shall i call you Master? ")
+    voice_io.show("What shall I call you Master? ")
     nm = bytes(invoice.inpt(), encoding = "utf-8") #Name of the user i.e the name by which the assistant will call him/her
     voice_io.show("\nAnd you are, Master or Miss, master? ") #Gender of the user which the assistant will refer to again and again
     gnd = invoice.inpt()
-    """
-    while True:
-        voice_io.show(f"\nWhat is your MySQL Username, {gnd}(default 'root')?")
-        mysql_usr = invoice.inpt(processed = False)
-        if mysql_usr == "":
-            mysql_usr = "root"
-        mysql_pswd = getpass.getpass(voice_io.show("\nAnd  what is your MySQL Password?",show_output = False) + "\nPassword:" )
-        try:
-            import mysql.connector
-            mysql.connector.connect(host = "localhost", user = mysql_usr, password = mysql_pswd)
-            break
+    asst_pswd = bytes(getpass.getpass(voice_io.show("\nWhat should be your password for accessing me?",show_output = False) + "\nPassword: "), encoding = "utf-8")#
+    salt = b'$2b$12$3hbla5Xs2Ekx9SGVYfWQuO'
+    hashed_pswd = bcrypt.hashpw(asst_pswd, salt)
+    kdf = PBKDF2HMAC(
+                        algorithm=hashes.SHA256(),
+                        length=32,
+                        salt=salt,
+                        iterations=100000,
+                    )
+    global key
+    key = base64.urlsafe_b64encode(kdf.derive(hashed_pswd))
 
-        except mysql.connector.errors.ProgrammingError:
-            voice_io.show("Seems like the Username and/or Password of your mysql account is incorrect!\nPlease try entering the correct information as this step is necessary!")
-
-    mysql_usr = bytes(mysql_usr, encoding = "utf-8")
-    mysql_pswd = bytes(mysql_pswd, encoding = "utf-8")
-    """
     voice_io.show("\nNow What would be your email address? \nI will be needing this for my email operations so that i can help you with sending automated emails to others without you lifting a finger and also for helping you send feedback to my developers regarding bugs or minor issues, which i would hope doesn't happen :D")#usr email address
     eml = bytes(invoice.inpt(processed= False), encoding = "utf-8")
+
     pswd = bytes(getpass.getpass(voice_io.show("\nAnd lastly what is your email password? Note: All these personal information is stored only and only on your local machine and hence there's no way i can compromise your data, In short you can trust me ;) ",show_output = False) + "\nPassword: "), encoding = "utf-8")#use password
     voice_io.show("\nRegarding email operations, please note that for properly executing them you will have to make sure to turn on \"Less Secure Apps\" for your google account. \n\nWhich if you want to do now, please enter 'YES' and a webpage will be prompted with an option to turn on \"Less Secure Apps\" for your google account right away and just by clicking on that the program will be good to go! Otherwise enter 'NO' and you can always do it later in assistant settings.")
     ch = invoice.inpt()
@@ -50,16 +51,6 @@ def setNewUser():
         webbrowser.open("https://myaccount.google.com/lesssecureapps?")
     elif ch.lower()=="no" or ch.lower()=="":
         voice_io.show("Alright!")
-    
-    key = ""
-    if not os.path.exists(get_dirs.FILE_ENCRYPT_KEY):
-        key = Fernet.generate_key()
-        with open(get_dirs.FILE_ENCRYPT_KEY, "wb+") as keyfile:
-            keyfile.write(key)
-            keyfile.close()
-    else:
-        with open(get_dirs.FILE_ENCRYPT_KEY, "rb+") as keyfile:
-            key = keyfile.read()
             
     cipher_suite = Fernet(key)
     usr_info_dic['name']=cipher_suite.encrypt(nm)
@@ -72,18 +63,13 @@ def setNewUser():
         usr_info_dic['gender']=cipher_suite.encrypt(b"Male")
     else:   
         usr_info_dic['gender']=cipher_suite.encrypt(b"Others")
-
+    usr_info_dic["asst_password"] = cipher_suite.encrypt(hashed_pswd)
     usr_info_dic['email']=cipher_suite.encrypt(eml)
     usr_info_dic['password']=cipher_suite.encrypt(pswd)
-    # usr_info_dic['mysql_usr']=cipher_suite.encrypt(mysql_usr)
-    # usr_info_dic['mysql_pswd']=cipher_suite.encrypt(mysql_pswd)
     info_in(usr_info_dic)
     voice_io.show("Well then now you're good to go! Just press Enter/Return to get going!", end = "")
     invoice.inpt("", iterate = False)
-    if __name__ == "__main__":
-        exit()
-    else:
-        return
+    return key, str(nm)
 
 def info_in(x):
     #f1=open("./usr_info.dat",'wb+')
@@ -94,16 +80,21 @@ def info_in(x):
     f2.close()
 
 
-def info_out(x="all"):
+def info_out(key, x="all"):
     f=open(get_dirs.FILE_USR_DATA,'rb+')
-    k = open(get_dirs.FILE_ENCRYPT_KEY, "rb+")
-    key = k.read()
     cipher_suite = Fernet(key)
     rd=pk.load(f)
     ch=x.lower()
+    f.close()
     if ch=="name":
-        return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
+        name = ""
+        try:
+            name = bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
+            return name
+        
+        except:
+            return False
+        
 
     elif ch=="gender":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
@@ -139,12 +130,13 @@ def info_out(x="all"):
 
 u=''
 
-def in_upd_entr():
+def in_upd_entr(key):
     global u
-    
-    f1=open("./usr_info.dat","rb+")
-    f2=open("./usr_info1.dat","wb+")
-    x=input("Enter new value: ")
+    usr_info1 = get_dirs.FILE_USR_DATA
+    usr_info2 = get_dirs.PATH_USR_DATA + "/user_info1.dat"
+    f1=open(usr_info1,"rb+")
+    f2=open(usr_info2,"wb+")
+    x=input("Enter new value : ")
     while True:
         r=pk.load(f1)
         r[u]=x
@@ -153,7 +145,7 @@ def in_upd_entr():
         break
     f1.close()
     f2.close()
-    os.remove("usr_info.dat")
+    os.remove(usr_info2)
     os.rename("usr_info1.dat","usr_info.dat")
     f=open("./usr_info.dat","rb+")
     rd=pk.load(f)
@@ -197,13 +189,13 @@ def info_update():
 
 def main(**kwargs):
     if kwargs["operation"] == "new":
-        setNewUser()
+        return setNewUser()
     
     elif kwargs["operation"] == "fetch":
-        return info_out(kwargs["data_type"])
+        return info_out(kwargs["key"], kwargs["data_type"])
 
     elif kwargs["operation"] == "update":
-        info_update()
+        info_update(kwargs["key"])
 
 #setNewUser()
 # voice_io.show(info_out("all"))

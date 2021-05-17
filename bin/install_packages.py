@@ -18,7 +18,8 @@ def install():
         "cryptography": "pip3 install cryptography --user",
         "lxml": "pip3 install lxml --user",
         "tabulate": "pip3 install tabulate --user",
-        "plyer": "pip3 install plyer --user"
+        "plyer": "pip3 install plyer --user",
+        "bcrypt": "pip3 install bcrypt --user"
     }
     # bs4 is a dependency for gtts
     #pyaudio is a dependency for speech_recognition
