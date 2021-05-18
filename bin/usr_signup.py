@@ -69,7 +69,7 @@ def setNewUser():
     info_in(usr_info_dic)
     voice_io.show("Well then now you're good to go! Just press Enter/Return to get going!", end = "")
     invoice.inpt("", iterate = False)
-    return key, str(nm)
+    return key, nm.decode("utf-8")
 
 def info_in(x):
     #f1=open("./usr_info.dat",'wb+')
