@@ -1,14 +1,14 @@
 import os
 import datetime
-from urllib.parse import non_hierarchical
+from urlpac.parse import non_hierarchical
 import webbrowser
 import random
 import getpass
 import base64
 
-from bin import install_packages as ip
-from bin import get_dirs
-from bin import clear
+from pac import install_packages as ip
+from pac import get_dirs
+from pac import clear
 if not os.path.exists(get_dirs.PATH_USR_DATA):
     clear.clear()
     print("\nInstalling required packages.....\n")
@@ -25,14 +25,14 @@ try:
     #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
     import wolframalpha
     import requests 
-    from bin import usr_signup
-    from bin import voice_io
-    from bin import invoice
-    from bin import wolfy
-    from bin import file_operations
-    from bin import mailer
-    from bin import assistant_settings   
-    from bin import misc_operations
+    from pac import usr_signup
+    from pac import voice_io
+    from pac import invoice
+    from pac import wolfy
+    from pac import file_operations
+    from pac import mailer
+    from pac import assistant_settings   
+    from pac import misc_operations
     
     
 except ModuleNotFoundError:    
@@ -47,17 +47,17 @@ except ModuleNotFoundError:
         exit()
     import wolframalpha
     import requests 
-    from bin import usr_signup
-    from bin import voice_io
-    from bin import invoice
-    from bin import wolfy
-    from bin import file_operations
-    from bin import mailer
-    from bin import assistant_settings
-    from bin import misc_operations
+    from pac import usr_signup
+    from pac import voice_io
+    from pac import invoice
+    from pac import wolfy
+    from pac import file_operations
+    from pac import mailer
+    from pac import assistant_settings
+    from pac import misc_operations
 
 except OSError:
-    print("\nPackage 'libespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
+    print("\nPackage 'pacespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
     exit()
 
 import bcrypt

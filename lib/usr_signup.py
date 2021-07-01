@@ -10,10 +10,10 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from bin import get_dirs
-from bin import clear
-from bin import voice_io
-from bin import invoice
+from pac import get_dirs
+from pac import clear
+from pac import voice_io
+from pac import invoice
 #import get_dirs
 #import clear
 #import voice_io

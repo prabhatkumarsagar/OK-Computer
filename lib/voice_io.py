@@ -11,7 +11,7 @@ import pyaudio
 import bs4
 import speech_recognition as sr
 
-from bin import get_dirs
+from pac import get_dirs
 
 def is_connected():
     try:
@@ -63,7 +63,7 @@ def voice_in():
         return False   
 
 def show(*args, end = "\n", sep = " ", show_output = True):
-    from bin.assistant_settings import loadSound
+    from pac.assistant_settings import loadSound
     sound = loadSound()
     st = ""
     for i in args:

@@ -1,16 +1,16 @@
-#from bin.get_dirs import FILE_USR_DATA
-from bin import assistant_settings
-from bin.get_dirs import FILE_USR_DATA
+#from pac.get_dirs import FILE_USR_DATA
+from pac import assistant_settings
+from pac.get_dirs import FILE_USR_DATA
 import os
-from bin import get_dirs
-from bin import clear
+from pac import get_dirs
+from pac import clear
 #import get_dirs
 #import clear
-from bin import assistant_settings
+from pac import assistant_settings
 
 def inpt(text = ">>> ", audio_io = True, iterate = True, processed = True):
     if audio_io:
-        from bin import voice_io
+        from pac import voice_io
         #import voice_io
         
         while True:

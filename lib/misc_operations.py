@@ -7,7 +7,7 @@ import wikipedia
 import datetime
 import wolframalpha
 import webbrowser
-import smtplib
+import smtppac
 import getpass
 import tabulate
 import time as samay
@@ -15,13 +15,13 @@ from plyer import notification
 
 
 try:
-    from bin import mailer
-    from bin import voice_io
-    from bin import wolfy
-    from bin import invoice
-    from bin import clear
-    from bin import usr_signup
-    from bin import get_dirs
+    from pac import mailer
+    from pac import voice_io
+    from pac import wolfy
+    from pac import invoice
+    from pac import clear
+    from pac import usr_signup
+    from pac import get_dirs
 
 except ModuleNotFoundError:
     import mailer
@@ -32,7 +32,7 @@ except ModuleNotFoundError:
     import usr_signup
     import get_dirs
     
-from urllib import request
+from urlpac import request
 from bs4 import BeautifulSoup as soup
 #import vlc #pip install python-vlc
 #from bs4 import BeautifulSoup
