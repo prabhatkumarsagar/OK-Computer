@@ -7,7 +7,7 @@ elif os.name == 'posix':
 	HOME = os.getenv("HOME")
 
 #important user directories
-
+CUR_DIR = os.getcwd()
 DESKTOP =  HOME + "/Desktop"
 DOWNLOADS = HOME + "/Downloads"
 DOCUMENTS = HOME + "/Documents"

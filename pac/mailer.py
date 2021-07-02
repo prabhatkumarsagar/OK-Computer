@@ -1,8 +1,8 @@
 import smtplib
 import webbrowser
 
-from bin import voice_io
-from bin import usr_signup
+from pac import voice_io
+from pac import usr_signup
 
 def sendMail(sndr_mail,sndr_pw,rcpnt,msg_sub,msg_body):
     with smtplib.SMTP('smtp.gmail.com',587) as smtp:

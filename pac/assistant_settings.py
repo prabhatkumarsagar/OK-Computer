@@ -2,8 +2,8 @@ import pickle as pk
 import os
 #import voice_io
 #from get_dirs import FILE_ASSISTANT_SETTINGS
-from bin import voice_io
-from bin.get_dirs import FILE_ASSISTANT_SETTINGS
+from pac import voice_io
+from pac.get_dirs import FILE_ASSISTANT_SETTINGS
 """
 Assistant Voice Settings:
 - assistant voice gender (male/female) **WINDOWS ONLY

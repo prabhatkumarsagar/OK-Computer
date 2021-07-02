@@ -3,26 +3,29 @@ import sys
 import os
 import subprocess
 
-def install():
-    commands = {
-        "gtts": "pip3 install gTTS --user",
-        "playsound": "pip3 install playsound --user",
-        "pyttsx3": "pip3 install pyttsx3 --user",
-        "speech_recognition": "pip3 install SpeechRecognition --user",
-        "bs4": "pip3 install bs4 --user",
-        "wolframalpha": "pip3 install wolframalpha --user",
-        "wikipedia": "pip3 install wikipedia --user",
-        "pyaudio": "pipwin install https://download.lfd.uci.edu/pythonlibs/z4tqcw5k/PyAudio-0.2.11-cp39-cp39-win_amd64.whl --user",
-        "pyowm": "pip3 install pyowm --user",
-        "geocoder": "pip3 install geocoder --user",
-        "cryptography": "pip3 install cryptography --user",
-        "lxml": "pip3 install lxml --user",
-        "tabulate": "pip3 install tabulate --user",
-        "plyer": "pip3 install plyer --user",
-        "bcrypt": "pip3 install bcrypt --user"
-    }
-    # bs4 is a dependency for gtts
-    #pyaudio is a dependency for speech_recognition
+def install(packages = {}):
+    if packages == {}:
+        commands = {
+            "gtts": "pip3 install gTTS",
+            "playsound": "pip3 install playsound",
+            "pyttsx3": "pip3 install pyttsx3",
+            "speech_recognition": "pip3 install SpeechRecognition",
+            "bs4": "pip3 install bs4",
+            "wolframalpha": "pip3 install wolframalpha",
+            "wikipedia": "pip3 install wikipedia",
+            "pyaudio": "pipwin install https://download.lfd.uci.edu/pythonlibs/z4tqcw5k/PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
+            "pyowm": "pip3 install pyowm",
+            "geocoder": "pip3 install geocoder",
+            "cryptography": "pip3 install cryptography",
+            "lxml": "pip3 install lxml",
+            "tabulate": "pip3 install tabulate",
+            "plyer": "pip3 install plyer",
+            "bcrypt": "pip3 install bcrypt"
+        }
+        # bs4 is a dependency for gtts
+        #pyaudio is a dependency for speech_recognition
+    else:
+        commands = packages
     for name in commands.keys():
         if name in sys.modules:
             pass

@@ -6,11 +6,11 @@ import shutil
 import platform
 import subprocess
 import multiprocessing
-from playsound import playsound
 
-from bin import get_dirs
-from bin import voice_io
-from bin import invoice
+
+from pac import get_dirs
+from pac import voice_io
+from pac import invoice
 
 audio_file_ext = [".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac", ".alac", ".wma"]
 
@@ -613,6 +613,7 @@ def createFile(f_name, path, type):
     f.close()
 """
 def playMusic(name, search_dir):
+    from playsound import playsound
     file_search_results = fileSearch(file_name = name, search_dir = search_dir)
     music_files = []
     if len(file_search_results) > 0:

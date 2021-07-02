@@ -15,13 +15,13 @@ from plyer import notification
 
 
 try:
-    from bin import mailer
-    from bin import voice_io
-    from bin import wolfy
-    from bin import invoice
-    from bin import clear
-    from bin import usr_signup
-    from bin import get_dirs
+    from pac import mailer
+    from pac import voice_io
+    from pac import wolfy
+    from pac import invoice
+    from pac import clear
+    from pac import usr_signup
+    from pac import get_dirs
 
 except ModuleNotFoundError:
     import mailer
