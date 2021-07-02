@@ -1,6 +1,6 @@
 import os
 import datetime
-from urlpac.parse import non_hierarchical
+from urllib.parse import non_hierarchical
 import webbrowser
 import random
 import getpass
@@ -57,7 +57,7 @@ except ModuleNotFoundError:
     from pac import misc_operations
 
 except OSError:
-    print("\nPackage 'pacespeak1', which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
+    print("\nPackage 'libespeak1'(debian based systems) or 'espeak'(fedora based systems), which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
     exit()
 
 import bcrypt
