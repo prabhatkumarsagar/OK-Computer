@@ -7,7 +7,7 @@ import wikipedia
 import datetime
 import wolframalpha
 import webbrowser
-import smtppac
+import smtplib
 import getpass
 import tabulate
 import time as samay
@@ -32,7 +32,7 @@ except ModuleNotFoundError:
     import usr_signup
     import get_dirs
     
-from urlpac import request
+from urllib import request
 from bs4 import BeautifulSoup as soup
 #import vlc #pip install python-vlc
 #from bs4 import BeautifulSoup

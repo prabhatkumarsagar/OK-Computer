@@ -8,15 +8,15 @@ vi. requests
 vii. os
 viii. playsound
 ix. shutlil
-x. importpac
+x. importlib
 xi. subprocess
 xii. sys
-xiii. smtppac
+xiii. smtplib
 xiv. json 
 xv. re
 xvi. wikipedia 
 xvi. wolframalpha
-xvii. urlpac (request)
+xvii. urllib (request)
 xviii. bs4 (BeautifulSoup)
 xix. pyowm
 xx. geocoder

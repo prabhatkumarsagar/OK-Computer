@@ -7,7 +7,7 @@ elif os.name == 'posix':
 	HOME = os.getenv("HOME")
 
 #important user directories
-
+CUR_DIR = os.getcwd()
 DESKTOP =  HOME + "/Desktop"
 DOWNLOADS = HOME + "/Downloads"
 DOCUMENTS = HOME + "/Documents"
@@ -20,5 +20,5 @@ PATH_USR_DATA = HOME + "/Documents/kori_userdata/"
 FILE_ASSISTANT_SETTINGS = PATH_USR_DATA + "assistant_settings.dat"
 FILE_SOUND_VALUE = PATH_USR_DATA + 'ass_sound_val.dat'
 FILE_USR_DATA = PATH_USR_DATA + "user_info.dat"
-FILE_ENCRYPT_KEY = PATH_USR_DATA + "key.pac"
+FILE_ENCRYPT_KEY = PATH_USR_DATA + "key.bin"
 DB_NOTES_REMINDERS = PATH_USR_DATA + "notes_reminders.db"
