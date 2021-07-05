@@ -13,7 +13,7 @@ def install(packages = {}):
             "bs4": "pip3 install bs4",
             "wolframalpha": "pip3 install wolframalpha",
             "wikipedia": "pip3 install wikipedia",
-            "pyaudio": "pipwin install https://download.lfd.uci.edu/pythonlibs/z4tqcw5k/PyAudio-0.2.11-cp39-cp39-win_amd64.whl",
+            "pyaudio": "pip install https://download.lfd.uci.edu/pythonlibs/r4tycu3t/PyAudio-0.2.11-cp310-cp310-win_amd64.whl",
             "pyowm": "pip3 install pyowm",
             "geocoder": "pip3 install geocoder",
             "cryptography": "pip3 install cryptography",
