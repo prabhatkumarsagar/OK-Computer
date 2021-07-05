@@ -7,7 +7,6 @@ import socket
 import gtts
 from playsound import playsound
 import pyttsx3
-import pyaudio
 import bs4
 import speech_recognition as sr
 
@@ -58,8 +57,10 @@ def voice_in():
         audio = r.listen(source) 
     try:    
         query = r.recognize_google(audio, language ='en-in') 
+        print(query)
         return query
-    except:   
+    except: 
+        print(False)  
         return False   
 
 def show(*args, end = "\n", sep = " ", show_output = True):
@@ -78,3 +79,5 @@ def show(*args, end = "\n", sep = " ", show_output = True):
             print(st, end = end)
     if not show_output:
         return st
+        
+
