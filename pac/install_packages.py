@@ -2,6 +2,8 @@ import importlib.util
 import sys
 import os
 import subprocess
+import socket
+import pip
 
 def install(packages = {}):
     if packages == {}:
@@ -22,10 +24,9 @@ def install(packages = {}):
             "plyer": "pip3 install plyer",
             "bcrypt": "pip3 install bcrypt"
         }
-        # bs4 is a dependency for gtts
-        #pyaudio is a dependency for speech_recognition
     else:
         commands = packages
+
     for name in commands.keys():
         if name in sys.modules:
             pass
@@ -34,20 +35,18 @@ def install(packages = {}):
         else:
             if name == "pipwin" and os.name != "nt":
                 continue
-
-            if name == "pyaudio":
-                if os.name == "posix":
-                    print("Your system is missing the python package PyAudio which is required by this program for voice functions.")
-                    print("Please install 'python3-pyaudio' manually from your distro repos and run this program again.")
-                    return False
+            if name == "pyaudio" and os.name == "posix":
+                print("Your system is missing the python package PyAudio which is required by this program for voice functions.")
+                print("Please install 'python3-pyaudio' manually from your distro repos and run this program again.")
+                return False
             try:
                 subprocess.check_output(commands[name], shell = True)
             except subprocess.CalledProcessError:
                 if os.name == "nt":
-                    print("Installation of required packages failed!\nPIP has not been installed in your system. To install pip, please \nre-run the python setup process and make sure to check the 'Install PIP' check box!")
+                    print("Installation of required packages failed!\nPIP has either not been installed in your system or not been added to the PATH. Please do it that ASAP to continue.")
                 
                 else :
-                    print("PIP3 is not installed in your system! \nPlease install python3-pip from your distro repos and run this app again!")
+                    print("PIP3 is not installed in your system! \nPlease do it that ASAP to continue.")
                 
                 return False
 

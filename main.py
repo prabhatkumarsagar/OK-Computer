@@ -5,10 +5,10 @@ import webbrowser
 import random
 import getpass
 import base64
-
 from pac import install_packages as ip
 from pac import get_dirs
 from pac import clear
+
 if not os.path.exists(get_dirs.PATH_USR_DATA):
     clear.clear()
     print("\nInstalling required packages.....\n")
@@ -22,17 +22,16 @@ if not os.path.exists(get_dirs.PATH_USR_DATA):
     os.mkdir(get_dirs.PATH_USR_DATA)
 
 try:
-    #All the packages that require special dependencies, or depend on packages requiring them must be called from here.
     import wolframalpha
     import requests 
-    from pac import usr_signup
-    from pac import voice_io
-    from pac import invoice
-    from pac import wolfy
-    from pac import file_operations
-    from pac import mailer
-    from pac import assistant_settings   
-    from pac import misc_operations
+    from pac import (
+        usr_signup,
+        voice_io,
+        invoice,
+        file_operations,
+        mailer,
+        assistant_settings,
+        misc_operations)
     
     
 except ModuleNotFoundError:    
@@ -45,16 +44,17 @@ except ModuleNotFoundError:
     else:
         print("\nInstalling packages failed! Make sure you have a stable internet connection and all the requirements to install packages are fulfilled. Please try running this program again after resolving all issues, and if the problem still persists, contact the developer.")
         exit()
+
     import wolframalpha
     import requests 
-    from pac import usr_signup
-    from pac import voice_io
-    from pac import invoice
-    from pac import wolfy
-    from pac import file_operations
-    from pac import mailer
-    from pac import assistant_settings
-    from pac import misc_operations
+    from pac import (
+            usr_signup,
+            voice_io,
+            invoice,
+            file_operations,
+            mailer,
+            assistant_settings,
+            misc_operations)
 
 except OSError:
     print("\nPackage 'libespeak1'(debian based systems) or 'espeak'(fedora based systems), which is required by this program, is missing from your system!\nPlease install it from your distro repos and run this program again!")
@@ -84,7 +84,7 @@ locate_pictures = ["5", "pictures"]
 locate_videos = ["6", "videos"]
 locate_home = ["7", "home"]
 
-#sound = sound_val
+#sound = False
 usr_name = ""
 
 def operation(query):
@@ -133,6 +133,7 @@ def operation(query):
             else:
                 continue
     return n
+
 key = None
 
 def fetch_password():
@@ -152,17 +153,14 @@ def fetch_password():
     usr_name = usr_signup.main(operation = "fetch", data_type = "name", key = key)
 
 def main():
-    global sound
     clear.clear()
-    #this portion is dedicated to new-user sign-up
     if os.path.exists(file_user_data):
         #usr_data = open(path_user_data)
         fetch_password()
         while usr_name == False:
-            voice_io.show("Invalid password! Press enter to proceed")
+            voice_io.show("Invalid password! Press enter to try again.")
             invoice.inpt(iterate = False)
             fetch_password()
-
 
     else:
         userSetup()
@@ -176,21 +174,18 @@ def main():
         if iterate_jokes > 0 and task not in ["another", "another one","another joke", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
-        elif task.lower() == "clear":
-            clear.clear()
-
         else:
             result=operation(task.lower())
             result=result.lower()
             if result=="":
                 try:
-                    voice_io.show(wolfy.wolfram_try(task))
+                    voice_io.show(misc_operations.wolfram_try(task))
 
                 except:
                     voice_io.show("Sorry i couldn't help you with that. Please try a valid operation.")
                     
             elif result=="help":
-                voice_io.show("Hello Hello! What is it that i can help you with, today?")
+                voice_io.show("Hello Hello! What is it that i can help you with today?")
                 voice_io.show("1. Assistant Settings")
                 voice_io.show("2. Assistant Services")
                 voice_io.show("3. Assistant Operations")
@@ -601,31 +596,35 @@ def main():
     
 def userSetup():
     return_val = True
-    voice_io.show("""Hey There!
+    voice_io.show("""Hello There!
 
-I am Kori, your personal desktop Assistant.
+I am Kori, your Personal Virtual Assistant.
 I will be present at all times, waiting for your command.
-You can ask me to do what ever you want; getting some work done,
-or lightening the mood with a few jokes or a friendly talk!
+You can ask me to do whatever you want! 
+Want to get some work done and need help to ease your burden? 
+or Check in on the latest news headlines and match scores 
+or Wanna lighten up your mood with some funny jokes 
+or Tune in to your favorite podcasts or songs, all of this and more 
+without moving a single finger? Well that's what I was made for :)
 
 But first, please do let me know you better.
     
-If you would like to disable sound, please type 'disable sound' and continue.
-else you can simply continue by pressing Enter/Return and disable sound 
-later on using the command 'disable sound'. You can also use the command 
-'enable sound' if you feel generous enough to give me my voice back!
+The voice output feature is turned off by default as I'm still in
+my fetal phase and my voice box, so to speak, is not ready yet! ;)
+But if you still want to use it, type 'enable sound' and ENDURE!!! 
 
-I will be taking Text Input but you can always use the command 'voice' if you 
-would prefer to speak your commands instead.
+By the way, I will be taking Text Input (as my ears too are... you know) 
+but you can always use the command 'voice' if you would prefer to speak 
+your commands instead.
 
-Press Enter/Return to continue.
+Now then, Please Press Enter/Return to continue.
 """)
     command = invoice.inpt(iterate = False)
 
     if command == "":
         pass    
     else:
-        voice_io.show("Unable to understand your command, continuing with sound.")
+        voice_io.show("Sorry I don't get it, I'm continuing with the Setup Process.")
     
     if not os.path.exists(get_dirs.PATH_USR_DATA):
         os.mkdir(get_dirs.PATH_USR_DATA)
@@ -633,7 +632,6 @@ Press Enter/Return to continue.
     key, usr_name = usr_signup.main(operation = "new")
 
 def deleteFileUnspecified():
-    global sound
     search_dir = ""
     voice_io.show("Which file fo you want to delete?")
     file_name = invoice.inpt(processed = False)
@@ -667,7 +665,6 @@ def deleteFileUnspecified():
     file_operations.deleteFile(file_name = file_name,search_dir = search_dir)
 
 def deleteFolderUnspecified():
-    global sound
     search_dir = ""
     voice_io.show("Which folder do you want to delete?")
     folder_name = invoice.inpt(processed = False)

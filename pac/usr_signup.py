@@ -10,15 +10,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from pac import get_dirs
-from pac import clear
-from pac import voice_io
-from pac import invoice
-#import get_dirs
-#import clear
-#import voice_io
-#import invoice
-#sound = True
+from pac import (get_dirs, clear, voice_io, invoice)
+
 
 key = ""
 def setNewUser():
@@ -98,35 +91,27 @@ def info_out(key, x="all"):
 
     elif ch=="gender":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
 
     elif ch=="email":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
 
     elif ch=="password":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
 
     elif ch == "mysql_usr":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
     
     elif ch == "mysql_pswd":
         return bytes(cipher_suite.decrypt(rd[ch])).decode("utf-8")
-        f.close()
 
     elif ch=="all":
         nrd = {}
         for i in rd.keys():
             nrd[i] = bytes(cipher_suite.decrypt(rd[i])).decode("utf-8")
         return nrd
-        f.close()
 
     else:
         return False
-        f.close()
-
 
 u=''
 
@@ -196,7 +181,3 @@ def main(**kwargs):
 
     elif kwargs["operation"] == "update":
         info_update(kwargs["key"])
-
-#setNewUser()
-# voice_io.show(info_out("all"))
-#info_update()

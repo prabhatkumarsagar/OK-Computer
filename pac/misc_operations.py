@@ -1,14 +1,11 @@
 #miscellaneous operations go here!
 import requests
-import json
 import os
 import re
 import wikipedia
 import datetime
 import wolframalpha
 import webbrowser
-import smtplib
-import getpass
 import tabulate
 import time as samay
 from plyer import notification
@@ -17,33 +14,33 @@ from plyer import notification
 try:
     from pac import mailer
     from pac import voice_io
-    from pac import wolfy
     from pac import invoice
-    from pac import clear
-    from pac import usr_signup
     from pac import get_dirs
 
 except ModuleNotFoundError:
     import mailer
     import invoice
     import voice_io
-    import wolfy
-    import clear
-    import usr_signup
     import get_dirs
     
 from urllib import request
 from bs4 import BeautifulSoup as soup
-#import vlc #pip install python-vlc
-#from bs4 import BeautifulSoup
-#import youtube-dl #RIP
 import sqlite3 as sql
-from pyowm.owm import OWM  #pip install pyowm
+from pyowm.owm import OWM 
 from pyowm.utils import timestamps
-import geocoder #pip install geocoder
+import geocoder
 
 g = geocoder.ip('me')
 ct=(g.city)
+
+
+#wolframalpha operation
+def wolfram_try(question):    
+    app_id = "AT3YLY-P2L67K557P"
+    client = wolframalpha.Client(app_id) 
+    res = client.query(question) 
+    answer = next(res.results)["subpod"]["plaintext"]
+    return answer
 
 #weather
 def weather_curr():      
@@ -436,7 +433,7 @@ def web(query):
     if 'what is' in query:
         try:
             #clear.clear()
-            voice_io.show(wolfy.wolfram_try(query))
+            voice_io.show(wolfram_try(query))
 
         except:
             try:
@@ -459,7 +456,7 @@ def web(query):
         except:
             try:
                 #clear.clear()
-                voice_io.show(wolfy.wolfram_try(query))
+                voice_io.show(wolfram_try(query))
             except:
                 voice_io.show(f"Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
     
@@ -473,7 +470,7 @@ def web(query):
         except:
             try:
                 #clear.clear()
-                voice_io.show(wolfy.wolfram_try(query))
+                voice_io.show(wolfram_try(query))
             except:
                 voice_io.show(f"Could not find any results relating to {query1}, \nplease make sure you're entering a valid input!")
 
@@ -527,7 +524,7 @@ def web(query):
 
     else:
         try:
-            voice_io.show(wolfy.wolfram_try(query))
+            voice_io.show(wolfram_try(query))
         except:
             voice_io.show("Uh-oh! It looks like i ran into some problems, why don't you try again later?")
 

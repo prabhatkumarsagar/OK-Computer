@@ -51,7 +51,7 @@ tamil 62
 Mandarin 67
 """
 
-usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us','vc_sound':True}
+usr_ass_settings={'vc_gnd':'male','vc_vol':1.0,'vc_rate':'100','vc_lng':'english-us','vc_sound':False}
 
 
 def write():

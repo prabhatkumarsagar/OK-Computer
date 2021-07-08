@@ -1,7 +1,5 @@
 from pac import get_dirs
 from pac import install_packages
-#from pac import file_operations
-
 import os
 import subprocess
 import shutil
@@ -10,10 +8,10 @@ home = get_dirs.HOME
 print("Kori Installer.")
 
 while True:
-    print("\nEnter the directory inside your home where you want to install Kori.")
-    install_dir = home + input(">>>")
+    print("\nEnter the directory inside your home where you want to install Kori. (Note - Please add \"\\\" before the directory name.)")
+    install_dir = home + input(">>> ")
     print(f"Install Kori in {install_dir}?[y/n]")
-    confrm = input(">>>")
+    confrm = input(">>> ")
     if os.path.isdir(install_dir):
         if 'y' in confrm.lower():
             break
@@ -50,6 +48,6 @@ copytree(cur_dir, install_dir)
 
 for i in range((len(files))):
     shutil.copy2(cur_dir + "/" + files[i], install_dir) 
-print("done!")
+print("one!")
 
 print(f"Kori has been installed successfully. In order to run Kori, run \n 'source bin/activate' inside {install_dir} and then run 'python main.py'.")

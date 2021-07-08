@@ -1,13 +1,8 @@
-#import get_dirs
 import os
-from os import system
-import subprocess 
-import datetime
 import socket
 import gtts
 from playsound import playsound
 import pyttsx3
-import bs4
 import speech_recognition as sr
 
 from pac import get_dirs
@@ -79,5 +74,3 @@ def show(*args, end = "\n", sep = " ", show_output = True):
             print(st, end = end)
     if not show_output:
         return st
-        
-
