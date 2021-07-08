@@ -174,6 +174,9 @@ def main():
         if iterate_jokes > 0 and task not in ["another", "another one","another joke", "once more", "more", "again", "new one", "make me laugh again"]:
             iterate_jokes = 0
 
+        elif task.lower() == "clear":
+            clear.clear()
+
         else:
             result=operation(task.lower())
             result=result.lower()
@@ -605,7 +608,7 @@ Want to get some work done and need help to ease your burden?
 or Check in on the latest news headlines and match scores 
 or Wanna lighten up your mood with some funny jokes 
 or Tune in to your favorite podcasts or songs, all of this and more 
-without moving a single finger? Well that's what I was made for :)
+without lifting a single finger? Well that's what I was made for :)
 
 But first, please do let me know you better.
     
