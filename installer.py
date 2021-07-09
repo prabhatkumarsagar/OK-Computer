@@ -5,7 +5,16 @@ import subprocess
 import shutil
 
 home = get_dirs.HOME
-print("Kori Installer.")
+print("""Kori Installer.
+
+Please note that this Installer feature is still under-development and is very much prone to errors, 
+so we'd recommend you run the program the traditional way i.e. by running the main.py file in the Kori 
+Directory which you might've downloaded. 
+
+So, Please quit this window all along, right this moment! 
+
+But if you still want to continue anyway, Press Enter.""")
+input()
 
 while True:
     print("\nEnter the directory inside your home where you want to install Kori. (Note - Please add \"\\\" before the directory name.)")
@@ -18,8 +27,12 @@ while True:
     else:
         print("The given directory does not exist. Please try again.")
 
-if not install_dir[-1] == "/":
+if os.name=="nt" and install_dir[-1] != "\\":
+    install_dir += "\\"
+
+if os.name=="posix" and install_dir[-1] != "/":
     install_dir += "/"
+
 
 cur_dir = get_dirs.CUR_DIR
 
@@ -48,6 +61,6 @@ copytree(cur_dir, install_dir)
 
 for i in range((len(files))):
     shutil.copy2(cur_dir + "/" + files[i], install_dir) 
-print("one!")
+print("Done!")
 
 print(f"Kori has been installed successfully. In order to run Kori, run \n 'source bin/activate' inside {install_dir} and then run 'python main.py'.")
