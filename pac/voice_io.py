@@ -4,12 +4,10 @@ import gtts
 from playsound import playsound
 import pyttsx3
 import speech_recognition as sr
-
 from pac import get_dirs
 
 def is_connected():
     try:
-        # connect to the host -- tells us if the host is actually reachable
         socket.create_connection(("8.8.8.8", 53))
         return True
     except OSError:
@@ -25,7 +23,6 @@ else:
 engine.setProperty('rate',125) #Default Rate = 150
 
 def voice_out(qry): 
-    
     if is_connected():
         try:
             voice_ob = gtts.gTTS(qry)

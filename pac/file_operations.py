@@ -1,12 +1,9 @@
-#file operations go here! 
-#file handler
 from importlib.abc import FileLoader
 import os
 import shutil
 import platform
 import subprocess
 import multiprocessing
-
 
 from pac import get_dirs
 from pac import voice_io
